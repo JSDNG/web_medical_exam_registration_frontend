@@ -1,0 +1,58 @@
+.detail-folder-main {
+    padding: 40px 300px 20px 40px;
+    cursor: pointer;
+    .detail-folder-header {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding-bottom: 10px;
+
+        .total-set {
+        }
+        .create-by-user {
+            .img-by-user-create {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+        .action-folder {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            button {
+                border-radius: 30px;
+                border-color: rgb(214, 212, 212);
+                margin-left: auto;
+            }
+        }
+    }
+    .folder-name {
+        padding-bottom: 20px;
+        .folder-name-text {
+            font-size: 25px;
+            font-weight: 700;
+        }
+    }
+    .list-set-folder {
+        display: flex;
+        gap: 15px;
+        .set-content-folder {
+            padding: 10px 20px;
+            .set-header-text-folder {
+            }
+            .set-body-content-folder {
+            }
+            .set-footer-content-folder {
+                padding-top: 40px;
+                .img-by-user-create {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}

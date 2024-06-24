@@ -1,0 +1,42 @@
+.image {
+    padding-top: 60px;
+    width: 750px;
+    height: 550px;
+}
+.back {
+    display: flex;
+    justify-content: right;
+    padding: 15px 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+.action-choose {
+    margin-left: 930px;
+    padding-top: 60px;
+    .btn {
+        margin-right: 15px;
+    }
+}
+.register-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+
+    margin-left: 930px;
+    padding-top: 20px;
+
+    button {
+        width: 100%;
+        height: 40px;
+    }
+    .password-custom {
+        position: relative;
+        .icons-eye {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+    }
+}

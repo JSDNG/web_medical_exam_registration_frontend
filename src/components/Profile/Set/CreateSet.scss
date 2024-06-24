@@ -1,0 +1,57 @@
+.create-set-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 50px 150px;
+    .set-header-container {
+        display: flex;
+        align-items: center;
+        padding-bottom: 30px;
+        span {
+            font-size: 25px;
+            font-weight: 500;
+        }
+        button {
+            border-radius: 7px;
+            border-color: rgb(214, 212, 212);
+            margin-left: auto;
+        }
+    }
+    .set-header-tille-custom {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        input {
+            width: 50%;
+        }
+    }
+    .card-main-container {
+        margin-bottom: 10px;
+        .card-header-1 {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px 0;
+            button {
+                border-radius: 7px;
+                border-color: rgb(214, 212, 212);
+                margin-left: auto;
+            }
+        }
+        .cards-content {
+            display: flex;
+            padding: 30px 20px 40px;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+    .create-set-footer {
+        margin-left: auto;
+        button {
+            width: 70px;
+            height: 60px;
+            border-radius: 7px;
+            border-color: rgb(214, 212, 212);
+            margin-left: auto;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+.list-class-main {
+    .class-header {
+        display: flex;
+        align-items: center;
+        padding-bottom: 20px;
+        .search {
+            width: 500px;
+            margin-left: auto;
+        }
+    }
+
+    .list-class {
+        cursor: pointer;
+        display: grid;
+        gap: 15px;
+        .class-content {
+            padding: 10px 15px;
+            .card-header-text-class {
+                .text {
+                    font-weight: 500;
+                }
+                .t {
+                    font-weight: 100;
+                }
+            }
+            .card-body-content-class {
+                .card-body-text-class {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

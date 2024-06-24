@@ -1,0 +1,48 @@
+.get-set-home-page {
+    display: grid;
+    gap: 10px;
+    .title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .set-home-custom {
+        .set-navigate {
+            &:hover {
+                border-bottom: 3px solid #8846ec;
+            }
+            cursor: pointer;
+            .set-home-card {
+                padding: 10px 20px;
+                .set-home-a {
+                    .set-home-a-title {
+                        font-weight: 500;
+                    }
+                }
+                .set-home-b {
+                    padding: 10px 0 30px 0;
+                    .card-text-set-home {
+                        font-size: 12px;
+                        font-weight: 500;
+                        border-radius: 10px;
+                        background-color: rgb(210, 207, 255);
+                    }
+                }
+                .set-home-c {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                    .name-text {
+                        font-size: 12px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}

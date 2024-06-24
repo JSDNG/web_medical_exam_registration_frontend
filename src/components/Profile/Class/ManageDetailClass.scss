@@ -1,0 +1,24 @@
+.detail-class-main {
+    padding: 40px 155px;
+
+    .detail-class-header {
+        display: flex;
+        flex-direction: column;
+
+        gap: 30px;
+        padding-bottom: 10px;
+        .class-name {
+            .class-name-text {
+                font-size: 30px;
+                font-weight: 700;
+            }
+        }
+        .action-class {
+            button {
+                border-radius: 30px;
+                border-color: rgb(214, 212, 212);
+                margin-left: auto;
+            }
+        }
+    }
+}
