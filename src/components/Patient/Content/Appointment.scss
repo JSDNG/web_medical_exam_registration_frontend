@@ -1,0 +1,32 @@
+.appointment-container {
+    .appointment-content {
+        .custom-link {
+            color: aquamarine;
+            cursor: pointer;
+        }
+        .appointment-header {
+            margin: 20px;
+            .custom-img {
+                display: flex;
+                gap: 15px;
+                .img-top {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                }
+                .body-content-doctor{
+                    display: flex;
+                    flex-direction: column;
+                    .name-text{
+                        font-size: 25px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+        .appointment-body {
+        }
+        .appointment-footer {
+        }
+    }
+}

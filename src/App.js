@@ -8,15 +8,15 @@ const App = () => {
             <div className="app-header-container">
                 <Header />
             </div>
-            <div className="app-main-container">
+            <div className="app-body-container">
                 <div className="app-sidenav-container"></div>
-                <div className="app-content">
+                <div className="app-main">
                     <Outlet />
                 </div>
             </div>
-            <div className="app-footer-container">
+            {/* <div className="app-footer-container">
                 <Footer />
-            </div>
+            </div> */}
         </div>
     );
 };
