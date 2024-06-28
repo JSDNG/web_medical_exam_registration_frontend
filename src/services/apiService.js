@@ -29,8 +29,8 @@ const deleteUser = (id) => {
 const getUserWithPage = (page, limit) => {
     return axios.get(`/api/v1/participant?page=${page}&limit=${limit}`);
 };
-const postLogin = (email, password) => {
-    return axios.post("/api/v1/login", { email, password });
+const postLogin = (data) => {
+    return axios.post("/api/v1/login", { ...data });
 };
 const postRegister = (email, password, username, groupId) => {
     return axios.post("/api/v1/register", { email, password, username, groupId });
@@ -38,7 +38,17 @@ const postRegister = (email, password, username, groupId) => {
 const logout = (email, refresh_token) => {
     return axios.post("/api/v1/logout", { email, refresh_token });
 };
-
+const getAllTime = () => {
+    return axios.get("/api/v1/time/all");
+};
+//Schedule
+const postCreateSchedule = (data) => {
+    console.log({ ...data });
+    return axios.post(`/api/v1/doctor/schedule`, { ...data });
+};
+const getAllChedule = (id) => {
+    return axios.get(`/api/v1/doctor/${id}/schedule/all`);
+};
 export {
     postCreacteNewUser,
     getAllUsers,
@@ -47,5 +57,8 @@ export {
     getUserWithPage,
     postLogin,
     postRegister,
-    logout, 
+    logout,
+    getAllTime,
+    postCreateSchedule,
+    getAllChedule,
 };

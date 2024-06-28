@@ -30,7 +30,7 @@ const Sidebar = (props) => {
                         }}
                     >
                         <DiReact size={"3em"} color={"00bfff"} />
-                        <span>Admin</span>
+                        <span>Quản lý</span>
                     </div>
                 </SidebarHeader>
 
@@ -38,19 +38,40 @@ const Sidebar = (props) => {
                     <Menu iconShape="circle">
                         <MenuItem icon={<MdDashboard />}>
                             dashboard
-                            <Link to="/admin" />
+                            <Link to="/quan-tri-vien" />
                         </MenuItem>
                         <MenuItem icon={<FaGem />}> components</MenuItem>
                     </Menu>
                     <Menu iconShape="circle">
-                        <SubMenu title="Manage" icon={<FaRegLaughWink />}>
+                        <SubMenu title="Quản lý" icon={<FaRegLaughWink />}>
                             <MenuItem>
-                                ManageUser
-                                <Link to="/admin/manage-user" />
+                                ManageDoctor
+                                <Link to="/admin/quan-ly-bac-si" />
                             </MenuItem>
-                            <MenuItem>submenu 2</MenuItem>
-                            <MenuItem>submenu 3</MenuItem>
+                            <MenuItem>
+                                ManageStaff
+                                <Link to="/admin/manage-staff" />
+                            </MenuItem>
+                            <MenuItem>
+                                ManagePatient
+                                <Link to="/admin/manage-patient" />
+                            </MenuItem>
                         </SubMenu>
+                    </Menu>
+                    {/* Doctor */}
+                    <Menu iconShape="circle">
+                        <MenuItem>
+                            Quản lý lịch làm viện
+                            <Link to="/bac-si/quan-ly-lich-lam-viec" />
+                        </MenuItem>
+                        <MenuItem>
+                            Quản lý khám bệnh
+                            <Link to="/bac-si/quan-ly-kham-benh" />
+                        </MenuItem>
+                        <MenuItem>
+                            ManagePatient
+                            <Link to="/admin/manage-patient" />
+                        </MenuItem>
                     </Menu>
                 </SidebarContent>
             </ProSidebar>

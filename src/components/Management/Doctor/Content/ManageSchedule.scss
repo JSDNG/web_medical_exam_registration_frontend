@@ -1,0 +1,28 @@
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    .schedule-header-custom {
+        .title-custom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 500;
+        }
+    }
+    .schedule-body-custom {
+        .schedule-content {
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: center;
+            }
+        }
+    }
+}

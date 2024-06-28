@@ -29,7 +29,7 @@ body {
             padding: 15px 145px;
             z-index: 10;
             background-color: rgb(233, 252, 240) !important;
-            .custom-icon-header{
+            .custom-icon-header {
                 color: #5ee0dc;
                 font-size: 38px;
             }
@@ -51,9 +51,9 @@ body {
                     .nav-link {
                         font-size: 19px;
                         color: black !important;
-                        &.active {
-                            border-bottom: 3px solid #8846ec;
-                        }
+                        // &.active {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
                         // &:hover {
                         //     border-bottom: 3px solid #8846ec;
                         // }
@@ -75,7 +75,7 @@ body {
                         left: auto;
                         right: 0;
                     }
-    
+
                     .dropdown-toggle::after {
                         display: none !important;
                     }
@@ -90,8 +90,8 @@ body {
             }
         }
     }
-    .app-body-container{
-        .app-main{
+    .app-body-container {
+        .app-main {
             padding: 10px 160px;
         }
     }

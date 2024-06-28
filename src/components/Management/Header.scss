@@ -1,0 +1,10 @@
+.body-header-manage-custom {
+    .custom-collapse-manage {
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+        .custom-header-mamage {
+            margin-left: auto;
+        }
+    }
+}
