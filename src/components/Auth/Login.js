@@ -39,24 +39,26 @@ const Login = () => {
         const inValidEmail = validateEmail(email);
 
         if (!inValidEmail) {
-            toast.error("invalid email");
+            toast.error("Vui lòng nhập email");
             return;
         }
 
         if (!password) {
-            toast.error("invalid password");
+            toast.error("Vui lòng nhập mật khẩu");
             return;
         }
 
         //api
-        let data = await postLogin(email, password);
-        if (data && data.EC === 0) {
-            dispatch(doLogin(data));
-            toast.success(data.EM);
-            navigate("/home");
+        let res = await postLogin({ email, password });
+        if (res && res.EC === 0) {
+            dispatch(doLogin(res));
+            toast.success(res.EM);
+            if (res.DT.role === "Bác sĩ") {
+                navigate("/bac-si");
+            }
         }
-        if (data && +data.EC !== 0) {
-            toast.error(data.EM);
+        if (res && +res.EC !== 0) {
+            toast.error(res.EM);
         }
     };
 
@@ -81,10 +83,10 @@ const Login = () => {
                         navigate("/register");
                     }}
                 >
-                    Register
+                    Đăng ký
                 </button>
                 <button className="btn btn-light col-2" disabled>
-                    Log in
+                    Đăng nhập
                 </button>
             </div>
             <div className="login-container col-4">
@@ -99,7 +101,7 @@ const Login = () => {
                     />
                 </div>
                 <div className="password-custom">
-                    <label className="form-label">Password(*)</label>
+                    <label className="form-label">Mật khẩu(*)</label>
                     <input
                         type={showPassword ? "text" : "password"}
                         className="form-control"
@@ -120,7 +122,7 @@ const Login = () => {
                     )}
                 </div>
                 <div className="forgot-password">
-                    <span>Forgot password?</span>
+                    <span>Quên mật khẩu?</span>
                 </div>
                 <div>
                     <button
@@ -129,7 +131,7 @@ const Login = () => {
                             handleLogin();
                         }}
                     >
-                        <span>Log in</span>
+                        <span>Đăng nhập</span>
                     </button>
                 </div>
 
@@ -140,13 +142,13 @@ const Login = () => {
                 <div>
                     <button className="btn btn-light">
                         <FcGoogle className="mx-2" />
-                        Continue with Google
+                        Tiếp tục với Google
                     </button>
                 </div>
                 <div>
                     <button className="btn btn-light">
                         <FaFacebook className="mx-2" />
-                        Continue with Facebook
+                        Tiếp tục với Facebook
                     </button>
                 </div>
             </div>

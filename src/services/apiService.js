@@ -29,8 +29,8 @@ const deleteUser = (id) => {
 const getUserWithPage = (page, limit) => {
     return axios.get(`/api/v1/participant?page=${page}&limit=${limit}`);
 };
-const postLogin = (email, password) => {
-    return axios.post("/api/v1/login", { email, password });
+const postLogin = (data) => {
+    return axios.post("/api/v1/login", { ...data });
 };
 const postRegister = (email, password, username, groupId) => {
     return axios.post("/api/v1/register", { email, password, username, groupId });
@@ -38,52 +38,16 @@ const postRegister = (email, password, username, groupId) => {
 const logout = (email, refresh_token) => {
     return axios.post("/api/v1/logout", { email, refresh_token });
 };
-const getQuizByUser = () => {
-    return axios.get("/api/v1/quiz-by-participant");
+const getAllTime = () => {
+    return axios.get("/api/v1/time/all");
 };
-const getDataQuiz = (id) => {
-    return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
-};
-
-//Set
-const getAllSet = () => {
-    return axios.get("/api/v1/studyset");
-};
-const getSetWithPage = (page, limit) => {
-    return axios.get(`/api/v1/studyset?page=${page}&limit=${limit}`);
-};
-const getDataSet = (id) => {
-    return axios.get(`/api/v1/studyset/${id}`);
-};
-const postCreateNewSet = (data) => {
+//Schedule
+const postCreateSchedule = (data) => {
     console.log({ ...data });
-    return axios.post(`/api/v1/studyset`, { ...data });
+    return axios.post(`/api/v1/doctor/schedule`, { ...data });
 };
-const putUpdateSet = (data) => {
-    return axios.put(`/api/v1/studyset`, { ...data });
-};
-//Folder
-const getAllFolder = () => {
-    return axios.get("/api/v1/folder");
-};
-const getDataFolder = (id) => {
-    return axios.get(`/api/v1/folder/${id}`);
-};
-const getFolderWithPage = (page, limit) => {
-    return axios.get(`/api/v1/folder?page=${page}&limit=${limit}`);
-};
-//Class
-const getAllClass = () => {
-    return axios.get("/api/v1/class");
-};
-const getClassWithPage = (page, limit) => {
-    return axios.get(`/api/v1/class?page=${page}&limit=${limit}`);
-};
-const getDataClass = (id) => {
-    return axios.get(`/api/v1/class/${id}`);
-};
-const getAllMember = (id) => {
-    return axios.get(`/api/v1/class/members/${id}`);
+const getAllChedule = (id) => {
+    return axios.get(`/api/v1/doctor/${id}/schedule/all`);
 };
 export {
     postCreacteNewUser,
@@ -94,18 +58,7 @@ export {
     postLogin,
     postRegister,
     logout,
-    getQuizByUser,
-    getDataQuiz,
-    getAllSet,
-    getSetWithPage,
-    getDataSet,
-    postCreateNewSet,
-    putUpdateSet,
-    getAllFolder,
-    getDataFolder,
-    getFolderWithPage,
-    getAllClass,
-    getClassWithPage,
-    getDataClass,
-    getAllMember,
+    getAllTime,
+    postCreateSchedule,
+    getAllChedule,
 };

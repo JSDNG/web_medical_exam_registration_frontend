@@ -9,6 +9,7 @@ import { logout } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import { useState } from "react";
+import { FaRegHospital } from "react-icons/fa";
 const Header = (props) => {
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const account = useSelector((state) => state.user.account);
@@ -28,170 +29,59 @@ const Header = (props) => {
         }
     };
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary body-header-custom">
             <Container>
-                {isAuthenticated === false ? (
-                    <NavLink to="/" className="navbar-brand header-custom">
-                        Quizlet
-                    </NavLink>
-                ) : (
-                    <NavLink to="/home" className="navbar-brand header-custom">
-                        Quizlet
-                    </NavLink>
-                )}
-
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        {isAuthenticated === false ? (
-                            <>
-                                <NavLink to="/" className="nav-link">
-                                    Trang chủ
-                                </NavLink>
-                                <NavDropdown title="Sản phẩm" id="basic-nav-dropdown">
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/");
-                                        }}
-                                    >
-                                        Test 1
-                                    </NavDropdown.Item>
-
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/");
-                                        }}
-                                    >
-                                        Test 2
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/");
-                                        }}
-                                    >
-                                        Test 3
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            </>
-                        ) : (
-                            <>
-                                <NavLink to="/home" className="nav-link">
-                                    Trang chủ
-                                </NavLink>
-                                <NavDropdown title="Thư viện của bạn" id="basic-nav-dropdown">
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/profile/sets");
-                                        }}
-                                    >
-                                        Học phần
-                                    </NavDropdown.Item>
-
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/profile/folders");
-                                        }}
-                                    >
-                                        Thư mục
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/profile/classes");
-                                        }}
-                                    >
-                                        Lớp học
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-
-                                <NavLink to="/admin" className="nav-link">
-                                    Admin
-                                </NavLink>
-                                <NavLink to="/user" className="nav-link">
-                                    User
-                                </NavLink>
-                            </>
-                        )}
+                <FaRegHospital className="custom-icon-header" />
+                <NavLink to="/" className="navbar-brand header-custom">
+                    BookingCare
+                </NavLink>
+                {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+                <Navbar.Collapse id="basic-navbar-nav" className="custom-collapse">
+                    <Nav className="me-auto1 ">
+                        <NavLink to="/" className="nav-link">
+                            Tất cả
+                        </NavLink>
+                        <NavLink to="/" className="nav-link">
+                            Tại nhà
+                        </NavLink>
+                        <NavLink to="/" className="nav-link">
+                            Tại viện
+                        </NavLink>
+                        <NavLink to="/" className="nav-link">
+                            Sống khỏe
+                        </NavLink>
+                        <Form className="custom-search">
+                            <Form.Control type="search" placeholder="Tìm kiếm" className="me-2" aria-label="Search" />
+                        </Form>
                     </Nav>
-                    <Form className="d-flex">
-                        <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
-                    </Form>
-                    <Nav className="set-2">
-                        {isAuthenticated === false ? (
-                            <>
-                                <button
-                                    className="btn btn-light"
-                                    onClick={() => {
-                                        navigate("/login");
-                                    }}
-                                >
-                                    Đăng nhập
-                                </button>
-                                <button
-                                    className="btn btn-warning"
-                                    onClick={() => {
-                                        navigate("/register");
-                                    }}
-                                >
-                                    Đăng ký
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <NavDropdown title="Thêm" id="basic-nav-dropdown">
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/create-set");
-                                        }}
-                                    >
-                                        Học phần
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/create-set");
-                                        }}
-                                    >
-                                        Thư mục
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/create-set");
-                                        }}
-                                    >
-                                        Lớp học
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                                <NavDropdown
-                                    title={
-                                        <img
-                                            src={`data:image/png;base64, ${account.image}`}
-                                            alt="Cài đặt chung"
-                                            style={{ width: "30px", height: "30px" }}
-                                        />
-                                    }
-                                    id="basic-nav-dropdown"
-                                >
-                                    <NavDropdown.Item> {account.username}</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            navigate("/profile");
-                                        }}
-                                    >
-                                        Hồ sơ
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>Ngôn ngữ</NavDropdown.Item>
-                                    <NavDropdown.Item>Cài đặt</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item
-                                        onClick={() => {
-                                            handleLogOut();
-                                        }}
-                                    >
-                                        Đăng xuất
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            </>
-                        )}
+                    <Nav className="me-auto2">
+                        <NavLink to="/lich-hen" className="nav-link">
+                            Lịch hẹn
+                        </NavLink>
+                        <NavLink to="/ho-tro" className="nav-link">
+                            Hỗ trợ
+                        </NavLink>
+
+                        <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
+                            <NavDropdown.Item> {account.username}</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    navigate("/");
+                                }}
+                            >
+                                Hồ sơ bệnh án
+                            </NavDropdown.Item>
+                            <NavDropdown.Item>Cài đặt</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    handleLogOut();
+                                }}
+                            >
+                                Đăng xuất
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
