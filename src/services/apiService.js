@@ -51,6 +51,9 @@ const postCreateSchedule = (data) => {
 const getAllChedule = (id) => {
     return axios.get(`/api/v1/doctor/${id}/schedule/all`);
 };
+const deleteOneSchedule = (id) => {
+    return axios.delete(`/api/v1/doctor/schedule/${id}`);
+};
 export {
     postCreacteNewUser,
     getAllUsers,
@@ -64,4 +67,5 @@ export {
     getAllDoctor,
     postCreateSchedule,
     getAllChedule,
+    deleteOneSchedule,
 };

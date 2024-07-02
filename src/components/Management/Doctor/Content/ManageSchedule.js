@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 const ManageSchedule = (props) => {
     const [show, setShow] = useState(false);
-    const [data, setData] = useState([]);
+    const [listSchedule, setListSchedule] = useState([]);
     const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const ManageSchedule = (props) => {
     const getData = async () => {
         let res = await getAllChedule(account?.user?.id);
         if (res && res.EC === 0) {
-            setData(res.DT);
+            setListSchedule(res.DT);
         }
     };
     return (
@@ -33,7 +33,13 @@ const ManageSchedule = (props) => {
                 <button className="btn btn-primary" onClick={() => setShow(true)}>
                     Thêm mới
                 </button>
-                <ModalCreactSchedule show={show} setShow={setShow} getData={getData} doctorId={account?.user?.id} />
+                <ModalCreactSchedule
+                    show={show}
+                    setShow={setShow}
+                    getData={getData}
+                    doctorId={account?.user?.id}
+                    listSchedule={listSchedule}
+                />
             </div>
 
             <div className="schedule-body-manage-custom">
