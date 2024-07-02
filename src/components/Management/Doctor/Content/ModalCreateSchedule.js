@@ -6,12 +6,12 @@ import "./ModalCreateSchedule.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import { getAllTime, postCreateSchedule } from "../../../../services/apiService";
+import { getAllTime, postCreateSchedule, deleteOneSchedule } from "../../../../services/apiService";
 import _ from "lodash";
 const ModalCreateSchedule = (props) => {
-    const { show, setShow, doctorId } = props;
+    const { show, setShow, doctorId, listSchedule } = props;
     const [arrTime, setArrTime] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(Date.now() + 24 * 60 * 60 * 1000));
     const [dataCreate, setDataCreate] = useState([]);
     const [dataDelete, setDataDelete] = useState([]);
 
@@ -31,9 +31,80 @@ const ModalCreateSchedule = (props) => {
             setArrTime(data);
         }
     };
+    const handleOnClickDate = (date) => {
+        let arrTimeClone = arrTime.map((item) => ({
+            ...item,
+            isSelected: false,
+        }));
+
+        let dateString = new Date(date).toISOString().split("T")[0];
+        // Tìm kiếm ngày trong mảng dataSchedule
+        let temp = listSchedule.find((item) => item.date === dateString);
+
+        if (temp) {
+            // Lặp qua các schedule của ngày tìm được
+            temp.schedules.forEach((schedule) => {
+                // Tìm thời gian trong mảng time và đặt isSelected = true nếu thời gian trùng khớp
+                let matchingTime = arrTimeClone.find((t) => t.time === schedule.timeId.time);
+                if (matchingTime) {
+                    matchingTime.isSelected = true;
+                }
+            });
+        }
+        setArrTime(arrTimeClone);
+    };
+    const handleOnClickTime = async (status, time, timeId) => {
+        if (status === true) {
+            try {
+                const dateString = new Date(startDate).toISOString().split("T")[0];
+                let updatedDataDelete = [...dataDelete];
+                let updatedArrTime = [...arrTime];
+                let shouldUpdateArrTime = true;
+
+                for (const item of listSchedule) {
+                    if (item.date === dateString) {
+                        for (const schedule of item.schedules) {
+                            if (schedule.timeId.time === time) {
+                                const res = await deleteOneSchedule(schedule.id);
+                                if (res && res.EC === 0) {
+                                    updatedDataDelete = [...updatedDataDelete, schedule.id];
+                                } else {
+                                    toast.error("Không thể xóa lịch trình vì có một bệnh nhân đã được lên lịch hẹn");
+                                    shouldUpdateArrTime = false; // Không cần cập nhật arrTime nữa nếu có lỗi
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (shouldUpdateArrTime) {
+                    updatedArrTime = updatedArrTime.map((item) => {
+                        if (item.id === timeId) {
+                            item.isSelected = !item.isSelected;
+                        }
+                        return item;
+                    });
+                }
+
+                setDataDelete(updatedDataDelete);
+                setArrTime(updatedArrTime);
+            } catch (error) {
+                console.error("Error handling time click:", error);
+                toast.error("An error occurred while handling the time click.");
+            }
+        } else {
+            const updatedArrTime = arrTime.map((item) => {
+                if (item.id === timeId) {
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            });
+            setArrTime(updatedArrTime);
+        }
+    };
+
     const handleSubmitCreactSchedule = async () => {
         let date = new Date(moment(startDate).format().split("T")[0]).getTime();
-
         let newTimes = arrTime
             .filter((item) => item.isSelected)
             .map((item) => ({
@@ -63,16 +134,6 @@ const ModalCreateSchedule = (props) => {
             toast.error(res.EM);
         }
     };
-    const handleOnClickTime = async (timeId) => {
-        if (arrTime && arrTime.length > 0) {
-            let arrTimeClone = [...arrTime];
-            arrTimeClone = arrTimeClone.map((item) => {
-                if (item.id === timeId) item.isSelected = !item.isSelected;
-                return item;
-            });
-            setArrTime(arrTimeClone);
-        }
-    };
     return (
         <>
             <Modal
@@ -90,17 +151,14 @@ const ModalCreateSchedule = (props) => {
                     <form className="row g-3 form-schedule-custom">
                         <div className="col-md-6">
                             <label className="form-label">Chọn ngày</label>
-                            {/* <input
-                                //type="email"
-                                className="form-control"
-                                //value={email}
-                                //onChange={(event) => setEmail(event.target.value)}
-                            /> */}
                             <DatePicker
                                 className="form-control"
                                 selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                minDate={new Date()}
+                                onChange={(date) => {
+                                    setStartDate(date); // Cập nhật ngày mới vào state
+                                    handleOnClickDate(date); // Xử lý logic khi ngày thay đổi
+                                }}
+                                minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
                             />
                         </div>
                         <div className="col-12 pick-hour">
@@ -115,7 +173,7 @@ const ModalCreateSchedule = (props) => {
                                                     ? "btn btn-schedule-custom active"
                                                     : "btn btn-schedule-custom"
                                             }
-                                            onClick={() => handleOnClickTime(item.id)}
+                                            onClick={() => handleOnClickTime(item.isSelected, item.time, item.id)}
                                         >
                                             {item.time}
                                         </Button>

@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 const ManageSchedule = (props) => {
     const [show, setShow] = useState(false);
-    const [data, setData] = useState([]);
+    const [listSchedule, setListSchedule] = useState([]);
     const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -21,26 +21,31 @@ const ManageSchedule = (props) => {
     const getData = async () => {
         let res = await getAllChedule(account?.user?.id);
         if (res && res.EC === 0) {
-            setData(res.DT);
+            setListSchedule(res.DT);
         }
     };
     return (
-        <div className="schedule-container">
-            <div className="schedule-header-custom">
+        <div className="schedule-container-manage-custom">
+            <div className="schedule-header-manage-custom">
                 <span className="title-custom">LỊCH TRÌNH LÀM VIỆC CỦA BÁC SĨ</span>
             </div>
-            <div>
+            <div className="btn-add-schedule-manage-custom">
                 <button className="btn btn-primary" onClick={() => setShow(true)}>
                     Thêm mới
                 </button>
-                <ModalCreactSchedule show={show} setShow={setShow} getData={getData} doctorId={account?.user?.id} />
+                <ModalCreactSchedule
+                    show={show}
+                    setShow={setShow}
+                    getData={getData}
+                    doctorId={account?.user?.id}
+                    listSchedule={listSchedule}
+                />
             </div>
 
-            <div className="schedule-body-custom">
-                <div className="schedule-content">
+            <div className="schedule-body-manage-custom">
+                <div className="schedule-content-manage">
                     <div className="col-md-6">
                         <label className="form-label">Chọn ngày</label>
-                        
                     </div>
                     <table>
                         <thead>

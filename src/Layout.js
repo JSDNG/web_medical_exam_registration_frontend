@@ -14,6 +14,7 @@ import Patient from "./components/Patient/Patient";
 import HomePage from "./components/Home/HomePage";
 
 import Appointment from "./components/Patient/Content/Appointment";
+import ListDoctor from "./components/Patient/Content/ListDoctor";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Auth/Login";
@@ -25,7 +26,10 @@ const Layout = (props) => {
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<HomePage />} />
-                    <Route path="/dich-vu-y-te/kham-chuyen-khoa" element={<Appointment />}>
+                    <Route path="/dich-vu-y-te/kham-chuyen-khoa/:id" element={<Appointment />}>
+                        <Route path="sets" element={<Appointment />} />
+                    </Route>
+                    <Route path="/danh-sach/bac-si/noi-bat" element={<ListDoctor />}>
                         <Route path="sets" element={<Appointment />} />
                     </Route>
                     <Route path="/benh-nhan" element={<Patient />}>
