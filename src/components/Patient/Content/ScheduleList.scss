@@ -1,13 +1,33 @@
-.schedule-container {
+.schedule-container-client {
     display: flex;
-    .custom-schedule {
+    flex-direction: row;
+    .custom-booking-schedule {
         display: flex;
         flex-direction: column;
-        padding: 10px;
-        width: 50%;
+        width: 680px;
+        padding: 10px 10px 0 0;
+        .custom-schedule-client-for-date {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            //flex-direction: row;
+            gap: 10px;
+            padding-top: 10px;
+            .btn-click-pick-time-custom {
+            }
+        }
+        .span-schedule-client-custom {
+            padding-top: 10px;
+            font-size: 13px;
+            font-weight: 300;
+        }
+    }
+    .vertical-separator {
+        width: 1px; 
+        background-color: #ccc; 
     }
     .custom-extra {
         display: flex;
         flex-direction: column;
+        padding: 0px 10px;
     }
 }

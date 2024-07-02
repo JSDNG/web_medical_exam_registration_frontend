@@ -1,8 +1,9 @@
-.schedule-container {
+.schedule-container-manage-custom {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     padding: 10px 20px;
-    .schedule-header-custom {
+    .schedule-header-manage-custom {
         .title-custom {
             display: flex;
             justify-content: center;
@@ -11,8 +12,8 @@
             font-weight: 500;
         }
     }
-    .schedule-body-custom {
-        .schedule-content {
+    .schedule-body-manage-custom {
+        .schedule-content-manage {
             table {
                 width: 100%;
                 border-collapse: collapse;

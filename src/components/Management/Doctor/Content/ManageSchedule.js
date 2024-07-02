@@ -25,22 +25,21 @@ const ManageSchedule = (props) => {
         }
     };
     return (
-        <div className="schedule-container">
-            <div className="schedule-header-custom">
+        <div className="schedule-container-manage-custom">
+            <div className="schedule-header-manage-custom">
                 <span className="title-custom">LỊCH TRÌNH LÀM VIỆC CỦA BÁC SĨ</span>
             </div>
-            <div>
+            <div className="btn-add-schedule-manage-custom">
                 <button className="btn btn-primary" onClick={() => setShow(true)}>
                     Thêm mới
                 </button>
                 <ModalCreactSchedule show={show} setShow={setShow} getData={getData} doctorId={account?.user?.id} />
             </div>
 
-            <div className="schedule-body-custom">
-                <div className="schedule-content">
+            <div className="schedule-body-manage-custom">
+                <div className="schedule-content-manage">
                     <div className="col-md-6">
                         <label className="form-label">Chọn ngày</label>
-                        
                     </div>
                     <table>
                         <thead>

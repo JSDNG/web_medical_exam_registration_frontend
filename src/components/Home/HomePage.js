@@ -81,11 +81,17 @@ const HomePage = () => {
                 <div className="body-good-doctor"></div>
                 <span className="test">3</span>
             </div> */}
-            <div className="homepage-content-for-you">
-                <div className="header-for-you">
+            <div className="homepage-content-good-doctor">
+                <div className="header-good-doctor">
                     <span className="header-div">Bác sĩ nổi bật</span>
+                    <button
+                        className="btn btn-light btn-header-good-doctor-custom"
+                        onClick={() => navigate("/danh-sach/bac-si/noi-bat")}
+                    >
+                        Xem thêm
+                    </button>
                 </div>
-                <div className="body-for-you">
+                <div className="body-good-doctor">
                     <div className="home-page-custom row-cols-md-6 ">
                         <div className="container" onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa")}>
                             {/* <img src={`data:image/jpeg;base64,${item?.userId?.image}`} /> */}

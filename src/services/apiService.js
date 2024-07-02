@@ -39,11 +39,13 @@ const logout = (email, refresh_token) => {
     return axios.post("/api/v1/logout", { email, refresh_token });
 };
 const getAllTime = () => {
-    return axios.get("/api/v1/time/all");
+    return axios.get(`/api/v1/admin/time/all`);
+};
+const getAllDoctor = (data) => {
+    return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
 };
 //Schedule
 const postCreateSchedule = (data) => {
-    console.log({ ...data });
     return axios.post(`/api/v1/doctor/schedule`, { ...data });
 };
 const getAllChedule = (id) => {
@@ -59,6 +61,7 @@ export {
     postRegister,
     logout,
     getAllTime,
+    getAllDoctor,
     postCreateSchedule,
     getAllChedule,
 };

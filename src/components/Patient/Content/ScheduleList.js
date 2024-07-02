@@ -3,75 +3,34 @@ import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./ScheduleList.scss";
 const Schedule = (props) => {
+    const { listSchedule, index } = props;
     const [showAppointment, setShowAppointment] = useState(false);
     return (
-        <div className="schedule-container ">
-            <div className="custom-schedule ">
-                <span>calendar</span>
+        <div className="schedule-container-client">
+            <div className="custom-booking-schedule">
                 <div className="d-flex align-items-center">
                     <FaCalendarAlt />
                     <span>LỊCH KHÁM</span>
                 </div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 1
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 2
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 3
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 4
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 5
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 6
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 7
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 8
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 9
-                            </button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-light btn-custom" onClick={() => setShowAppointment(true)}>
-                                Click 10
-                            </button>
-                        </div>
-                    </div>
+                <div className=" custom-schedule-client-for-date">
+                    {listSchedule[index]?.schedules &&
+                        listSchedule[index]?.schedules.length > 0 &&
+                        listSchedule[index]?.schedules.map((item, index) => {
+                            return (
+                                <button
+                                    key={index}
+                                    className="btn btn-light btn-click-pick-time-custom"
+                                    onClick={() => setShowAppointment(true)}
+                                >
+                                    {item?.timeId?.time}
+                                </button>
+                            );
+                        })}
                 </div>
-                <span>Chọn và đặt (Phí đặt lịch 0đ)</span>
+                <span className="span-schedule-client-custom">Chọn và đặt (Phí đặt lịch 0đ)</span>
                 <ModalCreateAppointment showAppointment={showAppointment} setShowAppointment={setShowAppointment} />
             </div>
+            <div className="vertical-separator"></div>
             <div className="custom-extra">
                 <span>ĐỊA CHỈ KHÁM</span>
                 <span>Bệnh viện Đa khoa Bảo Sơn</span>
