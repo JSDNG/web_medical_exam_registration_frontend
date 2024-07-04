@@ -55,6 +55,12 @@ const Login = () => {
             toast.success(res.EM);
             if (res.DT.role === "Bác sĩ") {
                 navigate("/bac-si");
+            } else if (res.DT.role === "Bệnh nhân") {
+                navigate("/");
+            } else if (res.DT.role === "Quản trị viên") {
+                navigate("/quan-tri-vien");
+            } else if (res.DT.role === "Nhân viên") {
+                navigate("/nhan-vien");
             }
         }
         if (res && +res.EC !== 0) {
@@ -85,7 +91,7 @@ const Login = () => {
                 >
                     Đăng ký
                 </button>
-                <button className="btn btn-light col-2" disabled>
+                <button className="btn btn-light" disabled>
                     Đăng nhập
                 </button>
             </div>

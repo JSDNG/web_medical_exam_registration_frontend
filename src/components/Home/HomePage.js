@@ -52,6 +52,12 @@ const HomePage = () => {
             <div className="homepage-content-specialty">
                 <div className="header-specialty">
                     <span className="header-div">Chuyên khoa</span>
+                    <button
+                        className="btn btn-light btn-header-good-doctor-custom"
+                        onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa")}
+                    >
+                        Xem thêm
+                    </button>
                 </div>
                 <div className="body-specialty row row-cols-md-4 g-4">
                     <div className="card custom-card-home-page ">
@@ -74,13 +80,6 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="homepage-content-good-doctor">
-                <div className="header-good-doctor">
-                    <span className="header-div">Bác sĩ nổi bật</span>
-                </div>
-                <div className="body-good-doctor"></div>
-                <span className="test">3</span>
-            </div> */}
             <div className="homepage-content-good-doctor">
                 <div className="header-good-doctor">
                     <span className="header-div">Bác sĩ nổi bật</span>

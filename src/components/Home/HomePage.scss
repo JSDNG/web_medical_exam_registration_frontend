@@ -40,6 +40,10 @@
         .header-specialty {
             font-size: 25px;
             font-weight: 500;
+            .btn-header-good-doctor-custom {
+                display: flex;
+                margin-left: auto;
+            }
         }
         .body-specialty {
             display: flex;

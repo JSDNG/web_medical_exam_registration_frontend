@@ -1,18 +1,18 @@
-import "./ListDoctor.scss";
+import "./DoctorList.scss";
 import { useNavigate } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { getAllDoctor } from "../../../services/apiService";
 import { useState, useEffect } from "react";
 const ListDoctor = (props) => {
     const navigate = useNavigate();
-    const [listDoctor, setListDoctor] = useState([]);
+    const [doctorList, setDoctorList] = useState([]);
     useEffect(() => {
         getData();
     }, []);
     const getData = async () => {
         let res = await getAllDoctor("bac-si");
         if (res && res.EC === 0) {
-            setListDoctor(res.DT);
+            setDoctorList(res.DT);
         }
         if (res && res.EC !== 0) {
             console.log("err");
@@ -25,9 +25,9 @@ const ListDoctor = (props) => {
                 <span> / Bác sĩ nổi bật</span>
             </div>
             <div className="list-doctor-body-client">
-                {listDoctor &&
-                    listDoctor.length > 0 &&
-                    listDoctor.map((item, index) => {
+                {doctorList &&
+                    doctorList.length > 0 &&
+                    doctorList.map((item, index) => {
                         return (
                             <div
                                 key={index}

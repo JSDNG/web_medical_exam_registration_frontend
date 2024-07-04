@@ -1,0 +1,22 @@
+.specialty-list-container-client-custom {
+    .custom-link-header {
+        .custom-link {
+            color: aquamarine;
+            cursor: pointer;
+        }
+    }
+    .specialty-list-body-client {
+        padding-top: 20px;
+        .detail-specialty-custom {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding-bottom: 10px;
+            cursor: pointer;
+            .image-specialty-custom {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+}

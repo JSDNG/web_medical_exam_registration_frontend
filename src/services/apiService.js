@@ -32,8 +32,8 @@ const getUserWithPage = (page, limit) => {
 const postLogin = (data) => {
     return axios.post("/api/v1/login", { ...data });
 };
-const postRegister = (email, password, username, groupId) => {
-    return axios.post("/api/v1/register", { email, password, username, groupId });
+const postRegister = (data) => {
+    return axios.post("/api/v1/register", { ...data });
 };
 const logout = (email, refresh_token) => {
     return axios.post("/api/v1/logout", { email, refresh_token });
@@ -41,18 +41,34 @@ const logout = (email, refresh_token) => {
 const getAllTime = () => {
     return axios.get(`/api/v1/admin/time/all`);
 };
+const getAllSpecialty = () => {
+    return axios.get(`/api/v1/admin/specialty/all`);
+};
 const getAllDoctor = (data) => {
     return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
+};
+// Doctor
+const getAllAppointmentFromDoctor = (id) => {
+    return axios.get(`/api/v1/doctor/appointment-from-doctor/all?id=${id}`);
 };
 //Schedule
 const postCreateSchedule = (data) => {
     return axios.post(`/api/v1/doctor/schedule`, { ...data });
 };
-const getAllChedule = (id) => {
+const getAllSchedule = (id) => {
     return axios.get(`/api/v1/doctor/${id}/schedule/all`);
 };
 const deleteOneSchedule = (id) => {
     return axios.delete(`/api/v1/doctor/schedule/${id}`);
+};
+//Appointment
+const postCreateAppointment = (data) => {
+    return axios.post(`/api/v1/patient/appointment`, { ...data });
+};
+
+//Patient
+const putUpdatePatient = (data) => {
+    return axios.put(`/api/v1/patient/information`, { ...data });
 };
 export {
     postCreacteNewUser,
@@ -64,8 +80,12 @@ export {
     postRegister,
     logout,
     getAllTime,
+    getAllSpecialty,
     getAllDoctor,
     postCreateSchedule,
-    getAllChedule,
+    getAllSchedule,
     deleteOneSchedule,
+    postCreateAppointment,
+    putUpdatePatient,
+    getAllAppointmentFromDoctor,
 };

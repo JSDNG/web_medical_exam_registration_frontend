@@ -11,8 +11,8 @@ import { doLogout } from "../../redux/action/userAction";
 import { useState } from "react";
 import { FaRegHospital } from "react-icons/fa";
 const Header = (props) => {
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-    const account = useSelector((state) => state.user.account);
+    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const account = useSelector((state) => state?.user?.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -55,33 +55,37 @@ const Header = (props) => {
                         </Form>
                     </Nav>
                     <Nav className="me-auto2">
-                        <NavLink to="/lich-hen" className="nav-link">
+                        <NavLink to="/ho-so/lich-hen" className="nav-link">
                             Lịch hẹn
                         </NavLink>
-                        <NavLink to="/ho-tro" className="nav-link">
-                            Hỗ trợ
+                        <NavLink to="/kham-ngay" className="nav-link">
+                            Khám ngay
                         </NavLink>
-
-                        <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
-                            <NavDropdown.Item> {account.username}</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item
-                                onClick={() => {
-                                    navigate("/");
-                                }}
-                            >
-                                Hồ sơ bệnh án
-                            </NavDropdown.Item>
-                            <NavDropdown.Item>Cài đặt</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item
-                                onClick={() => {
-                                    handleLogOut();
-                                }}
-                            >
-                                Đăng xuất
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                        {isAuthenticated === false ? (
+                            <NavLink to="/login" className="nav-link">
+                                Đăng nhập
+                            </NavLink>
+                        ) : (
+                            <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
+                                <NavDropdown.Item> {account?.user?.fullName}</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item
+                                    onClick={() => {
+                                        navigate("/ho-so");
+                                    }}
+                                >
+                                    Hồ sơ
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item
+                                    onClick={() => {
+                                        handleLogOut();
+                                    }}
+                                >
+                                    Đăng xuất
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

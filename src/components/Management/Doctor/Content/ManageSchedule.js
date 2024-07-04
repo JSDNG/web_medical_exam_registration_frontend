@@ -2,7 +2,7 @@ import "./ManageSchedule.scss";
 import { useNavigate } from "react-router-dom";
 import ModalCreactSchedule from "./ModalCreateSchedule";
 import { useState, useEffect } from "react";
-import { getAllChedule } from "../../../../services/apiService";
+import { getAllSchedule } from "../../../../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,7 +19,7 @@ const ManageSchedule = (props) => {
         getData();
     }, []);
     const getData = async () => {
-        let res = await getAllChedule(account?.user?.id);
+        let res = await getAllSchedule(account?.user?.id);
         if (res && res.EC === 0) {
             setListSchedule(res.DT);
         }
