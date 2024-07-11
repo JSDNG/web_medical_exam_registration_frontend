@@ -6,6 +6,7 @@ import MedicalAppointmentScheduleList from "./MedicalAppointmentScheduleList";
 const ManageMedicalAppointment = (props) => {
     const [medicalAppointmentList, setMedicalAppointmentList] = useState([]);
     const [dateList, setDateList] = useState([]);
+
     const [index, setIndex] = useState(0);
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);

@@ -44,7 +44,7 @@ const Register = () => {
             return;
         }
         //api
-        let res = await postRegister({ email, password, accountType: "Patient", fullName, roleId: 3 });
+        let res = await postRegister({ email, password, accountType: "Patient", fullName, roleId: 4 });
 
         if (res && +res.EC === 0) {
             toast.success(res.EM);

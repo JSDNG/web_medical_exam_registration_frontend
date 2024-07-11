@@ -28,7 +28,6 @@ const Appointment = (props) => {
             setDateList(res.DT.map((item) => item.date));
         }
     };
-    console.log(dateList);
     return (
         <div className="appointment-container">
             <div className="appointment-content">
@@ -39,8 +38,8 @@ const Appointment = (props) => {
                 </div>
                 <div className="appointment-header">
                     <div className="custom-img">
-                        {/* <img src={`data:image/jpeg;base64,${infoDoctor?.image}`} className="img-top" alt="..." /> */}
-                        <img src={imagedoctor} className="img-top" alt="..." />
+                        <img src={`data:image/jpeg;base64,${infoDoctor?.image}`} className="img-top" alt="..." />
+
                         <div className="body-content-doctor">
                             <span className="name-text">
                                 {infoDoctor?.Position?.positionName}, Bác sĩ {infoDoctor?.fullName}
@@ -65,12 +64,7 @@ const Appointment = (props) => {
                             ))}
                     </select>
 
-                    <ScheduleList
-                        scheduleList={scheduleList}
-                        index={index}
-                        specialties={infoDoctor?.Specialties}
-                        doctorId={infoDoctor?.id}
-                    />
+                    <ScheduleList scheduleList={scheduleList} index={index} infoDoctor={infoDoctor} getData={getData} />
                 </div>
                 <hr />
                 <div className="appointment-footer">

@@ -23,7 +23,7 @@ const Header = (props) => {
             //clear redux
             dispatch(doLogout());
             toast.success(res.EM);
-            navigate("/");
+            navigate("/login");
         } else {
             toast.error(res.EM);
         }

@@ -108,7 +108,6 @@ const ModalCreateSchedule = (props) => {
         let newTimes = arrTime
             .filter((item) => item.isSelected)
             .map((item) => ({
-                price: "400000",
                 date: date,
                 doctorId: doctorId,
                 timeId: item.id,

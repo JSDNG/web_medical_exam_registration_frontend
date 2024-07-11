@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./ScheduleList.scss";
 const ScheduleList = (props) => {
-    const { scheduleList, index, specialties, doctorId } = props;
+    const { scheduleList, index, infoDoctor } = props;
     const [showAppointment, setShowAppointment] = useState(false);
     const [scheduleId, setScheduleId] = useState("");
     const handleOnClickTime = (id) => {
@@ -36,20 +36,18 @@ const ScheduleList = (props) => {
                 <ModalCreateAppointment
                     showAppointment={showAppointment}
                     setShowAppointment={setShowAppointment}
-                    specialties={specialties}
+                    specialties={infoDoctor?.Specialties}
                     scheduleId={scheduleId}
-                    doctorId={doctorId}
+                    doctorId={infoDoctor?.id}
+                    getData={props.getData}
                 />
             </div>
             <div className="vertical-separator"></div>
             <div className="custom-extra">
                 <span>ĐỊA CHỈ KHÁM</span>
-                <span>Bệnh viện Đa khoa Bảo Sơn</span>
-                <span>Địa chỉ</span>
+                <span>{infoDoctor?.address}</span>
                 <hr />
-                <span>GIÁ KHÁM: 300.000đ</span>
-                <hr />
-                <span>LOẠI BẢO HIỂM ÁP DỤNG</span>
+                <span>GIÁ KHÁM: {infoDoctor?.price}</span>
             </div>
         </div>
     );

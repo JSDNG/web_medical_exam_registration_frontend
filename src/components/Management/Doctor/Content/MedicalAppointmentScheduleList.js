@@ -1,60 +1,56 @@
 import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./MedicalAppointmentScheduleList.scss";
+import ModalMedicalAppointment from "./ModalMedicalAppointment";
 const MedicalAppointmentScheduleList = (props) => {
     const { medicalAppointmentList, index } = props;
-    const [scheduleId, setScheduleId] = useState("");
-    const handleOnClickTime = (id) => {
-        setScheduleId(id);
+    const [show, setShow] = useState(false);
+    const [medicalInfo, setMedicalInfo] = useState({});
+    const handleOnClick = (item) => {
+        setShow(true);
+        setMedicalInfo(item);
     };
     return (
         <div className="medical-appointment-list-container-client">
-                {/* <div className="d-flex align-items-center">
+            {/* <div className="d-flex align-items-center">
                     <FaCalendarAlt />
                     <span>LỊCH KHÁM</span>
                 </div> */}
-                <div className=" custom--client-for-date">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Patient Name</th>
-                                <th>Date of Birth</th>
-                                <th>Gender</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th>Price</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {medicalAppointmentList[index]?.data &&
-                                medicalAppointmentList[index]?.data.length > 0 &&
-                                medicalAppointmentList[index]?.data.map((item, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>{item?.Patient?.fullName}</td>
-                                            <td>{item?.Patient?.dateOfBirth}</td>
-                                            <td>{item?.Patient?.gender}</td>
-                                            <td>{item?.Patient?.phone}</td>
-                                            <td>{item?.Patient?.address}</td>
-                                            <td>{item?.Schedule?.price}</td>
-                                            <td>{item?.Schedule?.PeriodOfTime?.time}</td>
-                                        </tr>
-                                    );
-                                })}
-                        </tbody>
-                    </table>
-                </div>
-                {/* <ModalCreateAppointment
-                    showAppointment={showAppointment}
-                    setShowAppointment={setShowAppointment}
-                    specialties={specialties}
-                    scheduleId={scheduleId}
-                    doctorId={doctorId}
-                /> */}
-          
+            <div className="custom-table-for-medical">
+                <table className="table table-bordered table-hover table-medical-custom">
+                    <thead>
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Chuyên khoa</th>
+                            <th>Tên bệnh nhân</th>
+                            <th>Số điện thoại</th>
+                            <th>Khoảng thời gian </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {medicalAppointmentList[index]?.data &&
+                            medicalAppointmentList[index]?.data.length > 0 &&
+                            medicalAppointmentList[index]?.data.map((item, index) => {
+                                return (
+                                    <tr key={index} onClick={() => handleOnClick(item)}>
+                                        <td>{item?.appointmentNumber}</td>
+                                        <td>{item?.MedicalRecord?.specialtyMR}</td>
+                                        <td>{item?.Patient?.fullName}</td>
+                                        <td>{item?.Patient?.phone}</td>
+                                        <td>{item?.time}</td>
+                                    </tr>
+                                );
+                            })}
+                    </tbody>
+                </table>
+            </div>
+            <ModalMedicalAppointment
+                show={show}
+                setShow={setShow}
+                medicalInfo={medicalInfo}
+                //scheduleId={scheduleId}
+                //doctorId={doctorId}
+            />
         </div>
     );
 };

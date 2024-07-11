@@ -20,6 +20,7 @@ import SpecialistExamination from "./components/Patient/Content/SpecialistExamin
 import SpecialtyDetail from "./components/Patient/Content/SpecialtyDetail";
 import Appointment from "./components/Patient/Content/Appointment";
 import DoctorList from "./components/Patient/Content/DoctorList";
+import MedicalStaffRecord from "./components/Management/MedicalStaffRecord";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Auth/Login";
@@ -51,6 +52,7 @@ const Layout = (props) => {
                     <Route index element={<DashBoardDoctor />} />
                     <Route path="quan-ly-lich-lam-viec" element={<ManageSchedule />} />
                     <Route path="quan-ly-kham-benh" element={<ManageMedicalAppointment />} />
+                    <Route path="quan-ly-thong-tin-ca-nhan" element={<MedicalStaffRecord />} />
                 </Route>
                 <Route path="/nhan-vien" element={<Staff />}>
                     <Route index element={<DashBoardAdmin />} />

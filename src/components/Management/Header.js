@@ -30,19 +30,13 @@ const Header = (props) => {
         if (account?.role === "Quản trị viên") {
             return (
                 <NavDropdown title="Người dùng" id="basic-nav-dropdown">
-                    <NavDropdown.Item
-                        onClick={() => navigate("/quan-tri-vien/quan-ly-bac-si")}
-                    >
+                    <NavDropdown.Item onClick={() => navigate("/quan-tri-vien/quan-ly-bac-si")}>
                         Bác sĩ
                     </NavDropdown.Item>
-                    <NavDropdown.Item
-                        onClick={() => navigate("/quan-tri-vien/quan-ly-nhan-vien")}
-                    >
+                    <NavDropdown.Item onClick={() => navigate("/quan-tri-vien/quan-ly-nhan-vien")}>
                         Nhân viên
                     </NavDropdown.Item>
-                    <NavDropdown.Item
-                        onClick={() => navigate("/quan-tri-vien/quan-ly-benh-nhan")}
-                    >
+                    <NavDropdown.Item onClick={() => navigate("/quan-tri-vien/quan-ly-benh-nhan")}>
                         Bệnh nhân
                     </NavDropdown.Item>
                 </NavDropdown>
@@ -50,17 +44,19 @@ const Header = (props) => {
         } else if (account?.role === "Bác sĩ") {
             return (
                 <NavDropdown title="Phòng khám" id="basic-nav-dropdown">
-                    <NavDropdown.Item
-                        onClick={() => navigate("/bac-si/quan-ly-lich-lam-viec")}
-                    >
+                    <NavDropdown.Item onClick={() => navigate("/bac-si/quan-ly-lich-lam-viec")}>
                         Lịch làm việc
                     </NavDropdown.Item>
-                    <NavDropdown.Item
-                        onClick={() => navigate("/bac-si/quan-ly-kham-benh")}
-                    >
-                        Khám bệnh
-                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate("/bac-si/quan-ly-kham-benh")}>Khám bệnh</NavDropdown.Item>
                 </NavDropdown>
+            );
+        } else if (account?.role === "Nhân viên") {
+            return (
+                <NavDropdown
+                    title="Quản lý lịch hẹn"
+                    id="basic-nav-dropdown"
+                    onClick={() => navigate("/nhan-vien/quan-ly-lich-hen")}
+                ></NavDropdown>
             );
         }
         // Nếu không phù hợp với bất kỳ vai trò nào, trả về null để không render gì cả
@@ -72,19 +68,13 @@ const Header = (props) => {
             <Container fluid>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="custom-collapse-manage">
-                    <Nav className="me-auto">
-                        {renderNavDropdown()}
-                    </Nav>
+                    <Nav className="me-auto">{renderNavDropdown()}</Nav>
                     <Nav className="ms-auto custom-header-mamage">
-                        <NavLink to="/ho-so" className="nav-link">
+                        <NavLink to={`/bac-si/quan-ly-thong-tin-ca-nhan`} className="nav-link">
                             {account?.user?.fullName}
                         </NavLink>
                         <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
-                            <NavDropdown.Item
-                                onClick={handleLogOut}
-                            >
-                                Đăng xuất
-                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={handleLogOut}>Đăng xuất</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

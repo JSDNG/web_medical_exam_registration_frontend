@@ -9,6 +9,13 @@
         }
         .custom-header-mamage {
             margin-left: auto;
+            .dropdown-menu[data-bs-popper] {
+                left: auto;
+                right: 0;
+            }
+            .dropdown-toggle::after {
+                display: none !important;
+            }
         }
     }
 }

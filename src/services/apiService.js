@@ -51,6 +51,9 @@ const getAllDoctor = (data) => {
 const getAllAppointmentFromDoctor = (id) => {
     return axios.get(`/api/v1/doctor/appointment-from-doctor/all?id=${id}`);
 };
+const putExaminingDoctor = (data) => {
+    return axios.put("/api/v1/doctor/examining-doctor", { ...data });
+};
 //Schedule
 const postCreateSchedule = (data) => {
     return axios.post(`/api/v1/doctor/schedule`, { ...data });
@@ -63,12 +66,17 @@ const deleteOneSchedule = (id) => {
 };
 //Appointment
 const postCreateAppointment = (data) => {
+    console.log(data);
     return axios.post(`/api/v1/patient/appointment`, { ...data });
 };
 
 //Patient
 const putUpdatePatient = (data) => {
     return axios.put(`/api/v1/patient/information`, { ...data });
+};
+
+const getAllRelative = (id) => {
+    return axios.get(`/api/v1/relative/all?id=${id}`);
 };
 export {
     postCreacteNewUser,
@@ -88,4 +96,6 @@ export {
     postCreateAppointment,
     putUpdatePatient,
     getAllAppointmentFromDoctor,
+    putExaminingDoctor,
+    getAllRelative,
 };
