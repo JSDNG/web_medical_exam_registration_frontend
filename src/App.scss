@@ -38,7 +38,7 @@ body {
                 font-size: 26px;
                 font-weight: 700;
                 justify-content: center;
-                padding-right: 30px;
+                padding-right: 20px;
             }
             .custom-collapse {
                 display: flex;
@@ -47,9 +47,9 @@ body {
                 .me-auto1 {
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    gap: 8px;
                     .nav-link {
-                        font-size: 19px;
+                        font-size: 18px;
                         color: black !important;
                         // &.active {
                         //     border-bottom: 3px solid #8846ec;
@@ -61,12 +61,12 @@ body {
                 }
                 .me-auto2 {
                     .nav-link {
-                        font-size: 19px;
+                        font-size: 18px;
                         font-weight: 500;
                         color: #5ee0dc !important;
-                        &.active {
-                            border-bottom: 3px solid #8846ec;
-                        }
+                        // &.active {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
                         // &:hover {
                         //     border-bottom: 3px solid #8846ec;
                         // }

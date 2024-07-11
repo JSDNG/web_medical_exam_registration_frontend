@@ -11,9 +11,8 @@ import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
 const Register = () => {
     const [email, setEmail] = useState("");
-    const [username, setUserName] = useState("");
+    const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
-    const [group, setGroup] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -40,16 +39,12 @@ const Register = () => {
             return;
         }
 
-        if (!username) {
-            toast.error("invalid username");
-            return;
-        }
-        if (!group) {
-            toast.error("invalid group");
+        if (!fullName) {
+            toast.error("invalid fullName");
             return;
         }
         //api
-        let res = await postRegister(email, password, username, group);
+        let res = await postRegister({ email, password, accountType: "Patient", fullName, roleId: 4 });
 
         if (res && +res.EC === 0) {
             toast.success(res.EM);
@@ -76,15 +71,15 @@ const Register = () => {
             </div>
             <div className="action-choose">
                 <button className="btn btn-light col-2" disabled>
-                    Register
+                    Đăng ký
                 </button>
                 <button
-                    className="btn btn-light col-2"
+                    className="btn btn-light "
                     onClick={() => {
                         navigate("/login");
                     }}
                 >
-                    Log in
+                    Đăng nhập
                 </button>
             </div>
             <div className="register-container col-4">
@@ -99,17 +94,17 @@ const Register = () => {
                     />
                 </div>
                 <div>
-                    <label className="form-label">UserName(*)</label>
+                    <label className="form-label">Tên đầy đủ(*)</label>
                     <input
                         type={"text"}
                         className="form-control"
-                        name="username"
-                        value={username}
-                        onChange={(event) => setUserName(event.target.value)}
+                        name="fullName"
+                        value={fullName}
+                        onChange={(event) => setFullName(event.target.value)}
                     />
                 </div>
                 <div className="password-custom">
-                    <label className="form-label">Password(*)</label>
+                    <label className="form-label">Mật khẩu(*)</label>
                     <input
                         type={showPassword ? "text" : "password"}
                         className="form-control"
@@ -129,20 +124,13 @@ const Register = () => {
                     )}
                 </div>
                 <div>
-                    <label className="form-label">Group</label>
-                    <select className="form-select" onChange={(event) => setGroup(event.target.value)} value={group}>
-                        <option value="1">TEACHER</option>
-                        <option value="2">STUDENT</option>
-                    </select>
-                </div>
-                <div>
                     <button
                         className="btn btn-primary"
                         onClick={() => {
                             handleRegister();
                         }}
                     >
-                        Register
+                        Đăng ký
                     </button>
                 </div>
 
@@ -153,13 +141,13 @@ const Register = () => {
                 <div>
                     <button className="btn btn-light">
                         <FcGoogle className="mx-2" />
-                        Continue with Google
+                        Tiếp tục với Google
                     </button>
                 </div>
                 <div>
                     <button className="btn btn-light">
                         <FaFacebook className="mx-2" />
-                        Continue with Facebook
+                        Tiếp tục với Facebook
                     </button>
                 </div>
             </div>

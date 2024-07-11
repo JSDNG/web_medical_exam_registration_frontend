@@ -1,20 +1,9 @@
 .staff-container {
-    display: flex;
-    .staff-sidebar {
-        
+    width: 100%;
+
+    .staff-header {
     }
-    .staff-content {
-        width: 100%;
-        .staff-header {
-            height: 40px;
-            border: 1px solid blue;
-        }
-        .staff-main {
-            height: calc(100vh - 40px);
-            .user-pagination {
-                display: flex;
-                justify-content: center;
-            }
-        }
+    .staff-main {
+        padding: 10px 100px;
     }
 }
