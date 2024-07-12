@@ -10,12 +10,13 @@ import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import { useState } from "react";
 import { FaRegHospital } from "react-icons/fa";
+import ModalQuickCheckUp from "./ModalQuickCheckUp";
 const Header = (props) => {
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const [showQuickCheckUp, setShowQuickCheckUp] = useState(false);
     const handleLogOut = async () => {
         let res = await logout(account.email, account.refresh_token);
         //console.log(res);
@@ -58,9 +59,13 @@ const Header = (props) => {
                         <NavLink to="/ho-so/lich-hen" className="nav-link">
                             Lịch hẹn
                         </NavLink>
-                        <NavLink to="/kham-ngay" className="nav-link">
+                        <div onClick={() => setShowQuickCheckUp(true)} className="nav-link quick-check-up-custom">
                             Khám ngay
-                        </NavLink>
+                        </div>
+                        <ModalQuickCheckUp
+                            showQuickCheckUp={showQuickCheckUp}
+                            setShowQuickCheckUp={setShowQuickCheckUp}
+                        />
                         {isAuthenticated === false ? (
                             <NavLink to="/login" className="nav-link">
                                 Đăng nhập

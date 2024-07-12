@@ -24,8 +24,19 @@ const Appointment = (props) => {
     const getData = async () => {
         let res = await getAllSchedule(id);
         if (res && res.EC === 0) {
-            setScheduleList(res.DT);
-            setDateList(res.DT.map((item) => item.date));
+            // Lọc các lịch trình theo điều kiện Appointment
+            res.DT.forEach((entry) => {
+                entry.schedules = entry.schedules.filter((schedule) => {
+                    if (schedule.Appointment && schedule.Appointment.id === null) {
+                        delete schedule.Appointment;
+                        return true;
+                    }
+                    return !schedule.Appointment || schedule.Appointment.id === null;
+                });
+            });
+            const result = res.DT.filter((item) => item.schedules.length > 0);
+            setScheduleList(result);
+            setDateList(result.map((item) => item.date));
         }
     };
     return (

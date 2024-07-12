@@ -4,14 +4,15 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { postCreateAppointment, putUpdatePatient, getAllRelative } from "../../../services/apiService";
-const ModalCreateAppointment = (props) => {
-    const { showAppointment, setShowAppointment, specialties, scheduleId, doctorId } = props;
+import { getAllSpecialty, getAllRelative, putUpdatePatient, createQuickCheckUp } from "../../services/apiService";
+const ModalQuickCheckUp = (props) => {
+    const { showQuickCheckUp, setShowQuickCheckUp } = props;
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
 
     const [status, setStatus] = useState(true);
+    const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyId, setSpecialtyId] = useState("");
     const [fullName, setFullName] = useState(account?.user?.fullName);
     const [gender, setGender] = useState(account?.user?.gender);
@@ -28,13 +29,13 @@ const ModalCreateAppointment = (props) => {
         setGender("Nữ");
         setPhone("");
         setDateOfBirth("");
-        setSpecialtyId(specialties?.[0]?.id);
+        setSpecialtyId(specialtyList?.[0]?.id);
         setReason("");
         setMedicalHistory("");
     };
 
     const handleClose = () => {
-        setShowAppointment(false);
+        setShowQuickCheckUp(false);
         setStatus(true);
         setReason("");
         setMedicalHistory("");
@@ -51,7 +52,7 @@ const ModalCreateAppointment = (props) => {
             setGender(account?.user?.gender);
             setPhone(account?.user?.phone);
             setDateOfBirth(account?.user?.dateOfBirth);
-            setSpecialtyId(specialties?.[0]?.id);
+            setSpecialtyId(specialtyList?.[0]?.id);
             setReason("");
             setMedicalHistory("");
         } else {
@@ -61,18 +62,23 @@ const ModalCreateAppointment = (props) => {
             setGender(relativeList?.[0]?.gender);
             setPhone(relativeList?.[0]?.phone);
             setDateOfBirth(relativeList?.[0]?.dateOfBirth);
-            setSpecialtyId(specialties?.[0]?.id);
+            setSpecialtyId(specialtyList?.[0]?.id);
             setMedicalHistory("");
             setReason("");
         }
     }, [status, relativeList]);
-
+    console.log(specialtyId);
     const getData = async () => {
+        let res1 = await getAllSpecialty();
+        if (res1 && res1.EC === 0) {
+            setSpecialtyList(res1.DT);
+        }
         let res = await getAllRelative(account?.user?.id);
         if (res && res.EC === 0) {
             setRelativeList(res.DT);
         }
-        if (res && res.EC !== 0) {
+
+        if ((res && res.EC !== 0) || res1.EC !== 0) {
             toast.error(res.EM);
         }
     };
@@ -123,16 +129,11 @@ const ModalCreateAppointment = (props) => {
         }
 
         let data = {
-            appointment: {
-                statusId: 1,
-                scheduleId: scheduleId,
-                patientId: account?.user?.id,
-            },
+            dateQuickCheckUp: moment(new Date(Date.now())).format("YYYY-MM-DD HH:mm:ss"),
             medicalRecord: {
                 medicalHistory: medicalHistory,
                 reason: reason,
                 patientId: account?.user?.id,
-                doctorId: doctorId,
                 specialtyId: specialtyId,
             },
         };
@@ -149,12 +150,11 @@ const ModalCreateAppointment = (props) => {
                 patientId: account?.user?.id,
             };
         }
-
-        let res = await postCreateAppointment(data);
+        console.log(data);
+        let res = await createQuickCheckUp(data);
         if (res && res.EC === 0) {
             toast.success(res.EM);
             handleClose();
-            props.getData();
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
@@ -163,7 +163,7 @@ const ModalCreateAppointment = (props) => {
     return (
         <>
             <Modal
-                show={showAppointment}
+                show={showQuickCheckUp}
                 onHide={handleClose}
                 animation={false}
                 size="xl"
@@ -171,7 +171,7 @@ const ModalCreateAppointment = (props) => {
                 className="modal-add-user"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Đặt lịch khám</Modal.Title>
+                    <Modal.Title>Đặt lịch khám nhanh trong ngày</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
@@ -184,7 +184,7 @@ const ModalCreateAppointment = (props) => {
                         {status === true ? (
                             <></>
                         ) : (
-                            <div className="col-md-6 offset-md-3">
+                            <div className="col-md-6 offset-md-3" style={{ maxHeight: "300px", overflowY: "auto" }}>
                                 <select
                                     className="form-select pick-date-medical-appointment-custom"
                                     onChange={handleRelativeInfo}
@@ -199,17 +199,16 @@ const ModalCreateAppointment = (props) => {
                                 </select>
                             </div>
                         )}
-                        <div className="col-md-6 offset-md-3">
+                        <div className="col-md-6 offset-md-3" style={{ maxHeight: "300px", overflowY: "auto" }}>
                             <label className="form-label">Chuyên khoa</label>
-
                             <select
                                 className="form-select"
                                 onChange={(event) => setSpecialtyId(event.target.value)}
                                 value={specialtyId}
                             >
-                                {specialties &&
-                                    specialties.length > 0 &&
-                                    specialties.map((item, index) => (
+                                {specialtyList &&
+                                    specialtyList.length > 0 &&
+                                    specialtyList.map((item, index) => (
                                         <option key={`${index}-m`} value={item?.id}>
                                             {item?.specialtyName}
                                         </option>
@@ -316,4 +315,4 @@ const ModalCreateAppointment = (props) => {
     );
 };
 
-export default ModalCreateAppointment;
+export default ModalQuickCheckUp;
