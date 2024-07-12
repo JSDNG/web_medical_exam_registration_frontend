@@ -71,6 +71,10 @@ const postCreateAppointment = (data) => {
 };
 
 //Patient
+const createQuickCheckUp = (data) => {
+    return axios.post(`/api/v1/patient/quick-check-up`, { ...data });
+};
+
 const putUpdatePatient = (data) => {
     return axios.put(`/api/v1/patient/information`, { ...data });
 };
@@ -98,4 +102,5 @@ export {
     getAllAppointmentFromDoctor,
     putExaminingDoctor,
     getAllRelative,
+    createQuickCheckUp,
 };

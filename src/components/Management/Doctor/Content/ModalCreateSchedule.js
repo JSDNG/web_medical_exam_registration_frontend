@@ -14,12 +14,20 @@ const ModalCreateSchedule = (props) => {
     const [startDate, setStartDate] = useState(new Date(Date.now() + 24 * 60 * 60 * 1000));
     const [dataCreate, setDataCreate] = useState([]);
     const [dataDelete, setDataDelete] = useState([]);
-
     const handleClose = () => {
         setShow(false);
+        setDataCreate([]);
+        setDataDelete([]);
+        setStartDate(new Date(Date.now() + 24 * 60 * 60 * 1000));
+        let arrTimeClone = arrTime.map((item) => ({
+            ...item,
+            isSelected: false,
+        }));
+        setArrTime(arrTimeClone);
     };
     useEffect(() => {
         getData();
+        //handleOnClickDate(startDate);
     }, []);
     const getData = async () => {
         let res = await getAllTime();
@@ -36,11 +44,9 @@ const ModalCreateSchedule = (props) => {
             ...item,
             isSelected: false,
         }));
-
-        let dateString = new Date(date).toISOString().split("T")[0];
+        const dateString = moment(date).format("YYYY-MM-DD");
         // Tìm kiếm ngày trong mảng dataSchedule
-        let temp = listSchedule.find((item) => item.date === dateString);
-
+        let temp = props.listSchedule.find((item) => item.date === dateString);
         if (temp) {
             // Lặp qua các schedule của ngày tìm được
             temp.schedules.forEach((schedule) => {
@@ -56,53 +62,54 @@ const ModalCreateSchedule = (props) => {
     const handleOnClickTime = async (status, time, timeId) => {
         if (status === true) {
             try {
-                const dateString = new Date(startDate).toISOString().split("T")[0];
-                let updatedDataDelete = [...dataDelete];
-                let updatedArrTime = [...arrTime];
+                const dateString = moment(startDate).format("YYYY-MM-DD");
+                let updatedDataDelete = new Set(dataDelete);
                 let shouldUpdateArrTime = true;
 
-                for (const item of listSchedule) {
-                    if (item.date === dateString) {
-                        for (const schedule of item.schedules) {
-                            if (schedule.timeId.time === time) {
-                                const res = await deleteOneSchedule(schedule.id);
-                                if (res && res.EC === 0) {
-                                    updatedDataDelete = [...updatedDataDelete, schedule.id];
-                                } else {
-                                    toast.error("Không thể xóa lịch trình vì có một bệnh nhân đã được lên lịch hẹn");
-                                    shouldUpdateArrTime = false; // Không cần cập nhật arrTime nữa nếu có lỗi
-                                }
+                // Duyệt qua các lịch trình và cập nhật updatedDataDelete
+                const scheduleForDate = listSchedule.find((item) => item.date === dateString);
+                if (scheduleForDate) {
+                    for (const schedule of scheduleForDate.schedules) {
+                        if (schedule.timeId.time === time) {
+                            if (schedule.Appointment.id === null) {
+                                updatedDataDelete.add(schedule.id);
+                            } else {
+                                toast.error("Không thể xóa lịch trình vì có một bệnh nhân đã được lên lịch hẹn");
+                                shouldUpdateArrTime = false;
+                                break;
                             }
                         }
                     }
                 }
 
                 if (shouldUpdateArrTime) {
-                    updatedArrTime = updatedArrTime.map((item) => {
+                    const updatedArrTime = arrTime.map((item) => {
                         if (item.id === timeId) {
-                            item.isSelected = !item.isSelected;
+                            return { ...item, isSelected: !item.isSelected };
                         }
                         return item;
                     });
-                }
 
-                setDataDelete(updatedDataDelete);
-                setArrTime(updatedArrTime);
+                    setDataDelete(Array.from(updatedDataDelete));
+                    setArrTime(updatedArrTime);
+                }
             } catch (error) {
                 console.error("Error handling time click:", error);
-                toast.error("An error occurred while handling the time click.");
+                toast.error("Lỗi");
             }
         } else {
             const updatedArrTime = arrTime.map((item) => {
                 if (item.id === timeId) {
-                    item.isSelected = !item.isSelected;
+                    return { ...item, isSelected: !item.isSelected };
                 }
                 return item;
             });
+
             setArrTime(updatedArrTime);
         }
     };
 
+    console.log(dataDelete);
     const handleSubmitCreactSchedule = async () => {
         let date = new Date(moment(startDate).format().split("T")[0]).getTime();
         let newTimes = arrTime
@@ -123,14 +130,14 @@ const ModalCreateSchedule = (props) => {
         console.log(data);
         let res = await postCreateSchedule(data);
         if (res && res.EC === 0) {
-            toast.success(res.EM);
+            toast.success("Tạo lịch làm việc thành công!");
             props.getData();
             getData();
             setArrTime([]);
-            setShow(false);
+            handleClose();
         }
         if (res && +res.EC !== 0) {
-            toast.error(res.EM);
+            toast.error("Tạo lịch làm việc thất bại!");
         }
     };
     return (
