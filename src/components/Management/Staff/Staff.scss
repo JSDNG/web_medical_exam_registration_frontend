@@ -1,9 +1,25 @@
 .staff-container {
     width: 100%;
-
+    padding: 0px 200px;
+    .title-custom {
+        padding-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-weight: 500;
+    }
     .staff-header {
     }
     .staff-main {
-        padding: 10px 100px;
+        .outlet-staff-custom {
+            .approve-appointment-container-manage-custom {
+                .approve-appointment-custom {
+                    .tr-approve-appointment-custom {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
 }
