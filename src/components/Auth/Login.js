@@ -54,13 +54,13 @@ const Login = () => {
             dispatch(doLogin(res));
             toast.success(res.EM);
             if (res.DT.role === "Bác sĩ") {
-                navigate("/bac-si");
+                navigate("/quan-ly/bac-si");
             } else if (res.DT.role === "Bệnh nhân") {
                 navigate("/");
             } else if (res.DT.role === "Quản trị viên") {
-                navigate("/quan-tri-vien");
+                navigate("/quan-ly/quan-tri-vien");
             } else if (res.DT.role === "Nhân viên") {
-                navigate("/nhan-vien");
+                navigate("/quan-ly/nhan-vien");
             }
         }
         if (res && +res.EC !== 0) {

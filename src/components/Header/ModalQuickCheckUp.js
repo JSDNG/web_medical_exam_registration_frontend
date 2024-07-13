@@ -11,6 +11,9 @@ const ModalQuickCheckUp = (props) => {
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
 
+    const [result, setResult] = useState({});
+    const [show, setShow] = useState(false);
+
     const [status, setStatus] = useState(true);
     const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyId, setSpecialtyId] = useState("");
@@ -67,6 +70,7 @@ const ModalQuickCheckUp = (props) => {
             setReason("");
         }
     }, [status, relativeList]);
+
     console.log(specialtyId);
     const getData = async () => {
         let res1 = await getAllSpecialty();
@@ -152,14 +156,17 @@ const ModalQuickCheckUp = (props) => {
         }
         console.log(data);
         let res = await createQuickCheckUp(data);
-        if (res && res.EC === 0) {
+        if (res && res.EC === 0 && res.DT) {
             toast.success(res.EM);
             handleClose();
+            setResult(res.DT);
+            setShow(true);
         }
-        if (res && res.EC !== 0) {
+        if ((res && res.EC !== 0) || res.DT.length === 0) {
             toast.error(res.EM);
         }
     };
+
     return (
         <>
             <Modal
@@ -310,6 +317,87 @@ const ModalQuickCheckUp = (props) => {
                         Hoàn thành
                     </Button>
                 </Modal.Footer>
+            </Modal>
+
+            <Modal
+                show={show}
+                animation={false}
+                onHide={() => setShow(false)}
+                size="lg"
+                backdrop="static"
+                className="modal-add-user"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Thông tin liên quan</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form className="row g-3">
+                        <div className="row">
+                            <label className="offset-md-3">Thông tin lịch khám bệnh</label>
+                            <div className="col-md-12">
+                                <span className="form-label">
+                                    Số thứ tự khám: {result?.appointmentInfo?.appointmentNumber}
+                                </span>
+                            </div>
+                            <div className="col-md-6 ">
+                                <span className="form-label">Ngày khám: {result?.schedule?.date}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Giờ khám: {result?.schedule?.timeId?.time}</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <label className="offset-md-3">Thông tin bệnh nhân</label>
+                            <div className="col-md-12 ">
+                                <span className="form-label">Chuyên khoa: {result?.specialtyInfo?.specialtyName}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Họ tên bệnh nhân: {result?.patientInfo?.fullName}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Số điện thoại: {result?.patientInfo?.phone}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Email: {result?.patientInfo?.email}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Giới tính: {result?.patientInfo?.gender}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Ngày sinh: {result?.patientInfo?.dateOfBirth}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Địa chỉ: {result?.patientInfo?.address} </span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Lí do khám: {result?.medicalRecordInfo?.reason} </span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">
+                                    Lịch sử bệnh án: {result?.medicalRecordInfo?.medicalHistory}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <label className="offset-md-3">Thông tin bác sĩ</label>
+                            <div className="col-md-6">
+                                <span className="form-label">Họ tên bác sĩ: {result?.doctorInfo?.fullName}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Số điện thoại: {result?.doctorInfo?.phone}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Giới tính: {result?.doctorInfo?.gender}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Địa chỉ: {result?.doctorInfo?.address}</span>
+                            </div>
+                            <div className="col-md-6">
+                                <span className="form-label">Giá khám: {result?.doctorInfo?.price}</span>
+                            </div>
+                        </div>
+                    </form>
+                </Modal.Body>
             </Modal>
         </>
     );

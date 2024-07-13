@@ -1,0 +1,106 @@
+// body {
+//     padding: 0px;
+//     margin: 0;
+//     font-family: -managementle-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+//         "Droid Sans", "Helvetica Neue", sans-serif;
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+// }
+// @media (min-width: 1400px) {
+//     .container,
+//     .container-lg,
+//     .container-md,
+//     .container-sm,
+//     .container-xl,
+//     .container-xxl {
+//         max-width: 1500px !important;
+//     }
+// }
+
+.management-container {
+    .management-header-container {
+        // .lbl-add {
+        //     cursor: pointer;
+        // }
+        // .btn {
+        //     margin-right: 10px;
+        // }
+        .body-header-custom {
+            padding: 15px 145px;
+            z-index: 10;
+            background-color: rgb(233, 252, 240) !important;
+            .custom-icon-header {
+                color: #5ee0dc;
+                font-size: 38px;
+            }
+            .header-custom {
+                color: #ffb516;
+                font-size: 26px;
+                font-weight: 700;
+                justify-content: center;
+                padding-right: 20px;
+            }
+            .custom-collapse {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                .me-auto1 {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    .nav-link {
+                        font-size: 18px;
+                        color: black !important;
+                        // &.active {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
+                        // &:hover {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
+                    }
+                }
+                .me-auto2 {
+                    .nav-link {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: #5ee0dc !important;
+                        // &.active {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
+                        // &:hover {
+                        //     border-bottom: 3px solid #8846ec;
+                        // }
+                    }
+                    .quick-check-up-custom {
+                        cursor: pointer;
+                    }
+                    .dropdown-menu[data-bs-popper] {
+                        left: auto;
+                        right: 0;
+                    }
+
+                    .dropdown-toggle::after {
+                        display: none !important;
+                    }
+                }
+                .custom-search {
+                    .me-2 {
+                        border-radius: 20px;
+                    }
+                    width: 300px !important;
+                    /* border-radius: 50px !important; */
+                }
+            }
+        }
+    }
+    .management-body-container {
+        .management-main {
+            padding: 10px 160px;
+        }
+    }
+    // .management-footer-container {
+    //     position: fixed;
+    //     bottom: 0;
+    //     width: 100%;
+    // }
+}
