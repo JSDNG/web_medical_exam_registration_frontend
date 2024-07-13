@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { putUpdateUser } from "../../../../services/apiService";
-import _ from "lodash";
-const ModalUpdateUser = (props) => {
-    const { show, setShow, dataUpdate, setDataUpdate } = props;
+//import { postCreacteNewUser } from "../../../../services/apiService";
+const ModalCreactDoctor = (props) => {
+    const { show, setShow } = props;
 
     const handleClose = () => {
-        setDataUpdate({});
         setShow(false);
         setEmail("");
         setPassword("");
@@ -30,34 +28,45 @@ const ModalUpdateUser = (props) => {
     //     console.log(">>>", event.target.files[0]);
     // };
 
-    useEffect(() => {
-        if (!_.isEmpty(dataUpdate)) {
-            setEmail(dataUpdate.email);
-            setUsername(dataUpdate.username);
-            setRole(dataUpdate.role);
-            setImage("");
-        }
-    }, [dataUpdate]);
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
-    const handleSubmitUpdateUser = async () => {
+    const handleSubmitCreactDoctor = async () => {
         //validate
+        const inValidEmail = validateEmail(email);
+
+        if (!inValidEmail) {
+            toast.error("invalid email");
+            return;
+        }
+
+        if (!password) {
+            toast.error("invalid password");
+            return;
+        }
+
         if (!username) {
             toast.error("invalid username");
             return;
         }
 
-        let data = await putUpdateUser(dataUpdate.id, username, role, image);
+        // let data = await postCreacteNewUser(email, password, username, role, image);
 
-        //console.log(">>>> data", data);
-
-        if (data && data.EC === 0) {
-            toast.success(data.EM);
-            handleClose();
-            await props.fetchListUsersWithPage(props.currentPage);
-        }
-        if (data && data.EC !== 0) {
-            toast.error(data.EM);
-        }
+        // if (data && data.EC === 0) {
+        //     toast.success(data.EM);
+        //     handleClose();
+        //     //await props.fetchListUsers();
+        //     props.setCurrentPage(1);
+        //     await props.fetchListUsersWithPage(1);
+        // }
+        // if (data && data.EC !== 0) {
+        //     toast.error(data.EM);
+        // }
     };
     return (
         <>
@@ -70,7 +79,7 @@ const ModalUpdateUser = (props) => {
                 className="modal-add-user"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update user</Modal.Title>
+                    <Modal.Title>Thêm mới bác sĩ</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -80,24 +89,22 @@ const ModalUpdateUser = (props) => {
                                 type="email"
                                 className="form-control"
                                 value={email}
-                                disabled
                                 onChange={(event) => setEmail(event.target.value)}
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Password</label>
+                            <label className="form-label">Mật khẩu</label>
                             <input
                                 type="password"
                                 className="form-control"
                                 name="password"
                                 autoComplete="off"
                                 value={password}
-                                disabled
                                 onChange={(event) => setPassword(event.target.value)}
                             />
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Username</label>
+                            <label className="form-label">Họ tên</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -107,7 +114,7 @@ const ModalUpdateUser = (props) => {
                         </div>
 
                         <div className="col-md-4">
-                            <label className="form-label">Role</label>
+                            <label className="form-label">Nhân viên y tế</label>
                             <select
                                 className="form-select"
                                 onChange={(event) => setRole(event.target.value)}
@@ -127,7 +134,7 @@ const ModalUpdateUser = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
+                    <Button variant="primary" onClick={() => handleSubmitCreactDoctor()}>
                         Save
                     </Button>
                 </Modal.Footer>
@@ -136,4 +143,4 @@ const ModalUpdateUser = (props) => {
     );
 };
 
-export default ModalUpdateUser;
+export default ModalCreactDoctor;

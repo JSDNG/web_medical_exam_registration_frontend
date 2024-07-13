@@ -1,22 +1,8 @@
 .admin-container {
-    display: flex;
-    .admin-sidebar {
-        .pro-sidebar {
-            height: 100vh !important;
-        }
-    }
-    .admin-content {
-        width: 100%;
-        .admin-header {
-            height: 40px;
-            border: 1px solid blue;
-        }
+    width: 100%;
+    padding: 10px 200px;
         .admin-main {
-            height: calc(100vh - 40px);
-            .user-pagination {
-                display: flex;
-                justify-content: center;
-            }
+            
         }
-    }
+    
 }

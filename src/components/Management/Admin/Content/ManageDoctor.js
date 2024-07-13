@@ -1,43 +1,37 @@
-import ModalCreactUser from "./ModalCreactUser";
+import ModalCreactDoctor from "./ModalCreactDoctor";
 import "./ManageUser.scss";
-import TableUser from "./TableUser";
+import TableDoctor from "./TableDoctor";
 import { useEffect, useState } from "react";
-import { getAllUsers, getUserWithPage } from "../../../../services/apiService";
-import ModalUpdateUser from "./ModalUpdateUser";
 import ModalDeleteUser from "./ModalDeleteUser";
 import TableUserPaginate from "./TableUserPaginate";
-const ManageUser = (props) => {
+import { getAllDoctor } from "../../../../services/apiService";
+const ManageDoctor = (props) => {
     const limitUsers = 4;
     const [showModalCreactUser, setShowModalCreactUser] = useState(false);
-    const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
-    const [listUser, setListUser] = useState([]);
+    const [doctorList, setDoctorList] = useState([]);
     const [data, setData] = useState({});
     const [pageCount, setPageCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        fetchListUsersWithPage(1);
+        //fetchListUsersWithPage(1);
+        fetchDoctorList();
     }, []);
 
-    // const fetchListUsers = async () => {
-    //     let res = await getAllUsers();
-    //     if (res.EC === 0) {
-    //         setListUser(res.DT);
-    //     }
-    // };
-
-    const fetchListUsersWithPage = async (page) => {
-        let res = await getUserWithPage(page, limitUsers);
+    const fetchDoctorList = async () => {
+        let res = await getAllDoctor("bac-si");
         if (res.EC === 0) {
-            setListUser(res.DT.users);
-            setPageCount(res.DT.totalPages);
+            setDoctorList(res.DT);
         }
     };
 
-    const handleClickBtnUpdate = (user) => {
-        setShowModalUpdateUser(true);
-        setData(user);
+    const fetchListUsersWithPage = async (page) => {
+        // let res = await getUserWithPage(page, limitUsers);
+        // if (res.EC === 0) {
+        //     setListUser(res.DT.users);
+        //     setPageCount(res.DT.totalPages);
+        // }
     };
 
     const handleClickBtnDelete = (user) => {
@@ -46,18 +40,25 @@ const ManageUser = (props) => {
     };
 
     return (
-        <div className="manage-user-container">
-            <div className="title">manage</div>
+        <div className="manage-doctor-container">
+            <div className="title">Quản lý bác sĩ</div>
             <div className="user-content">
                 <div className="btn-add-user">
                     <button className="btn btn-primary" onClick={() => setShowModalCreactUser(true)}>
-                        Add user
+                        Thêm mới
                     </button>
                 </div>
                 <div className="table-user">
-                    <TableUserPaginate
-                        listUser={listUser}
-                        handleClickBtnUpdate={handleClickBtnUpdate}
+                    {/* <TableUserPaginate
+                        doctorList={doctorList}
+                        handleClickBtnDelete={handleClickBtnDelete}
+                        fetchListUsersWithPage={fetchListUsersWithPage}
+                        pageCount={pageCount}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    /> */}
+                    <TableDoctor
+                        doctorList={doctorList}
                         handleClickBtnDelete={handleClickBtnDelete}
                         fetchListUsersWithPage={fetchListUsersWithPage}
                         pageCount={pageCount}
@@ -65,7 +66,7 @@ const ManageUser = (props) => {
                         setCurrentPage={setCurrentPage}
                     />
                 </div>
-                <ModalCreactUser
+                <ModalCreactDoctor
                     show={showModalCreactUser}
                     setShow={setShowModalCreactUser}
                     //fetchListUsers={fetchListUsers}
@@ -73,16 +74,7 @@ const ManageUser = (props) => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                 />
-                <ModalUpdateUser
-                    show={showModalUpdateUser}
-                    setShow={setShowModalUpdateUser}
-                    dataUpdate={data}
-                    setDataUpdate={setData}
-                    //fetchListUsers={fetchListUsers}
-                    fetchListUsersWithPage={fetchListUsersWithPage}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                />
+
                 <ModalDeleteUser
                     show={showModalDeleteUser}
                     setShow={setShowModalDeleteUser}
@@ -98,4 +90,4 @@ const ManageUser = (props) => {
     );
 };
 
-export default ManageUser;
+export default ManageDoctor;

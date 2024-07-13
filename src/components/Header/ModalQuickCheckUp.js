@@ -71,7 +71,6 @@ const ModalQuickCheckUp = (props) => {
         }
     }, [status, relativeList]);
 
-    console.log(specialtyId);
     const getData = async () => {
         let res1 = await getAllSpecialty();
         if (res1 && res1.EC === 0) {

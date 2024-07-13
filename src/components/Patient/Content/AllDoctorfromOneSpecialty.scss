@@ -1,0 +1,52 @@
+.prominent-doctor-list-container-client-custom {
+    .custom-link-header {
+        .custom-link {
+            color: aquamarine;
+            cursor: pointer;
+        }
+    }
+    .specialty-info-custom {
+        display: flex;
+        flex-direction: column;
+        .specialty-name-custom {
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .doctor-specialty-name-custom {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+    .prominent-doctor-list-body-client {
+        padding-top: 20px;
+        .detail-doctor-custom {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0 10px 10px;
+            margin-bottom: 10px;
+            //align-items: center;
+            padding-bottom: 10px;
+            cursor: pointer;
+            .info-doctor-custom {
+                display: flex;
+                gap: 20px;
+                .image-doctor-custom {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                }
+                .doctor-specialty-custom{
+                    display: flex;
+                    gap: 5px;
+                    flex-direction: column;
+                    width: 600px;
+                    .doctor-name-custom{
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #0cf59f;
+                    }
+                }
+            }
+        }
+    }
+}

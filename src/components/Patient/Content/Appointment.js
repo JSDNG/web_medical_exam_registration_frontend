@@ -45,7 +45,7 @@ const Appointment = (props) => {
                 <div className="custom-link">
                     <IoHome onClick={() => navigate("/")} />
                     <span onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa")}> / Khám chuyên khoa</span>
-                    <span onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa/tim-mach")}> / Tim mạch</span>
+                    {/* <span onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa/tim-mach")}> / Tim mạch</span> */}
                 </div>
                 <div className="appointment-header">
                     <div className="custom-img">
