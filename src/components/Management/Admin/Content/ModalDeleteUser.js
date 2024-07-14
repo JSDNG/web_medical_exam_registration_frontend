@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { deleteUser } from "../../../../services/apiService";
+//import { deleteUser } from "../../../../services/apiService";
 import { toast } from "react-toastify";
 const ModalDeleteUser = (props) => {
     const { show, setShow, dataDelete, setDataDelete } = props;
@@ -10,18 +10,18 @@ const ModalDeleteUser = (props) => {
     };
 
     const handleConfirmDelete = async () => {
-        let data = await deleteUser(dataDelete.id);
+        // let data = await deleteUser(dataDelete.id);
 
-        if (data.EC === 0) {
-            toast.success(data.EM);
-            handleClose();
-            //await props.fetchListUsers();
-            props.setCurrentPage(1);
-            await props.fetchListUsersWithPage(1);
-        }
-        if (data.EC !== 0) {
-            toast.error(data.EM);
-        }
+        // if (data.EC === 0) {
+        //     toast.success(data.EM);
+        //     handleClose();
+        //     //await props.fetchListUsers();
+        //     props.setCurrentPage(1);
+        //     await props.fetchListUsersWithPage(1);
+        // }
+        // if (data.EC !== 0) {
+        //     toast.error(data.EM);
+        // }
     };
     return (
         <>

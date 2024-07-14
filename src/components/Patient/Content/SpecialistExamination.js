@@ -29,26 +29,28 @@ const SpecialistExamination = (props) => {
                     specialtyList.length > 0 &&
                     specialtyList.map((item, index) => {
                         return (
-                            <div
-                                key={index}
-                                className="detail-specialty-custom"
-                                onClick={() =>
-                                    navigate(`/dich-vu-y-te/kham-chuyen-khoa/detail/${item.id}`, { state: { data: item } })
-                                }
-                            >
-                                <div>
-                                    <img
-                                        className="image-specialty-custom"
-                                        src={`data:image/jpeg;base64,${item?.image}`}
-                                    />
-                                </div>
-                                <div className="info-specialty-custom">
-                                    <div className="specialty-name-custom">
-                                        <span>{item?.specialtyName} </span>
+                            <>
+                                <div
+                                    key={index}
+                                    className="detail-specialty-custom"
+                                    onClick={() =>
+                                        navigate(`/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/${item.id}`)
+                                    }
+                                >
+                                    <div>
+                                        <img
+                                            className="image-specialty-custom"
+                                            src={`data:image/jpeg;base64,${item?.image}`}
+                                        />
+                                    </div>
+                                    <div className="info-specialty-custom">
+                                        <div className="specialty-name-custom">
+                                            <span>{item?.specialtyName} </span>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr />
-                            </div>
+                            </>
                         );
                     })}
             </div>

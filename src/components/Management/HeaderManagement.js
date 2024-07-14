@@ -64,9 +64,9 @@ const Header = (props) => {
                 <Navbar.Collapse id="basic-navbar-nav" className="custom-collapse-manage">
                     <Nav className="me-auto">{renderNavDropdown()}</Nav>
                     <Nav className="ms-auto custom-header-mamage">
-                        <NavLink to={`/bac-si/quan-ly-thong-tin-ca-nhan`} className="nav-link">
+                        <Nav className="nav-link nav-link-custom" onClick={() => navigate("/quan-ly/thong-tin-ca-nhan")}>
                             {account?.user?.fullName}
-                        </NavLink>
+                        </Nav>
                         <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={handleLogOut}>Đăng xuất</NavDropdown.Item>
                         </NavDropdown>

@@ -1,17 +1,17 @@
-.manage-user-container {
-    padding: 10px;
+.manage-doctor-container {
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-weight: 500;
+    }
     .user-content {
         .btn-add-user {
             margin: 10px 0px;
         }
     }
-
-    .title {
-        font-weight: 600px;
-        font-size: 30px;
-    }
 }
-
 .modal-add-user {
     .img-preview {
         height: 150px;

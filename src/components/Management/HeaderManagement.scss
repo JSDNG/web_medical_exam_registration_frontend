@@ -9,6 +9,9 @@
         }
         .custom-header-mamage {
             margin-left: auto;
+            .nav-link-custom {
+                cursor: pointer;
+            }
             .dropdown-menu[data-bs-popper] {
                 left: auto;
                 right: 0;

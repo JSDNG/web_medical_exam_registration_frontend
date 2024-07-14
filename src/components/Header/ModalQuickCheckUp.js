@@ -10,8 +10,10 @@ const ModalQuickCheckUp = (props) => {
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
+
     const [result, setResult] = useState({});
     const [show, setShow] = useState(false);
+
     const [status, setStatus] = useState(true);
     const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyId, setSpecialtyId] = useState("");
@@ -68,6 +70,7 @@ const ModalQuickCheckUp = (props) => {
             setReason("");
         }
     }, [status, relativeList]);
+
     const getData = async () => {
         let res1 = await getAllSpecialty();
         if (res1 && res1.EC === 0) {
@@ -162,7 +165,7 @@ const ModalQuickCheckUp = (props) => {
             toast.error(res.EM);
         }
     };
-    console.log(result);
+
     return (
         <>
             <Modal
@@ -314,6 +317,7 @@ const ModalQuickCheckUp = (props) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
             <Modal
                 show={show}
                 animation={false}

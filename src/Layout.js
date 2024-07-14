@@ -2,10 +2,9 @@ import App from "./App";
 import { Route, Routes } from "react-router-dom";
 
 import Management from "./components/Management/Management";
-import DasboardManagement from "./components/Management/DashBoard";
 import Admin from "./components/Management/Admin/Admin";
 import DashBoardAdmin from "./components/Management/Admin/Content/DashBoard";
-import ManageUser from "./components/Management/Admin/Content/ManageUser";
+import ManageDoctor from "./components/Management/Admin/Content/ManageDoctor";
 
 import Doctor from "./components/Management/Doctor/Doctor";
 import DashBoardDoctor from "./components/Management/Doctor/Content/DashBoard";
@@ -22,9 +21,9 @@ import ManageMedicalRecord from "./components/Patient/Profile/ManageMedicalRecor
 import ManageAppointmentSchedule from "./components/Patient/Profile/ManageAppointmentSchedule";
 import HomePage from "./components/Home/HomePage";
 import SpecialistExamination from "./components/Patient/Content/SpecialistExamination";
-import SpecialtyDetail from "./components/Patient/Content/SpecialtyDetail";
+import AllDoctorfromOneSpecialty from "./components/Patient/Content/AllDoctorfromOneSpecialty";
 import Appointment from "./components/Patient/Content/Appointment";
-import DoctorList from "./components/Patient/Content/DoctorList";
+import ProminentDoctorList from "./components/Patient/Content/ProminentDoctorList";
 import MedicalStaffRecord from "./components/Management/MedicalStaffRecord";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,11 +37,14 @@ const Layout = (props) => {
                 <Route path="/" element={<App />}>
                     <Route index element={<HomePage />} />
                     <Route path="/dich-vu-y-te/kham-chuyen-khoa" element={<SpecialistExamination />} />
-                    <Route path="/dich-vu-y-te/kham-chuyen-khoa/detail/:id" element={<SpecialtyDetail />} />
-                    <Route path="/dich-vu-y-te/kham-chuyen-khoa/:id" element={<Appointment />} />
-                    <Route path="/danh-sach/bac-si/noi-bat" element={<DoctorList />}>
-                        <Route path="sets" element={<Appointment />} />
-                    </Route>
+                    <Route
+                        path="/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/:id"
+                        element={<AllDoctorfromOneSpecialty />}
+                    />
+
+                    <Route path="/danh-sach/bac-si/noi-bat" element={<ProminentDoctorList />} />
+                    <Route path="/dich-vu-y-te/kham-chuyen-khoa/bac-si/:id" element={<Appointment />} />
+
                     <Route path="/ho-so" element={<Profile />}>
                         <Route index element={<ManageInformation />} />
                         <Route path="benh-an" element={<ManageMedicalRecord />} />
@@ -50,15 +52,15 @@ const Layout = (props) => {
                     </Route>
                 </Route>
                 <Route path="/quan-ly" element={<Management />}>
+                    <Route path="/quan-ly/thong-tin-ca-nhan" element={<MedicalStaffRecord />} />
                     <Route path="/quan-ly/quan-tri-vien" element={<Admin />}>
                         <Route index element={<DashBoardAdmin />} />
-                        <Route path="manage-user" element={<ManageUser />} />
+                        <Route path="quan-ly-bac-si" element={<ManageDoctor />} />
                     </Route>
                     <Route path="/quan-ly/bac-si" element={<Doctor />}>
                         <Route index element={<DashBoardDoctor />} />
                         <Route path="quan-ly-lich-lam-viec" element={<ManageSchedule />} />
                         <Route path="quan-ly-kham-benh" element={<ManageMedicalAppointment />} />
-                        <Route path="quan-ly-thong-tin-ca-nhan" element={<MedicalStaffRecord />} />
                     </Route>
                     <Route path="/quan-ly/nhan-vien" element={<Staff />}>
                         <Route index element={<ApproveAppointment />} />
