@@ -12,10 +12,7 @@ const MedicalAppointmentScheduleList = (props) => {
     };
     return (
         <div className="medical-appointment-list-container-client">
-            {/* <div className="d-flex align-items-center">
-                    <FaCalendarAlt />
-                    <span>LỊCH KHÁM</span>
-                </div> */}
+            
             <div className="custom-table-for-medical">
                 <table className="table table-bordered table-hover table-medical-custom">
                     <thead>
@@ -44,13 +41,7 @@ const MedicalAppointmentScheduleList = (props) => {
                     </tbody>
                 </table>
             </div>
-            <ModalMedicalAppointment
-                show={show}
-                setShow={setShow}
-                medicalInfo={medicalInfo}
-                //scheduleId={scheduleId}
-                //doctorId={doctorId}
-            />
+            <ModalMedicalAppointment show={show} setShow={setShow} medicalInfo={medicalInfo} getData={props.getData} />
         </div>
     );
 };

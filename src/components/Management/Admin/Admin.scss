@@ -1,8 +1,16 @@
 .admin-container {
     width: 100%;
-    padding: 10px 200px;
-        .admin-main {
-            
+    .admin-header {
+    }
+    .admin-main {
+        padding: 10px 100px;
+        .container-dash-board-admin {
+            padding: 40px 200px;
+            .dash-board-admin-custom {
+                display: flex;
+                gap: 50px;
+                padding-bottom: 100px;
+            }
         }
-    
+    }
 }

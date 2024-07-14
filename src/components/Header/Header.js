@@ -56,7 +56,7 @@ const Header = (props) => {
                         </Form>
                     </Nav>
                     <Nav className="me-auto2">
-                        <NavLink to="/ho-so/lich-hen" className="nav-link">
+                        <NavLink to="/lich-hen" className="nav-link">
                             Lịch hẹn
                         </NavLink>
                         <div onClick={() => setShowQuickCheckUp(true)} className="nav-link quick-check-up-custom">

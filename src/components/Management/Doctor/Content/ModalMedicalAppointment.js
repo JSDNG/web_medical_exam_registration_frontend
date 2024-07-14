@@ -26,14 +26,16 @@ const ModalCreateAppointment = (props) => {
                 statusId: 3,
             },
             medicalRecord: {
-                id: medicalInfo?.MedicalRecords?.id,
+                id: medicalInfo?.MedicalRecord?.id,
                 diagnosis: diagnosis,
                 statusId: 7,
             },
         };
+        console.log(medicalInfo);
         let res = await putExaminingDoctor(data);
         if (res && res.EC === 0) {
             toast.success(res.EM);
+            props.getData();
             handleClose();
         }
         if (res && res.EC !== 0) {

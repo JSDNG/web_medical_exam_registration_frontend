@@ -56,6 +56,10 @@ const putUpdatePatient = (data) => {
 const getAllRelative = (id) => {
     return axios.get(`/api/v1/relative/all?id=${id}`);
 };
+
+const getAllMedicalRecordfromPatient = (patientId, statusId) => {
+    return axios.get(`/api/v1/patient/medical-record/all?patientId=${patientId}&statusId=${statusId}`);
+};
 // staff
 const getAllAppointmentById = (id) => {
     return axios.get(`/api/v1/staff/appointment/all?id=${id}`);
@@ -94,4 +98,5 @@ export {
     putAppointment,
     deleteAppointment,
     getAllDoctorfromSpecialtyById,
+    getAllMedicalRecordfromPatient,
 };

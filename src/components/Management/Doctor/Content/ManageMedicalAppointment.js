@@ -23,22 +23,12 @@ const ManageMedicalAppointment = (props) => {
             console.log("err");
         }
     };
-    console.log(medicalAppointmentList);
     return (
         <div className="medical-appointment-container">
+            <div className="medical-appointment-list-header-manage-custom">
+                <span className="title-custom">LỊCH TRÌNH KHÁM BỆNH CỦA BÁC SĨ</span>
+            </div>
             <div className="medical-appointment-content">
-                {/* <div className="medical-appointment-header">
-                    <div className="custom-img">
-                        <div className="body-content-doctor">
-                            <span className="name-text">
-                                {infoDoctor?.Position?.positionName}, Bác sĩ {infoDoctor?.fullName}
-                            </span>
-                            <span className="description-text">{infoDoctor?.description}</span>
-                            <span className="address-text">{infoDoctor?.address}</span>
-                        </div>
-                    </div>
-                </div> */}
-
                 <div className="medical-appointment-body">
                     <select
                         className="form-select pick-date-medical-appointment-custom"
@@ -53,7 +43,11 @@ const ManageMedicalAppointment = (props) => {
                             ))}
                     </select>
 
-                    <MedicalAppointmentScheduleList medicalAppointmentList={medicalAppointmentList} index={index} />
+                    <MedicalAppointmentScheduleList
+                        medicalAppointmentList={medicalAppointmentList}
+                        index={index}
+                        getData={getData}
+                    />
                 </div>
                 <hr />
                 <div className="appointment-footer"></div>

@@ -1,4 +1,13 @@
 .medical-appointment-container {
+    .medical-appointment-list-header-manage-custom{
+        .title-custom{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 500;
+        }
+    }
     .medical-appointment-content {
         .medical-appointment-body {
             padding-top: 20px;

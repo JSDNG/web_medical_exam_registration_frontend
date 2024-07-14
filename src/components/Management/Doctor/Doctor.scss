@@ -1,9 +1,16 @@
 .doctor-container {
     width: 100%;
     .doctor-header {
-        
     }
     .doctor-main {
         padding: 10px 100px;
+        .container-dash-board-doctor {
+            padding: 40px 200px;
+            .dash-board-doctor-custom {
+                display: flex;
+                gap: 50px;
+                padding-bottom: 100px;
+            }
+        }
     }
 }

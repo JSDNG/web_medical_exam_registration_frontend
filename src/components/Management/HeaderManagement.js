@@ -29,17 +29,24 @@ const Header = (props) => {
     const renderNavDropdown = () => {
         if (account?.role === "Quản trị viên") {
             return (
-                <NavDropdown title="Người dùng" id="basic-nav-dropdown">
-                    <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-bac-si")}>
-                        Bác sĩ
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-nhan-vien")}>
-                        Nhân viên
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-benh-nhan")}>
-                        Bệnh nhân
-                    </NavDropdown.Item>
-                </NavDropdown>
+                <>
+                    <NavDropdown title="Người dùng" id="basic-nav-dropdown">
+                        <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-bac-si")}>
+                            Bác sĩ
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-nhan-vien")}>
+                            Nhân viên
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-benh-nhan")}>
+                            Bệnh nhân
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                    <NavDropdown
+                        title="Khác"
+                        id="basic-nav-dropdown"
+                        onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-chuyen-khoa")}
+                    ></NavDropdown>
+                </>
             );
         } else if (account?.role === "Bác sĩ") {
             return (
@@ -64,7 +71,10 @@ const Header = (props) => {
                 <Navbar.Collapse id="basic-navbar-nav" className="custom-collapse-manage">
                     <Nav className="me-auto">{renderNavDropdown()}</Nav>
                     <Nav className="ms-auto custom-header-mamage">
-                        <Nav className="nav-link nav-link-custom" onClick={() => navigate("/quan-ly/thong-tin-ca-nhan")}>
+                        <Nav
+                            className="nav-link nav-link-custom"
+                            onClick={() => navigate("/quan-ly/thong-tin-ca-nhan")}
+                        >
                             {account?.user?.fullName}
                         </Nav>
                         <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
