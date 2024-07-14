@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./ScheduleList.scss";
 const ScheduleList = (props) => {
-    const { scheduleList, index, infoDoctor } = props;
+    const { scheduleList, dateList, index, doctorInfor } = props;
     const [showAppointment, setShowAppointment] = useState(false);
     const [scheduleId, setScheduleId] = useState("");
-    const handleOnClickTime = (id) => {
+    const [time, setTime] = useState("");
+    const handleOnClickTime = (id, time) => {
         setShowAppointment(true);
         setScheduleId(id);
+        setTime(time);
     };
     return (
         <div className="schedule-container-client">
@@ -25,7 +27,7 @@ const ScheduleList = (props) => {
                                 <button
                                     key={`${index}-s`}
                                     className="btn btn-light btn-click-pick-time-custom"
-                                    onClick={() => handleOnClickTime(item?.id)}
+                                    onClick={() => handleOnClickTime(item?.id, item?.timeId?.time)}
                                 >
                                     {item?.timeId?.time}
                                 </button>
@@ -36,18 +38,22 @@ const ScheduleList = (props) => {
                 <ModalCreateAppointment
                     showAppointment={showAppointment}
                     setShowAppointment={setShowAppointment}
-                    specialties={infoDoctor?.Specialties}
+                    specialties={doctorInfor?.Specialties}
                     scheduleId={scheduleId}
-                    doctorId={infoDoctor?.id}
+                    doctorId={doctorInfor?.id}
                     getData={props.getData}
+                    doctorInfor={doctorInfor}
+                    time={time}
+                    dateList={dateList}
+                    index={index}
                 />
             </div>
             <div className="vertical-separator"></div>
             <div className="custom-extra">
                 <span>ĐỊA CHỈ KHÁM</span>
-                <span>{infoDoctor?.address}</span>
+                <span>{doctorInfor?.address}</span>
                 <hr />
-                <span>GIÁ KHÁM: {infoDoctor?.price}</span>
+                <span>GIÁ KHÁM: {doctorInfor?.price}</span>
             </div>
         </div>
     );

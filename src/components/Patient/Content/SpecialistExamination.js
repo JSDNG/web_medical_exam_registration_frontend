@@ -31,7 +31,7 @@ const SpecialistExamination = (props) => {
                         return (
                             <>
                                 <div
-                                    key={index}
+                                    key={`${index}-1`}
                                     className="detail-specialty-custom"
                                     onClick={() =>
                                         navigate(`/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/${item.id}`)

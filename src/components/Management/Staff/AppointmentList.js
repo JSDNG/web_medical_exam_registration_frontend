@@ -1,21 +1,10 @@
-//import "./AppointmentList.scss";
-import { useNavigate } from "react-router-dom";
-//import ModalCreactSchedule from "./ModalCreateSchedule";
 import { useState, useEffect } from "react";
-//import { getAllSchedule } from "../../../../services/apiService";
 import { getAllAppointmentById } from "../../../services/apiService";
-import { useDispatch, useSelector } from "react-redux";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+import ModalSendMail from "./ModalSendMail";
 const AppointmentList = (props) => {
     const [show, setShow] = useState(false);
     const [appointmentList, setAppointmentList] = useState([]);
-    const [startDate, setStartDate] = useState(new Date());
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
-    const account = useSelector((state) => state?.user?.account);
+    const [data, setData] = useState({});
     useEffect(() => {
         getData();
     }, []);
@@ -24,6 +13,10 @@ const AppointmentList = (props) => {
         if (res && res.EC === 0) {
             setAppointmentList(res.DT);
         }
+    };
+    const handleClick = (data) => {
+        setShow(true);
+        setData(data);
     };
     return (
         <div className="approve-appointment-container-manage-custom">
@@ -48,7 +41,7 @@ const AppointmentList = (props) => {
                             appointmentList.length > 0 &&
                             appointmentList.map((item, index) => {
                                 return (
-                                    <tr key={index} onClick={() => setShow(true)}>
+                                    <tr key={index} onClick={() => handleClick(item)}>
                                         <td>{index + 1}</td>
                                         <td>{item?.appointmentNumber}</td>
                                         <td>{item?.MedicalRecord?.specialtyMR}</td>
@@ -69,6 +62,7 @@ const AppointmentList = (props) => {
                         )}
                     </tbody>
                 </table>
+                <ModalSendMail show={show} setShow={setShow} data={data} />
             </div>
         </div>
     );

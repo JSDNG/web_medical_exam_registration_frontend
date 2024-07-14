@@ -23,9 +23,6 @@ const AllDoctorfromOneSpecialty = (props) => {
             console.log("err");
         }
     };
-    console.log(id);
-    console.log(doctorList);
-    console.log(specialtyDetail);
     return (
         <div className="prominent-doctor-list-container-client-custom">
             <div className="custom-link-header">

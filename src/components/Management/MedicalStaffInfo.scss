@@ -1,0 +1,32 @@
+.medical-staff-info-container-custom {
+    .medical-staff-info-body-custom {
+        padding-left: 50px;
+        .label-title-custom {
+            padding-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 500;
+        }
+    }
+}
+
+.modal-add-user {
+    .lbl-upload-image {
+        padding: 5px;
+        border-radius: 3px;
+        background: rgb(230, 229, 229);
+        cursor: pointer;
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+    .preview-img {
+        height: 150px;
+        width: 150px;
+        border: 1px solid royalblue;
+        background: center center no-repeat;
+        background-size: contain;
+    }
+}

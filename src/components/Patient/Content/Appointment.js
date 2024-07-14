@@ -11,14 +11,14 @@ const Appointment = (props) => {
     const [index, setIndex] = useState(0);
     const [scheduleList, setScheduleList] = useState([]);
     const [dateList, setDateList] = useState([]);
-    const [infoDoctor, setInfoDoctor] = useState({});
+    const [doctorInfor, setDoctorInfor] = useState({});
     const params = useParams();
     const navigate = useNavigate();
     const location = useLocation();
     const id = params.id;
 
     useEffect(() => {
-        setInfoDoctor(location?.state?.data);
+        setDoctorInfor(location?.state?.data);
         getData();
     }, [id]);
     const getData = async () => {
@@ -49,14 +49,14 @@ const Appointment = (props) => {
                 </div>
                 <div className="appointment-header">
                     <div className="custom-img">
-                        <img src={`data:image/jpeg;base64,${infoDoctor?.image}`} className="img-top" alt="..." />
+                        <img src={`data:image/jpeg;base64,${doctorInfor?.image}`} className="img-top" alt="..." />
 
                         <div className="body-content-doctor">
                             <span className="name-text">
-                                {infoDoctor?.Position?.positionName}, Bác sĩ {infoDoctor?.fullName}
+                                {doctorInfor?.Position?.positionName}, Bác sĩ {doctorInfor?.fullName}
                             </span>
-                            <span className="description-text">{infoDoctor?.description}</span>
-                            <span className="address-text">{infoDoctor?.address}</span>
+                            <span className="description-text">{doctorInfor?.description}</span>
+                            <span className="address-text">{doctorInfor?.address}</span>
                         </div>
                     </div>
                 </div>
@@ -75,13 +75,13 @@ const Appointment = (props) => {
                             ))}
                     </select>
 
-                    <ScheduleList scheduleList={scheduleList} index={index} infoDoctor={infoDoctor} getData={getData} />
+                    <ScheduleList scheduleList={scheduleList} dateList={dateList} index={index} doctorInfor={doctorInfor} getData={getData} />
                 </div>
                 <hr />
                 <div className="appointment-footer">
                     <span>Mô tả</span>
                     <div>
-                        <span>{infoDoctor?.description}</span>
+                        <span>{doctorInfor?.description}</span>
                     </div>
                 </div>
             </div>

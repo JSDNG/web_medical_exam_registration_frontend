@@ -64,7 +64,7 @@ const ModalQuickCheckUp = (props) => {
             setAddress(relativeList?.[0]?.address);
             setGender(relativeList?.[0]?.gender);
             setPhone(relativeList?.[0]?.phone);
-            setDateOfBirth(relativeList?.[0]?.dateOfBirth);
+            //setDateOfBirth(relativeList?.[0]?.dateOfBirth);
             setSpecialtyId(specialtyList?.[0]?.id);
             setMedicalHistory("");
             setReason("");
@@ -112,7 +112,24 @@ const ModalQuickCheckUp = (props) => {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             );
     };
+    const handleChangeDob = (dob) => {
+        // Remove all non-digit characters
+        dob = dob.replace(/\D/g, "");
 
+        // Format the date as YYYY-MM-DD
+        if (dob.length > 4) {
+            dob = dob.slice(0, 4) + "-" + dob.slice(4);
+        }
+        if (dob.length > 7) {
+            dob = dob.slice(0, 7) + "-" + dob.slice(7);
+        }
+
+        // Limit to 10 characters (YYYY-MM-DD)
+        if (dob.length > 10) {
+            dob = dob.slice(0, 10);
+        }
+        setDateOfBirth(dob);
+    };
     const handleSubmitCreactUser = async () => {
         if (!fullName || !phone || !gender || !address || !reason) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
@@ -270,12 +287,12 @@ const ModalQuickCheckUp = (props) => {
                             </select>
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">ngày sinh ("YYYY-MM-DD")</label>
+                            <label className="form-label">Ngày sinh ("YYYY-MM-DD")</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 value={dateOfBirth}
-                                onChange={(event) => setDateOfBirth(event.target.value)}
+                                onChange={(event) => handleChangeDob(event.target.value)}
                                 placeholder="Ví dụ: 2000-01-01"
                             />
                         </div>

@@ -15,6 +15,9 @@ const logout = (email, refresh_token) => {
 const getAllTime = () => {
     return axios.get(`/api/v1/admin/time/all`);
 };
+const getAllPosition = () => {
+    return axios.get(`/api/v1/admin/position/all`);
+};
 const getAllSpecialty = () => {
     return axios.get(`/api/v1/admin/specialty/all`);
 };
@@ -77,12 +80,17 @@ const getAllDoctorfromSpecialtyById = (id) => {
     return axios.get(`/api/v1/all-doctor/specialty-by-id?id=${id}`);
 };
 
+const putMedicalStaff = (data) => {
+    return axios.put(`/api/v1/medical-staff`, { ...data });
+};
+
 export {
     getUserWithPage,
     postLogin,
     postRegister,
     logout,
     getAllTime,
+    getAllPosition,
     getAllSpecialty,
     getAllDoctor,
     postCreateSchedule,
@@ -99,4 +107,5 @@ export {
     deleteAppointment,
     getAllDoctorfromSpecialtyById,
     getAllMedicalRecordfromPatient,
+    putMedicalStaff,
 };

@@ -6,7 +6,17 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { postCreateAppointment, putUpdatePatient, getAllRelative } from "../../../services/apiService";
 const ModalCreateAppointment = (props) => {
-    const { showAppointment, setShowAppointment, specialties, scheduleId, doctorId } = props;
+    const {
+        showAppointment,
+        setShowAppointment,
+        specialties,
+        scheduleId,
+        doctorId,
+        doctorInfor,
+        time,
+        dateList,
+        index,
+    } = props;
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
@@ -61,7 +71,7 @@ const ModalCreateAppointment = (props) => {
             setGender(relativeList?.[0]?.gender);
             setPhone(relativeList?.[0]?.phone);
             setDateOfBirth(relativeList?.[0]?.dateOfBirth);
-            setSpecialtyId(specialties?.[0]?.id);
+            //setSpecialtyId(specialties?.[0]?.id);
             setMedicalHistory("");
             setReason("");
         }
@@ -103,7 +113,24 @@ const ModalCreateAppointment = (props) => {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             );
     };
+    const handleChangeDob = (dob) => {
+        // Remove all non-digit characters
+        dob = dob.replace(/\D/g, "");
 
+        // Format the date as YYYY-MM-DD
+        if (dob.length > 4) {
+            dob = dob.slice(0, 4) + "-" + dob.slice(4);
+        }
+        if (dob.length > 7) {
+            dob = dob.slice(0, 7) + "-" + dob.slice(7);
+        }
+
+        // Limit to 10 characters (YYYY-MM-DD)
+        if (dob.length > 10) {
+            dob = dob.slice(0, 10);
+        }
+        setDateOfBirth(dob);
+    };
     const handleSubmitCreactUser = async () => {
         if (!fullName || !phone || !gender || !address || !reason) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
@@ -168,40 +195,27 @@ const ModalCreateAppointment = (props) => {
                 animation={false}
                 size="xl"
                 backdrop="static"
-                className="modal-add-user"
+                className="modal-add-appointment"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Đặt lịch khám</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
-                        <div className="col-md-6 offset-md-3">
-                            <select className="form-select" onChange={handleChange}>
-                                <option value={true}>Đặt cho mình</option>
-                                <option value={false}>Đặt cho người thân</option>
-                            </select>
-                        </div>
-                        {status === true ? (
-                            <></>
-                        ) : (
-                            <div className="col-md-6 offset-md-3">
-                                <select
-                                    className="form-select pick-date-medical-appointment-custom"
-                                    onChange={handleRelativeInfo}
-                                >
-                                    {relativeList &&
-                                        relativeList.length > 0 &&
-                                        relativeList.map((item, index) => (
-                                            <option key={`${index}-ma`} value={JSON.stringify(item)}>
-                                                {item?.fullName}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        )}
-                        <div className="col-md-6 offset-md-3">
-                            <label className="form-label">Chuyên khoa</label>
+                        <div className="custom-img-modal-appointment">
+                            <img src={`data:image/jpeg;base64,${doctorInfor?.image}`} className="img-top" alt="..." />
 
+                            <div className="body-content-doctor">
+                                <span className="name-text">
+                                    {doctorInfor?.Position?.positionName}, Bác sĩ {doctorInfor?.fullName}
+                                </span>
+                                <span className="time-text">
+                                    {time} {dateList?.[index]}
+                                </span>
+                                <span>Giá khám: {doctorInfor?.price} đ</span>
+                            </div>
+                        </div>
+                        <div className="col-md-12 div-appointment-booking-custom">
                             <select
                                 className="form-select"
                                 onChange={(event) => setSpecialtyId(event.target.value)}
@@ -216,6 +230,30 @@ const ModalCreateAppointment = (props) => {
                                     ))}
                             </select>
                         </div>
+                        <div className="col-md-12 div-appointment-booking-custom">
+                            <select className="form-select" onChange={handleChange}>
+                                <option value={true}>Đặt cho mình</option>
+                                <option value={false}>Đặt cho người thân</option>
+                            </select>
+                        </div>
+                        {status === true ? (
+                            <></>
+                        ) : (
+                            <div className="col-md-6 div-appointment-booking-custom">
+                                <select
+                                    className="form-select pick-date-medical-appointment-custom"
+                                    onChange={handleRelativeInfo}
+                                >
+                                    {relativeList &&
+                                        relativeList.length > 0 &&
+                                        relativeList.map((item, index) => (
+                                            <option key={`${index}-ma`} value={JSON.stringify(item)}>
+                                                {item?.fullName}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                        )}
 
                         <div className="col-md-6">
                             <label className="form-label">Họ tên bệnh nhân (bắt buộc)</label>
@@ -265,12 +303,12 @@ const ModalCreateAppointment = (props) => {
                             </select>
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">ngày sinh ("YYYY-MM-DD")</label>
+                            <label className="form-label">Ngày sinh ("YYYY-MM-DD")</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 value={dateOfBirth}
-                                onChange={(event) => setDateOfBirth(event.target.value)}
+                                onChange={(event) => handleChangeDob(event.target.value)}
                                 placeholder="Ví dụ: 2000-01-01"
                             />
                         </div>

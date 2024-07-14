@@ -22,12 +22,35 @@
         }
     }
     .vertical-separator {
-        width: 1px; 
-        background-color: #ccc; 
+        width: 1px;
+        background-color: #ccc;
     }
     .custom-extra {
         display: flex;
         flex-direction: column;
         padding: 0px 10px;
+    }
+}
+
+.modal-add-appointment {
+    .div-appointment-booking-custom {
+        width: 365px;
+    }
+    .custom-img-modal-appointment {
+        display: flex;
+        gap: 15px;
+        .img-top {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .body-content-doctor {
+            display: flex;
+            flex-direction: column;
+            .name-text {
+                font-size: 19px;
+                font-weight: 500;
+            }
+        }
     }
 }
