@@ -31,6 +31,7 @@ const AppointmentListPatient = (props) => {
                             <th>Lịch sử bệnh án</th>
                             <th>Lí do khám</th>
                             <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
                             <th>Ngày</th>
                             <th>Thời gian</th>
                         </tr>
@@ -48,6 +49,7 @@ const AppointmentListPatient = (props) => {
                                         <td>{item?.medicalHistory}</td>
                                         <td>{item?.reason}</td>
                                         <td>{item?.Patient?.phone}</td>
+                                        <td>{item?.statusMR}</td>
                                         <td>{item?.date}</td>
                                         <td>{item?.time}</td>
                                     </tr>

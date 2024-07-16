@@ -18,9 +18,17 @@ const getAllTime = () => {
 const getAllPosition = () => {
     return axios.get(`/api/v1/admin/position/all`);
 };
+
 const getAllSpecialty = () => {
     return axios.get(`/api/v1/admin/specialty/all`);
 };
+const postSpecialty = (data) => {
+    return axios.post(`/api/v1/admin/specialty`, { ...data });
+};
+const putSpecialty = (data) => {
+    return axios.put(`/api/v1/admin/specialty`, { ...data });
+};
+
 const getAllDoctor = (data) => {
     return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
 };
@@ -92,6 +100,8 @@ export {
     getAllTime,
     getAllPosition,
     getAllSpecialty,
+    postSpecialty,
+    putSpecialty,
     getAllDoctor,
     postCreateSchedule,
     getAllSchedule,

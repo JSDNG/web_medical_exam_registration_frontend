@@ -37,6 +37,9 @@ const AllDoctorfromOneSpecialty = (props) => {
                 <span className="doctor-specialty-name-custom">
                     Bác sĩ chuyên khoa {specialtyDetail?.specialtyName}
                 </span>
+                <span className="span-specialty-custom">
+                    Mô tả: {specialtyDetail?.description}
+                </span>
             </div>
             <div className="prominent-doctor-list-body-client">
                 {doctorList &&

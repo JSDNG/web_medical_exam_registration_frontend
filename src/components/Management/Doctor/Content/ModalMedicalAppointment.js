@@ -50,7 +50,7 @@ const ModalCreateAppointment = (props) => {
                 animation={false}
                 size="md"
                 backdrop="static"
-                className="modal-add-user"
+                className="modal-medical-appointment"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Khám bệnh</Modal.Title>

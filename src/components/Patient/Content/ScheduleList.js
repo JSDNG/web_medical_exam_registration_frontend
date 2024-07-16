@@ -53,7 +53,7 @@ const ScheduleList = (props) => {
                 <span>ĐỊA CHỈ KHÁM</span>
                 <span>{doctorInfor?.address}</span>
                 <hr />
-                <span>GIÁ KHÁM: {doctorInfor?.price}</span>
+                <span>GIÁ KHÁM: {doctorInfor?.price} đ</span>
             </div>
         </div>
     );

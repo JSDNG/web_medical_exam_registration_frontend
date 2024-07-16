@@ -93,7 +93,15 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             // console.log(base64);
         }
     };
+    const handleChangePhone = (phone) => {
+        // Xóa tất cả các ký tự không phải là số
+        const cleanedValue = phone.replace(/[^0-9]/g, "");
 
+        // Giới hạn số ký tự nhập vào là 10
+        if (cleanedValue.length <= 10) {
+            setPhone(cleanedValue);
+        }
+    };
     const handleSubmitUpdate = async () => {
         if (!fullName || !phone || !gender || !address || !price) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
@@ -107,7 +115,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
         let data = {
             id: account?.user?.id,
             fullName: fullName,
-            image: imageBase64.replace("data:image/jpeg;base64,", ""),
+            image: imageBase64.replace("data:image/png;base64,", ""),
             dateOfBirth: dateOfBirth,
             gender: gender,
             phone: phone,
@@ -201,7 +209,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                                 type="text"
                                 className="form-control"
                                 value={phone}
-                                onChange={(event) => setPhone(event.target.value)}
+                                onChange={(event) => handleChangePhone(event.target.value)}
                             />
                         </div>
                         {/* <div className="col-md-6">

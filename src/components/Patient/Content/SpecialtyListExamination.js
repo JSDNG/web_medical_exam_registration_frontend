@@ -1,9 +1,9 @@
-import "./SpecialistExamination.scss";
+import "./SpecialtyListExamination.scss";
 import { useNavigate } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
 import { getAllSpecialty } from "../../../services/apiService";
 import { useState, useEffect } from "react";
-const SpecialistExamination = (props) => {
+const SpecialtyListExamination = (props) => {
     const navigate = useNavigate();
     const [specialtyList, setSpecialtyList] = useState([]);
     useEffect(() => {
@@ -58,4 +58,4 @@ const SpecialistExamination = (props) => {
     );
 };
 
-export default SpecialistExamination;
+export default SpecialtyListExamination;

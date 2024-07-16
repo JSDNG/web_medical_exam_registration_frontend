@@ -5,6 +5,7 @@ import Management from "./components/Management/Management";
 import Admin from "./components/Management/Admin/Admin";
 import DashBoardAdmin from "./components/Management/Admin/Content/DashBoard";
 import ManageDoctor from "./components/Management/Admin/Content/ManageDoctor";
+import ManageSpecialtyList from "./components/Management/Admin/Content/ManageSpecialtyList";
 
 import Doctor from "./components/Management/Doctor/Doctor";
 import DashBoardDoctor from "./components/Management/Doctor/Content/DashBoard";
@@ -25,7 +26,7 @@ import AppointmentListPatient from "./components/Patient/AppointmentHistory/Appo
 import AppointmentListRelative from "./components/Patient/AppointmentHistory/AppointmentListRelative";
 
 import HomePage from "./components/Home/HomePage";
-import SpecialistExamination from "./components/Patient/Content/SpecialistExamination";
+import SpecialtyListExamination from "./components/Patient/Content/SpecialtyListExamination";
 import AllDoctorfromOneSpecialty from "./components/Patient/Content/AllDoctorfromOneSpecialty";
 import Appointment from "./components/Patient/Content/Appointment";
 import ProminentDoctorList from "./components/Patient/Content/ProminentDoctorList";
@@ -41,7 +42,7 @@ const Layout = (props) => {
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<HomePage />} />
-                    <Route path="/dich-vu-y-te/kham-chuyen-khoa" element={<SpecialistExamination />} />
+                    <Route path="/dich-vu-y-te/kham-chuyen-khoa" element={<SpecialtyListExamination />} />
                     <Route
                         path="/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/:id"
                         element={<AllDoctorfromOneSpecialty />}
@@ -66,6 +67,7 @@ const Layout = (props) => {
                     <Route path="/quan-ly/quan-tri-vien" element={<Admin />}>
                         <Route index element={<DashBoardAdmin />} />
                         <Route path="quan-ly-bac-si" element={<ManageDoctor />} />
+                        <Route path="quan-ly-chuyen-khoa" element={<ManageSpecialtyList />} />
                     </Route>
 
                     <Route path="/quan-ly/bac-si" element={<Doctor />}>
