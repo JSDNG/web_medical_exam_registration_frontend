@@ -9,7 +9,7 @@ const TableDoctor = (props) => {
                         <th scope="col">Họ tên</th>
                         <th scope="col">Email</th>
                         <th scope="col">Số điện thoại</th>
-                        <th width="257px">Action</th>
+                        {/* <th width="257px">Action</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +22,7 @@ const TableDoctor = (props) => {
                                     <td>{item.fullName}</td>
                                     <td>{item.Account.email}</td>
                                     <td>{item.phone}</td>
-                                    <td>
+                                    {/* <td>
                                         <button className="btn btn-success">View</button>
                                         <button
                                             className="btn btn-danger"
@@ -30,13 +30,13 @@ const TableDoctor = (props) => {
                                         >
                                             Delete
                                         </button>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             );
                         })}
                     {doctorList && doctorList.length === 0 && (
                         <tr>
-                            <td colSpan={"4"}>Not found data</td>
+                            <td colSpan={"5"}>Not found data</td>
                         </tr>
                     )}
                 </tbody>

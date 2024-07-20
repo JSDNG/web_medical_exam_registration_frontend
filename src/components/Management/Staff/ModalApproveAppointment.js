@@ -3,6 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { putAppointment, deleteAppointment } from "../../../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
+import { CgCalendarDates } from "react-icons/cg";
+import { BiHourglass } from "react-icons/bi";
+import { FaTransgender } from "react-icons/fa";
+import { MdLocalPhone } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { IoPersonSharp } from "react-icons/io5";
+import { FaStethoscope } from "react-icons/fa";
 const ModalApproveAppointment = (props) => {
     const { show, setShow, data } = props;
     const account = useSelector((state) => state?.user?.account);
@@ -23,7 +31,7 @@ const ModalApproveAppointment = (props) => {
             if (res && res.EC !== 0) {
                 toast.error(res.EM);
             }
-        } else {
+        } else if (status === "approve") {
             let res = await putAppointment({
                 id: data?.id,
                 statusId: 2,
@@ -50,52 +58,60 @@ const ModalApproveAppointment = (props) => {
                 className="modal-add-user"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Đặt lịch khám nhanh trong ngày</Modal.Title>
+                    <Modal.Title>Phê duyệt lịch khám bệnh</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
                         <div className="row">
-                            <label className="offset-md-3">Thông tin lịch khám bệnh</label>
+                            <label className="offset-md-3" style={{ fontSize: "18px" }}>
+                                Thông tin lịch khám bệnh
+                            </label>
                             <div className="col-md-6 ">
-                                <span className="form-label">Chuyên khoa: {data?.MedicalRecord?.specialtyMR}</span>
+                                <FaStethoscope />
+                                <span className="form-label"> {data?.MedicalRecord?.specialtyMR}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Số thứ tự khám: {data?.appointmentNumber}</span>
+                                <span className="form-label">Số thứ tự: {data?.appointmentNumber}</span>
                             </div>
                             <div className="col-md-6 ">
-                                <span className="form-label">Ngày khám: {data?.date}</span>
+                                <CgCalendarDates />
+                                <span className="form-label"> {data?.date}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Giờ khám: {data?.time}</span>
+                                <BiHourglass />
+                                <span className="form-label"> {data?.time}</span>
                             </div>
                         </div>
                         <div className="row">
-                            <label className="offset-md-3">Thông tin bệnh nhân</label>
+                            <label className="offset-md-3" style={{ fontSize: "18px" }}>
+                                Thông tin bệnh nhân
+                            </label>
                             <div className="col-md-6">
-                                <span className="form-label">Họ tên bệnh nhân: {data?.Patient?.fullName}</span>
+                                <IoPersonSharp />
+                                <span className="form-label"> {data?.Patient?.fullName}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Số điện thoại: {data?.Patient?.phone}</span>
+                                <MdLocalPhone />
+                                <span className="form-label"> {data?.Patient?.phone}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Email: {data?.Patient?.email}</span>
+                                <MdOutlineMarkEmailRead />
+                                <span className="form-label"> {data?.Patient?.email}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Giới tính: {data?.Patient?.gender}</span>
+                                <FaTransgender />
+                                <span className="form-label"> {data?.Patient?.gender}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Ngày sinh: {data?.Patient?.dateOfBirth}</span>
+                                <CgCalendarDates />
+                                <span className="form-label"> {data?.Patient?.dateOfBirth}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Địa chỉ: {data?.Patient?.address} </span>
+                                <FaHome />
+                                <span className="form-label"> {data?.Patient?.address} </span>
                             </div>
                             <div className="col-md-6">
                                 <span className="form-label">Lí do khám: {data?.MedicalRecord?.reason} </span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">
-                                    Lịch sử bệnh án: {data?.MedicalRecord?.medicalHistory}
-                                </span>
                             </div>
                         </div>
                     </form>

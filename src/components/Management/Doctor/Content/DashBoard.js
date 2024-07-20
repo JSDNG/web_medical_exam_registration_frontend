@@ -48,7 +48,7 @@ const DashBoard = (props) => {
                             </p>
                             <button
                                 className="btn btn-primary"
-                                onClick={() => navigate("/quan-ly/bac-si/quan-ly-kham-benh")}
+                                onClick={() => navigate("/quan-ly/bac-si/danh-sach-benh-an-da-kham")}
                             >
                                 Go somewhere
                             </button>

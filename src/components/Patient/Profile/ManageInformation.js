@@ -28,9 +28,9 @@ const ManageInformation = (props) => {
                 <div className="col-md-6">
                     <span className="form-label">Địa chỉ: {account?.user?.address} </span>
                 </div>
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                     <button className="btn btn-primary ">Cập nhật thông tin </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

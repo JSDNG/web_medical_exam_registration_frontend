@@ -16,8 +16,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
     const [fullName, setFullName] = useState(account?.user?.fullName);
     const [gender, setGender] = useState(account?.user?.gender);
     const [phone, setPhone] = useState(account?.user?.phone);
-    const [dateOfBirth, setDateOfBirth] = useState(account?.user?.dateOfBirth);
-    const [address, setAddress] = useState(account?.user?.address);
     const [price, setPrice] = useState(account?.user?.price);
 
     const [description, setDescription] = useState(account?.user?.description);
@@ -41,24 +39,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
         if (resSpecialty && resSpecialty.EC !== 0) {
             console.log("err");
         }
-    };
-    const handleChange = (dob) => {
-        // Remove all non-digit characters
-        dob = dob.replace(/\D/g, "");
-
-        // Format the date as YYYY-MM-DD
-        if (dob.length > 4) {
-            dob = dob.slice(0, 4) + "-" + dob.slice(4);
-        }
-        if (dob.length > 7) {
-            dob = dob.slice(0, 7) + "-" + dob.slice(7);
-        }
-
-        // Limit to 10 characters (YYYY-MM-DD)
-        if (dob.length > 10) {
-            dob = dob.slice(0, 10);
-        }
-        setDateOfBirth(dob);
     };
     const formatNumber = (value) => {
         // Remove all non-digit characters
@@ -103,25 +83,18 @@ const ModalUpdateMedicalStaffInfo = (props) => {
         }
     };
     const handleSubmitUpdate = async () => {
-        if (!fullName || !phone || !gender || !address || !price) {
+        if (!fullName || !phone || !gender || !price) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
-            return;
-        }
-        let format = moment(dateOfBirth, "YYYY-MM-DD", true).isValid();
-        if (!format) {
-            toast.error("Vui lòng điền ngày sinh hợp lệ!");
             return;
         }
         let data = {
             id: account?.user?.id,
             fullName: fullName,
             image: imageBase64.replace("data:image/png;base64,", ""),
-            dateOfBirth: dateOfBirth,
             gender: gender,
             phone: phone,
             description: description,
             price: price,
-            address: address,
             positionId: positionId,
             //specialtyId: specialtyId,
             //specialty: [3, 4],
@@ -226,28 +199,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                                 placeholder="Ví dụ: 300.000 đ"
                             />
                         </div>
-                        <div className="col-md-6 d-flex flex-column gap-4">
-                            <div>
-                                <label className="form-label">Ngày sinh ("YYYY-MM-DD")</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={dateOfBirth}
-                                    onChange={(event) => handleChange(event.target.value)}
-                                    placeholder="Ví dụ: 2000-01-01"
-                                />
-                            </div>
-                            <div>
-                                <label className="form-label">Địa chỉ</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={address}
-                                    onChange={(event) => setAddress(event.target.value)}
-                                />
-                            </div>
-                        </div>
-
                         <div className="col-md-6">
                             <input id="previewImg" type="file" hidden onChange={(event) => handleOnchangeImg(event)} />
                             <MdFileUpload />

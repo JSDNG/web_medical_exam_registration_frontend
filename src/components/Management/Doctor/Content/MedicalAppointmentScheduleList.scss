@@ -7,7 +7,29 @@
 }
 
 .modal-medical-appointment {
+    .modal-body-custom {
+        padding-left: 40px !important;
+    }
     textarea.form-control {
         height: 150px;
+    }
+}
+
+.modal-prescription {
+    .prescription-main-container {
+        .prescriptions-content {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding-bottom: 10px;
+            .card-prescription-custom {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .prescription-price-custom {
+                width: 300px;
+            }
+        }
     }
 }

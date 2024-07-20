@@ -12,5 +12,17 @@
                 padding-bottom: 100px;
             }
         }
+        .medical-record-list-container-manage-custom {
+            .medical-record-list-header-manage-custom {
+                .title-custom {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 25px;
+                    font-weight: 500;
+                    padding-bottom: 10px;
+                }
+            }
+        }
     }
 }

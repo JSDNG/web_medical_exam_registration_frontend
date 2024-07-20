@@ -51,7 +51,7 @@ const ScheduleList = (props) => {
             <div className="vertical-separator"></div>
             <div className="custom-extra">
                 <span>ĐỊA CHỈ KHÁM</span>
-                <span>{doctorInfor?.address}</span>
+                <span>97 Man Thiện, phường Hiệp Phú, TP. Thủ Đức</span>
                 <hr />
                 <span>GIÁ KHÁM: {doctorInfor?.price} đ</span>
             </div>

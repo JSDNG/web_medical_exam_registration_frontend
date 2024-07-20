@@ -42,14 +42,12 @@ const ManageMedicalAppointment = (props) => {
                                 </option>
                             ))}
                     </select>
-
-                    <MedicalAppointmentScheduleList
-                        medicalAppointmentList={medicalAppointmentList}
-                        index={index}
-                        getData={getData}
-                    />
                 </div>
-                <hr />
+                <MedicalAppointmentScheduleList
+                    medicalAppointmentList={medicalAppointmentList}
+                    index={index}
+                    getData={getData}
+                />
                 <div className="appointment-footer"></div>
             </div>
         </div>

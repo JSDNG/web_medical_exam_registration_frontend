@@ -1,8 +1,5 @@
 import "./Staff.scss";
-import { FaBars } from "react-icons/fa";
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../HeaderManagement";
 import HeaderStaff from "./HeaderStaff";
 const Staff = (props) => {
     return (

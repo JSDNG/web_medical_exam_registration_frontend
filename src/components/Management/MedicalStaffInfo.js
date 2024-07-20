@@ -31,12 +31,6 @@ const MedicalStaffInfo = (props) => {
                 <div className="col-md-6">
                     <span className="form-label">Giá khám: {account?.user?.price} đ</span>
                 </div>
-                <div className="col-md-6">
-                    <span className="form-label">Ngày sinh: {account?.user?.dateOfBirth}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Địa chỉ: {account?.user?.address} </span>
-                </div>
                 <div className="col-md-12">
                     <button className="btn btn-primary" onClick={() => setShow(true)}>
                         Cập nhật thông tin

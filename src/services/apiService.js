@@ -18,7 +18,7 @@ const getAllTime = () => {
 const getAllPosition = () => {
     return axios.get(`/api/v1/admin/position/all`);
 };
-
+// specialty
 const getAllSpecialty = () => {
     return axios.get(`/api/v1/admin/specialty/all`);
 };
@@ -28,10 +28,23 @@ const postSpecialty = (data) => {
 const putSpecialty = (data) => {
     return axios.put(`/api/v1/admin/specialty`, { ...data });
 };
-
+// medication
+const getAllMedication = () => {
+    return axios.get(`/api/v1/admin/medication/all`);
+};
+const postMedication = (data) => {
+    return axios.post(`/api/v1/admin/medication`, { ...data });
+};
+const putMedication = (data) => {
+    return axios.put(`/api/v1/admin/medication`, { ...data });
+};
 const getAllDoctor = (data) => {
     return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
 };
+const getListOfFamousDoctors = (data) => {
+    return axios.get(`/api/v1/admin/list-of-famous-doctors`);
+};
+
 // Doctor
 const getAllAppointmentFromDoctor = (id) => {
     return axios.get(`/api/v1/doctor/appointment-from-one-doctor/all?id=${id}`);
@@ -78,14 +91,13 @@ const getAllAppointmentById = (id) => {
 const putAppointment = (data) => {
     return axios.put(`/api/v1/staff/appointment`, { ...data });
 };
-const deleteAppointment = (data) => {
-    console.log(data);
-    return axios.delete(`/api/v1/staff/delete/medical-record/appointment/${data}`);
+const deleteAppointment = (id) => {
+    return axios.delete(`/api/v1/staff/appointment/${id}`);
 };
 
 // specialty
 const getAllDoctorfromSpecialtyById = (id) => {
-    return axios.get(`/api/v1/all-doctor/specialty-by-id?id=${id}`);
+    return axios.get(`/api/v1/admin/all-doctor-specialty-by-id?id=${id}`);
 };
 
 const putMedicalStaff = (data) => {
@@ -118,4 +130,8 @@ export {
     getAllDoctorfromSpecialtyById,
     getAllMedicalRecordfromPatient,
     putMedicalStaff,
+    getListOfFamousDoctors,
+    getAllMedication,
+    postMedication,
+    putMedication,
 };

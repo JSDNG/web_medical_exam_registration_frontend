@@ -69,10 +69,7 @@ const ManageDoctor = (props) => {
                 <ModalCreactDoctor
                     show={showModalCreactUser}
                     setShow={setShowModalCreactUser}
-                    //fetchListUsers={fetchListUsers}
-                    fetchListUsersWithPage={fetchListUsersWithPage}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
+                    fetchDoctorList={fetchDoctorList}
                 />
 
                 <ModalDeleteUser

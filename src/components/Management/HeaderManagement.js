@@ -41,11 +41,14 @@ const Header = (props) => {
                             Bệnh nhân
                         </NavDropdown.Item>
                     </NavDropdown>
-                    <NavDropdown
-                        title="Khác"
-                        id="basic-nav-dropdown"
-                        onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-chuyen-khoa")}
-                    ></NavDropdown>
+                    <NavDropdown title="Khác" id="basic-nav-dropdown">
+                        <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-chuyen-khoa")}>
+                            Quản lý chuyên khoa
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-thuoc")}>
+                            Quản lý thuốc
+                        </NavDropdown.Item>
+                    </NavDropdown>
                 </>
             );
         } else if (account?.role === "Bác sĩ") {
@@ -56,6 +59,9 @@ const Header = (props) => {
                     </NavDropdown.Item>
                     <NavDropdown.Item onClick={() => navigate("/quan-ly/bac-si/quan-ly-kham-benh")}>
                         Khám bệnh
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate("/quan-ly/bac-si/danh-sach-benh-an-da-kham")}>
+                        Bệnh án đã khám
                     </NavDropdown.Item>
                 </NavDropdown>
             );

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllAppointmentById } from "../../../services/apiService";
-import ModalSendMail from "./ModalSendMail";
 const AppointmentList = (props) => {
-    const [show, setShow] = useState(false);
     const [appointmentList, setAppointmentList] = useState([]);
     const [data, setData] = useState({});
     useEffect(() => {
@@ -15,7 +13,6 @@ const AppointmentList = (props) => {
         }
     };
     const handleClick = (data) => {
-        setShow(true);
         setData(data);
     };
     return (
@@ -31,9 +28,9 @@ const AppointmentList = (props) => {
                             <th>Lịch sử bệnh án</th>
                             <th>Lí do khám</th>
                             <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
                             <th>Thời gian</th>
                             <th>Ngày</th>
-                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,9 +46,9 @@ const AppointmentList = (props) => {
                                         <td>{item?.MedicalRecord?.medicalHistory}</td>
                                         <td>{item?.MedicalRecord?.reason}</td>
                                         <td>{item?.Patient?.phone}</td>
+                                        <td>{item?.statusAM}</td>
                                         <td>{item?.time}</td>
                                         <td>{item?.date}</td>
-                                        <td>{item?.statusAM}</td>
                                     </tr>
                                 );
                             })}
@@ -62,7 +59,6 @@ const AppointmentList = (props) => {
                         )}
                     </tbody>
                 </table>
-                <ModalSendMail show={show} setShow={setShow} data={data} />
             </div>
         </div>
     );

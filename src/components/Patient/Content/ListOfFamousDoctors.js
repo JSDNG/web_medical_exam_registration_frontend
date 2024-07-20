@@ -1,16 +1,16 @@
-import "./ProminentDoctorList.scss";
+import "./ListOfFamousDoctors.scss";
 import { useNavigate } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
-import { getAllDoctor } from "../../../services/apiService";
+import { getListOfFamousDoctors } from "../../../services/apiService";
 import { useState, useEffect } from "react";
-const ProminentDoctorList = (props) => {
+const ListOfFamousDoctors = (props) => {
     const navigate = useNavigate();
     const [doctorList, setDoctorList] = useState([]);
     useEffect(() => {
         getData();
     }, []);
     const getData = async () => {
-        let res = await getAllDoctor("bac-si");
+        let res = await getListOfFamousDoctors();
         if (res && res.EC === 0) {
             setDoctorList(res.DT);
         }
@@ -71,4 +71,4 @@ const ProminentDoctorList = (props) => {
     );
 };
 
-export default ProminentDoctorList;
+export default ListOfFamousDoctors;

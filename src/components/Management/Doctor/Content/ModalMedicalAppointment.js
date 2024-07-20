@@ -2,17 +2,22 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
 import { putExaminingDoctor } from "../../../../services/apiService";
+import ModalCreatePrescription from "./ModalCreatePrescription";
+import { CgCalendarDates } from "react-icons/cg";
+import { FaTransgender } from "react-icons/fa";
+import { MdLocalPhone } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { IoPersonSharp } from "react-icons/io5";
+import { FaStethoscope } from "react-icons/fa";
 const ModalCreateAppointment = (props) => {
     const { show, setShow, medicalInfo } = props;
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
-    const account = useSelector((state) => state?.user?.account);
+    const [showPrescription, setShowPrescription] = useState(false);
     const handleClose = () => {
         setShow(false);
         setDiagnosis("");
     };
-    const [status, setStatus] = useState(true);
     const [diagnosis, setDiagnosis] = useState("");
 
     const handleSubmit = async () => {
@@ -57,32 +62,35 @@ const ModalCreateAppointment = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
-                        <div className="col-md-12">
-                            <label className="form-label">Bệnh nhân:</label>
-                            <span> {medicalInfo?.Patient?.fullName} </span>
-                            <label className="form-label">- Chuyên khoa:</label>
+                        <div className="col-md-6 offset-md-3">
+                            <span> </span>
+                            <FaStethoscope />
                             <span> {medicalInfo?.MedicalRecord?.specialtyMR} </span>
+                        </div>
+                        <div className="col-md-6">
+                            <IoPersonSharp />
+                            <span> {medicalInfo?.Patient?.fullName}</span>
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Số điện thoại:</label>
+                            <MdLocalPhone />
                             <span> {medicalInfo?.Patient?.phone}</span>
                         </div>
 
                         <div className="col-md-6">
-                            <label className="form-label">Email:</label>
+                            <MdOutlineMarkEmailRead />
                             <span> {medicalInfo?.Patient?.email}</span>
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Giới tính:</label>
+                            <FaTransgender />
                             <span> {medicalInfo?.Patient?.gender}</span>
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Ngày sinh:</label>
+                            <CgCalendarDates />
                             <span> {medicalInfo?.Patient?.dateOfBirth}</span>
                         </div>
                         <div className="col-md-6">
-                            <label className="form-label">Địa chỉ:</label>
+                            <FaHome />
                             <span> {medicalInfo?.Patient?.address}</span>
                         </div>
                         <div className="col-md-6">
@@ -110,6 +118,12 @@ const ModalCreateAppointment = (props) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <ModalCreatePrescription
+                showPrescription={showPrescription}
+                setShowPrescription={setShowPrescription}
+                medicalInfo={medicalInfo}
+                diagnosis={diagnosis}
+            />
         </>
     );
 };

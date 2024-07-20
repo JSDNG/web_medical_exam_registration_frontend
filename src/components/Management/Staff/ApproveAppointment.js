@@ -30,9 +30,9 @@ const ApproveAppointment = (props) => {
                         <th>Lịch sử bệnh án</th>
                         <th>Lí do khám</th>
                         <th>Số điện thoại</th>
+                        <th>Trạng thái</th>
                         <th>Thời gian</th>
                         <th>Ngày</th>
-                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,11 @@ const ApproveAppointment = (props) => {
                         appointmentList.length > 0 &&
                         appointmentList.map((item, index) => {
                             return (
-                                <tr key={index} onClick={() => handleClick(item)} className="tr-approve-appointment-custom">
+                                <tr
+                                    key={index}
+                                    onClick={() => handleClick(item)}
+                                    className="tr-approve-appointment-custom"
+                                >
                                     <td>{index + 1}</td>
                                     <td>{item?.appointmentNumber}</td>
                                     <td>{item?.MedicalRecord?.specialtyMR}</td>
@@ -48,9 +52,9 @@ const ApproveAppointment = (props) => {
                                     <td>{item?.MedicalRecord?.medicalHistory}</td>
                                     <td>{item?.MedicalRecord?.reason}</td>
                                     <td>{item?.Patient?.phone}</td>
+                                    <td>{item?.statusAM}</td>
                                     <td>{item?.time}</td>
                                     <td>{item?.date}</td>
-                                    <td>{item?.statusAM}</td>
                                 </tr>
                             );
                         })}

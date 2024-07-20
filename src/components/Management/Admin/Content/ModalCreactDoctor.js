@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-//import { postCreacteNewUser } from "../../../../services/apiService";
+import { postRegister } from "../../../../services/apiService";
 const ModalCreactDoctor = (props) => {
     const { show, setShow } = props;
 
@@ -10,24 +10,14 @@ const ModalCreactDoctor = (props) => {
         setShow(false);
         setEmail("");
         setPassword("");
-        setUsername("");
-        setRole("USER");
-        setImage("");
+        setFullName("");
+        setPhone("");
     };
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
-    const [role, setRole] = useState("USER");
-    const [image, setImage] = useState("");
-    // const [previewImage, setPreviewImage] = useState("");
-    // const handleUploadImage = (event) => {
-    //     setPreviewImage("");
-    //     setImage("");
-    //     setPreviewImage(URL.createObjectURL(event.target.files[0]));
-    //     console.log(">>>", event.target.files[0]);
-    // };
-
+    const [fullName, setFullName] = useState("");
+    const [phone, setPhone] = useState("");
     const validateEmail = (email) => {
         return String(email)
             .toLowerCase()
@@ -35,7 +25,15 @@ const ModalCreactDoctor = (props) => {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             );
     };
+    const handleChangePhone = (phone) => {
+        // Xóa tất cả các ký tự không phải là số
+        const cleanedValue = phone.replace(/[^0-9]/g, "");
 
+        // Giới hạn số ký tự nhập vào là 10
+        if (cleanedValue.length <= 10) {
+            setPhone(cleanedValue);
+        }
+    };
     const handleSubmitCreactDoctor = async () => {
         //validate
         const inValidEmail = validateEmail(email);
@@ -50,23 +48,26 @@ const ModalCreactDoctor = (props) => {
             return;
         }
 
-        if (!username) {
+        if (!fullName) {
             toast.error("invalid username");
             return;
         }
 
-        // let data = await postCreacteNewUser(email, password, username, role, image);
+        if (!phone) {
+            toast.error("invalid phone");
+            return;
+        }
 
-        // if (data && data.EC === 0) {
-        //     toast.success(data.EM);
-        //     handleClose();
-        //     //await props.fetchListUsers();
-        //     props.setCurrentPage(1);
-        //     await props.fetchListUsersWithPage(1);
-        // }
-        // if (data && data.EC !== 0) {
-        //     toast.error(data.EM);
-        // }
+        let res = await postRegister({ email, password, accountType: "MedicalStaff", fullName, phone, roleId: 2 });
+
+        if (res && res.EC === 0) {
+            toast.success(res.EM);
+            handleClose();
+            props.fetchDoctorList();
+        }
+        if (res && res.EC !== 0) {
+            toast.error(res.EM);
+        }
     };
     return (
         <>
@@ -74,7 +75,7 @@ const ModalCreactDoctor = (props) => {
                 show={show}
                 onHide={handleClose}
                 animation={false}
-                size="xl"
+                size="md"
                 backdrop="static"
                 className="modal-add-user"
             >
@@ -83,7 +84,25 @@ const ModalCreactDoctor = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
-                        <div className="col-md-6">
+                        <div className="col-md-12">
+                            <label className="form-label">Họ tên</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={fullName}
+                                onChange={(event) => setFullName(event.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12">
+                            <label className="form-label">Số điện thoại</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={phone}
+                                onChange={(event) => handleChangePhone(event.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12">
                             <label className="form-label">Email</label>
                             <input
                                 type="email"
@@ -92,7 +111,7 @@ const ModalCreactDoctor = (props) => {
                                 onChange={(event) => setEmail(event.target.value)}
                             />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label className="form-label">Mật khẩu</label>
                             <input
                                 type="password"
@@ -103,39 +122,11 @@ const ModalCreactDoctor = (props) => {
                                 onChange={(event) => setPassword(event.target.value)}
                             />
                         </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Họ tên</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={username}
-                                onChange={(event) => setUsername(event.target.value)}
-                            />
-                        </div>
-
-                        <div className="col-md-4">
-                            <label className="form-label">Nhân viên y tế</label>
-                            <select
-                                className="form-select"
-                                onChange={(event) => setRole(event.target.value)}
-                                value={role}
-                            >
-                                <option value="USER">USER</option>
-                                <option value="ADMIN">ADMIN</option>
-                            </select>
-                        </div>
-                        {/* <div className="col-md-12">
-                            <label className="form-label">Upload file image</label>
-                            <input type="file" onChange={(event) => handleUploadImage(event)} />
-                        </div>
-                        <div className="col-md-12 img-preview">
-                            {previewImage ? <img src={previewImage} /> : <span>image</span>}
-                        </div> */}
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={() => handleSubmitCreactDoctor()}>
-                        Save
+                        Tạo
                     </Button>
                 </Modal.Footer>
             </Modal>

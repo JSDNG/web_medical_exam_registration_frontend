@@ -3,7 +3,7 @@ import imageHomePagedoctor from "../../assets/image/image_doctor.jpg";
 import imageHomePageSpecialty from "../../assets/image/image_specialty.jpg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllDoctor, getAllSpecialty } from "../../services/apiService";
+import { getListOfFamousDoctors, getAllSpecialty } from "../../services/apiService";
 import "./HomePage.scss";
 import { useEffect, useState } from "react";
 const HomePage = () => {
@@ -17,7 +17,7 @@ const HomePage = () => {
         getData();
     }, []);
     const getData = async () => {
-        let res = await getAllDoctor("bac-si");
+        let res = await getListOfFamousDoctors();
         if (res && res.EC === 0) {
             setDoctorList(res.DT.slice(0, 4));
         }
@@ -129,13 +129,13 @@ const HomePage = () => {
                         })}
                 </div>
             </div>
-            <div className="homepage-content-service">
+            {/* <div className="homepage-content-service">
                 <div className="header-service">
                     <span className="header-div">Dịch vụ toàn diện</span>
                 </div>
                 <div className="body-service"></div>
                 <span className="test">4</span>
-            </div>
+            </div> */}
         </div>
     );
 };
