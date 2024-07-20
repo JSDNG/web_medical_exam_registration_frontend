@@ -16,6 +16,16 @@
 }
 
 .modal-prescription {
+    .medication-custom {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        padding-bottom: 15px;
+        .pick-medication-custom {
+            width: 500px;
+            height: 40px;
+        }
+    }
     .prescription-main-container {
         .prescriptions-content {
             display: flex;
@@ -30,6 +40,32 @@
             .prescription-price-custom {
                 width: 300px;
             }
+        }
+    }
+}
+
+.modal-invoice {
+    .header-invoice-custom {
+        display: flex;
+        .left-header-invoice-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 300px;
+            .custom-icon-header {
+                font-size: 75px;
+                font-weight: 200 !important;
+            }
+            .name-title-invoice-custom {
+                font-size: 25px;
+                font-weight: 500;
+            }
+        }
+        .right-header-invoice-custom {
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            max-width: 300px;
         }
     }
 }

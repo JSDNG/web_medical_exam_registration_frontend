@@ -19,7 +19,8 @@ const ModalCreateAppointment = (props) => {
         setDiagnosis("");
     };
     const [diagnosis, setDiagnosis] = useState("");
-
+    const [temp, setTemp] = useState("");
+    console.log(medicalInfo);
     const handleSubmit = async () => {
         if (!diagnosis) {
             toast.error("Vui lòng chuẩn đoán bệnh án!");
@@ -36,12 +37,14 @@ const ModalCreateAppointment = (props) => {
                 statusId: 7,
             },
         };
-        console.log(medicalInfo);
+
         let res = await putExaminingDoctor(data);
         if (res && res.EC === 0) {
             toast.success(res.EM);
             props.getData();
             handleClose();
+            setShowPrescription(true);
+            setTemp(diagnosis);
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
@@ -122,7 +125,7 @@ const ModalCreateAppointment = (props) => {
                 showPrescription={showPrescription}
                 setShowPrescription={setShowPrescription}
                 medicalInfo={medicalInfo}
-                diagnosis={diagnosis}
+                temp={temp}
             />
         </>
     );

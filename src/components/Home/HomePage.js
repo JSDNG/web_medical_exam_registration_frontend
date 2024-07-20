@@ -26,7 +26,6 @@ const HomePage = () => {
             setSpecialtyList(res1.DT.slice(0, 3));
         }
     };
-    console.log(doctorList);
     return (
         <div className="homepage-container">
             <div className="homepage-content-header">

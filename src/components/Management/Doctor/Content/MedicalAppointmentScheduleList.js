@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import "./MedicalAppointmentScheduleList.scss";
 import ModalMedicalAppointment from "./ModalMedicalAppointment";
+import moment from "moment";
+import { toast } from "react-toastify";
 const MedicalAppointmentScheduleList = (props) => {
     const { medicalAppointmentList, index } = props;
     const [show, setShow] = useState(false);
     const [medicalInfo, setMedicalInfo] = useState({});
     const handleOnClick = (item) => {
-        setShow(true);
-        setMedicalInfo(item);
+        let date = new Date(Date.now());
+        if (moment(date).format("YYYY-MM-DD") === medicalAppointmentList[index].date) {
+            setShow(true);
+            setMedicalInfo(item);
+        } else {
+            toast.warning("Không phải thời gian khám!");
+        }
     };
     return (
         <div className="medical-appointment-list-container-client">
-            
             <div className="custom-table-for-medical">
                 <table className="table table-bordered table-hover table-medical-custom">
                     <thead>

@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { toast } from "react-toastify";
-import "./ModalCreateSchedule.scss";
 import _ from "lodash";
 const ManageSchedule = (props) => {
     const [scheduleList, setSchedulelList] = useState([]);
@@ -42,9 +41,6 @@ const ManageSchedule = (props) => {
     };
 
     const handleOnClickDate = (date) => {
-        console.log(date);
-        console.log(scheduleList);
-        console.log(arrTime);
         let arrTimeClone = arrTime.map((item) => ({
             ...item,
             isSelected: false,
@@ -146,7 +142,6 @@ const ManageSchedule = (props) => {
             toast.error("Tạo lịch làm việc thất bại!");
         }
     };
-    console.log(scheduleList);
     return (
         <div className="schedule-container-manage-custom">
             <div className="schedule-header-manage-custom">

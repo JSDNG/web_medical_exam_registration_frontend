@@ -52,6 +52,9 @@ const getAllAppointmentFromDoctor = (id) => {
 const putExaminingDoctor = (data) => {
     return axios.put("/api/v1/doctor/examining-doctor", { ...data });
 };
+const postPrescription = (data) => {
+    return axios.post(`/api/v1/doctor/prescription`, { ...data });
+};
 //Schedule
 const postCreateSchedule = (data) => {
     return axios.post(`/api/v1/doctor/schedule`, { ...data });
@@ -104,6 +107,12 @@ const putMedicalStaff = (data) => {
     return axios.put(`/api/v1/medical-staff`, { ...data });
 };
 
+const postSendEmailInvoice = (data) => {
+    return axios.post(`/api/v1/doctor/send-email-invoice`, { ...data });
+};
+const getAllInvoiceByDoctorId = (id) => {
+    return axios.get(`/api/v1/doctor/invoice?id=${id}`);
+};
 export {
     getUserWithPage,
     postLogin,
@@ -134,4 +143,7 @@ export {
     getAllMedication,
     postMedication,
     putMedication,
+    postPrescription,
+    postSendEmailInvoice,
+    getAllInvoiceByDoctorId,
 };

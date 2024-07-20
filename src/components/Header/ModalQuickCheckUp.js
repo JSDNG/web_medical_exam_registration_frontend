@@ -47,7 +47,6 @@ const ModalQuickCheckUp = (props) => {
     useEffect(() => {
         getData();
     }, []);
-
     useEffect(() => {
         if (status === true) {
             setFullName(account?.user?.fullName);
@@ -147,8 +146,8 @@ const ModalQuickCheckUp = (props) => {
                 return;
             }
         }
-
         let data = {
+            specialty: specialtyList[specialtyId - 1].specialtyName,
             dateQuickCheckUp: moment(new Date(Date.now())).format("YYYY-MM-DD HH:mm:ss"),
             medicalRecord: {
                 medicalHistory: medicalHistory,
@@ -406,10 +405,12 @@ const ModalQuickCheckUp = (props) => {
                                 <span className="form-label">Giới tính: {result?.doctorInfo?.gender}</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Địa chỉ: {result?.doctorInfo?.address}</span>
+                                <span className="form-label">Giá khám: {result?.doctorInfo?.price} đ</span>
                             </div>
                             <div className="col-md-6">
-                                <span className="form-label">Giá khám: {result?.doctorInfo?.price}</span>
+                                <span className="form-label">
+                                    Địa chỉ phòng khám: 97 Man Thiện, phường Hiệp Phú, TP Thủ Đức
+                                </span>
                             </div>
                         </div>
                     </form>
