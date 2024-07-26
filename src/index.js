@@ -6,10 +6,10 @@ import { store, persistor } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import { PersistGate } from "redux-persist/integration/react";
-
 import "react-perfect-scrollbar/dist/css/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "nprogress/nprogress.css";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
@@ -18,7 +18,6 @@ root.render(
             <BrowserRouter>
                 <Layout />
             </BrowserRouter>
-
             {/* </React.StrictMode> */}
         </PersistGate>
     </Provider>

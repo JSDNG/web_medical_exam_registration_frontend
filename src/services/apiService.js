@@ -3,8 +3,11 @@ import axios from "../utils/axiosCustomize";
 const getUserWithPage = (page, limit) => {
     return axios.get(`/api/v1/participant?page=${page}&limit=${limit}`);
 };
-const postLogin = (data) => {
+const postLoginWithLocal = (data) => {
     return axios.post("/api/v1/login", { ...data });
+};
+const postLoginWithGoogle = () => {
+    return axios.get("/api/v1/auth/google/callback");
 };
 const postRegister = (data) => {
     return axios.post("/api/v1/register", { ...data });
@@ -60,7 +63,7 @@ const postCreateSchedule = (data) => {
     return axios.post(`/api/v1/doctor/schedule`, { ...data });
 };
 const getAllSchedule = (id) => {
-    return axios.get(`/api/v1/doctor/${id}/schedule/all`);
+    return axios.get(`/api/v1/doctor/schedule/all?id=${id}`);
 };
 const deleteOneSchedule = (id) => {
     return axios.delete(`/api/v1/doctor/schedule/${id}`);
@@ -89,7 +92,7 @@ const getAllMedicalRecordfromPatient = (patientId, statusId) => {
 };
 // staff
 const getAllAppointmentById = (id) => {
-    return axios.get(`/api/v1/staff/appointment/all?id=${id}`);
+    return axios.get(`/api/v1/appointment/all?id=${id}`);
 };
 const putAppointment = (data) => {
     return axios.put(`/api/v1/staff/appointment`, { ...data });
@@ -103,6 +106,9 @@ const getAllDoctorfromSpecialtyById = (id) => {
     return axios.get(`/api/v1/admin/all-doctor-specialty-by-id?id=${id}`);
 };
 
+const getOneMedicalStaff = (id) => {
+    return axios.get(`/api/v1/medical-staff?id=${id}`);
+};
 const putMedicalStaff = (data) => {
     return axios.put(`/api/v1/medical-staff`, { ...data });
 };
@@ -115,7 +121,8 @@ const getAllInvoiceByDoctorId = (id) => {
 };
 export {
     getUserWithPage,
-    postLogin,
+    postLoginWithLocal,
+    postLoginWithGoogle,
     postRegister,
     logout,
     getAllTime,
@@ -146,4 +153,5 @@ export {
     postPrescription,
     postSendEmailInvoice,
     getAllInvoiceByDoctorId,
+    getOneMedicalStaff,
 };

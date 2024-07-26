@@ -51,7 +51,7 @@ const MedicalRecordRelative = (props) => {
                             })}
                         {medicalRecordRelative && medicalRecordRelative.length === 0 && (
                             <tr>
-                                <td colSpan={"4"}>Không có dữ liệu</td>
+                                <td colSpan={"10"}>Không có dữ liệu</td>
                             </tr>
                         )}
                     </tbody>

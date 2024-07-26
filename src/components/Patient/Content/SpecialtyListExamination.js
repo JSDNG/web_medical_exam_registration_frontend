@@ -20,8 +20,8 @@ const SpecialtyListExamination = (props) => {
     };
     return (
         <div className="specialty-list-container-client-custom">
-            <div className="custom-link-header">
-                <IoHome onClick={() => navigate("/")} className="custom-link" />
+            <div className="custom-link-header-1">
+                <IoHome onClick={() => navigate("/")} className="custom-link-1" />
                 <span> / Khám chuyên khoa</span>
             </div>
             <div className="specialty-list-body-client">
@@ -31,7 +31,7 @@ const SpecialtyListExamination = (props) => {
                         return (
                             <>
                                 <div
-                                    key={`${index}-1`}
+                                    key={index}
                                     className="detail-specialty-custom"
                                     onClick={() =>
                                         navigate(`/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/${item.id}`)

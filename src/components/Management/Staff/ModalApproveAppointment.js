@@ -19,10 +19,7 @@ const ModalApproveAppointment = (props) => {
     };
     const handleSubmitApproveAppointment = async (status) => {
         if (status === "delete") {
-            let res = await deleteAppointment({
-                appointmentId: data?.id,
-                medicalRecordId: data?.MedicalRecord?.id,
-            });
+            let res = await deleteAppointment(data?.id);
             if (res && res.EC === 0) {
                 toast.success(res.EM);
                 props.getData();

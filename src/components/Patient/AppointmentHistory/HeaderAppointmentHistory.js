@@ -12,10 +12,10 @@ const HeaderAppointmentHistory = (props) => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     <NavLink to="/lich-hen" className="nav-link">
-                        Danh sách lịch hẹn cá nhân
+                        Lịch hẹn cá nhân
                     </NavLink>
                     <NavLink to="/lich-hen/nguoi-than" className="nav-link">
-                        Danh sách lịch hẹn người thân
+                        Lịch hẹn người thân
                     </NavLink>
                 </Nav>
             </Navbar.Collapse>

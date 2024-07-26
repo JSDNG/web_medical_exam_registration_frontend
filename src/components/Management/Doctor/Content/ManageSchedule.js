@@ -99,6 +99,22 @@ const ManageSchedule = (props) => {
                 toast.error("Lỗi");
             }
         } else {
+            const [startTimeString] = time.split(" - ");
+            const [startHours, startMinutes] = startTimeString.split(":").map(Number);
+
+            // Chuyển đổi "08:00" thành thời gian dạng số (phút)
+            const startTimeInMinutes = startHours * 60 + startMinutes;
+
+            // Thời gian hiện tại từ chuỗi "Mon Jul 22 2024 18:17:31 GMT+0700 (Giờ Đông Dương)"
+            let date = new Date(Date.now());
+            const currentTimeInMinutes = date.getHours() * 60 + date.getMinutes();
+
+            // So sánh thời gian
+            if (currentTimeInMinutes > startTimeInMinutes) {
+                toast.error("Vui lòng chọn thời gian lớn hơn thời gian hiện tại !");
+                return;
+            }
+            //const dateString = moment(startDate).format("YYYY-MM-DD");
             const updatedArrTime = arrTime.map((item) => {
                 if (item.id === timeId) {
                     return { ...item, isSelected: !item.isSelected };
@@ -114,6 +130,7 @@ const ManageSchedule = (props) => {
     const handleSubmitCreactSchedule = async () => {
         if (!startDate) {
             toast.error("Vui lòng chọn thời gian!");
+            return;
         }
         let date = new Date(moment(startDate).format().split("T")[0]).getTime();
         let newTimes = arrTime
@@ -158,7 +175,7 @@ const ManageSchedule = (props) => {
                                 setStartDate(date); // Cập nhật ngày mới vào state
                                 handleOnClickDate(date); // Xử lý logic khi ngày thay đổi
                             }}
-                            minDate={new Date(Date.now() + 24 * 60 * 60 * 1000)}
+                            minDate={new Date(Date.now())}
                         />
                     </div>
                     <div className="col-12 pick-hour">

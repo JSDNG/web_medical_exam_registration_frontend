@@ -86,7 +86,7 @@ const MedicalRecordList = (props) => {
                         )}
                     </tbody>
                 </table>
-                <ModalSendEmailInvoice show={show} setShow={setShow} data={data} />
+                <ModalSendEmailInvoice show={show} setShow={setShow} data={data} getData={getData} />
             </div>
         </div>
     );

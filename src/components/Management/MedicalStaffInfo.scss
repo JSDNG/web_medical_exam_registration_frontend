@@ -1,13 +1,23 @@
 .medical-staff-info-container-custom {
-    .medical-staff-info-body-custom {
-        padding-left: 50px;
-        .label-title-custom {
-            padding-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 25px;
-            font-weight: 500;
+    .label-title-custom {
+        padding-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-weight: 500;
+    }
+    .medical-staff-info-header-custom {
+        display: flex;
+        .div-img-info-custom {
+            max-width: 200px;
+            .card-img-top {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        .medical-staff-info-body-custom {
+            padding-left: 50px;
         }
     }
 }

@@ -44,6 +44,7 @@ const ModalSendEmailInvoice = (props) => {
         let res = await postSendEmailInvoice(result);
         if (res && res.EC === 0) {
             toast.success(res.EM);
+            props.getData();
             handleClose();
         }
         if (res && res.EC !== 0) {

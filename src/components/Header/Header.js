@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import { useState } from "react";
 import { FaRegHospital } from "react-icons/fa";
+import logo from "../../assets/image/logo.png"
 import ModalQuickCheckUp from "./ModalQuickCheckUp";
 const Header = (props) => {
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
@@ -32,7 +33,7 @@ const Header = (props) => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary body-header-custom">
             <Container>
-                <FaRegHospital className="custom-icon-header" />
+                <img src={logo} className="custom-icon-header" />
                 <NavLink to="/" className="navbar-brand header-custom">
                     BookingCare
                 </NavLink>
@@ -41,9 +42,6 @@ const Header = (props) => {
                     <Nav className="me-auto1 ">
                         <NavLink to="/" className="nav-link">
                             Tất cả
-                        </NavLink>
-                        <NavLink to="/" className="nav-link">
-                            Tại nhà
                         </NavLink>
                         <NavLink to="/" className="nav-link">
                             Tại viện

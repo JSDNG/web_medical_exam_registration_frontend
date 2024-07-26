@@ -81,7 +81,7 @@ const Layout = (props) => {
 
                     <Route path="/quan-ly/nhan-vien" element={<Staff />}>
                         <Route index element={<ApproveAppointment />} />
-                        <Route path="m" element={<AppointmentList />} />
+                        <Route path="danh-sach" element={<AppointmentList />} />
                     </Route>
                 </Route>
                 <Route path="/login" element={<Login />} />

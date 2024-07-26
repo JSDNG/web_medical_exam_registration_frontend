@@ -1,42 +1,53 @@
-.image {
-    padding-top: 60px;
-    width: 750px;
-    height: 550px;
-}
-.back {
-    display: flex;
-    justify-content: right;
-    padding: 15px 20px;
-    font-size: 25px;
-    cursor: pointer;
-}
-.action-choose {
-    margin-left: 930px;
-    padding-top: 60px;
-    .btn {
-        margin-right: 15px;
+.register-container-custom {
+    background-color: rgb(242, 246, 246);
+    height: 729px;
+    .back {
+        display: flex;
+        justify-content: right;
+        padding: 15px 20px;
+        font-size: 25px;
+        cursor: pointer;
     }
-}
-.register-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
+    .register-body {
+        border-radius: 5px;
+        margin: 70px 500px;
+        padding: 40px;
+        background-color: rgb(255, 255, 255) !important;
+        .header-custom-register {
+            display: flex;
+            .image {
+                width: 100px;
+                padding-right: 10px;
+            }
+            .hospital-header-register {
+                font-size: 30px;
+                font-weight: 600;
+            }
+            .name-hospital-header-register {
+                font-size: 20px;
+                font-weight: 500;
+            }
+        }
+        .register-content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 20px;
+            button {
+                width: 100%;
+                height: 40px;
+            }
 
-    margin-left: 930px;
-    padding-top: 20px;
-
-    button {
-        width: 100%;
-        height: 40px;
-    }
-    .password-custom {
-        position: relative;
-        .icons-eye {
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            bottom: 10px;
+            .password-custom {
+                position: relative;
+                .icons-eye {
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    bottom: 10px;
+                }
+            }
         }
     }
 }

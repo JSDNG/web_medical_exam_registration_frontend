@@ -15,10 +15,10 @@ const HeaderProfile = (props) => {
                         Thông tin cá nhân
                     </NavLink>
                     <NavLink to="/ho-so/benh-an-ban-than" className="nav-link">
-                        Danh sách bệnh án đã khám của bản thân
+                        Bệnh án đã khám của bản thân
                     </NavLink>
                     <NavLink to="/ho-so/benh-an-nguoi-than" className="nav-link">
-                        Danh sách Bệnh án đã khám của người thân
+                        Bệnh án đã khám của người thân
                     </NavLink>
                 </Nav>
             </Navbar.Collapse>

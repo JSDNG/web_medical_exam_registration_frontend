@@ -19,19 +19,17 @@ body {
 
 .app-container {
     .app-header-container {
-        // .lbl-add {
-        //     cursor: pointer;
-        // }
-        // .btn {
-        //     margin-right: 10px;
-        // }
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
         .body-header-custom {
-            padding: 15px 145px;
+            padding: 10px 145px;
             z-index: 10;
             background-color: rgb(233, 252, 240) !important;
             .custom-icon-header {
-                color: #5ee0dc;
-                font-size: 38px;
+                width: 45px;
+                padding-right: 2px;
             }
             .header-custom {
                 color: #ffb516;
@@ -43,33 +41,22 @@ body {
             .custom-collapse {
                 display: flex;
                 align-items: center;
-                gap: 30px;
+                gap: 55px;
                 .me-auto1 {
                     display: flex;
                     align-items: center;
-                    gap: 8px;
+                    gap: 20px;
                     .nav-link {
                         font-size: 18px;
                         color: black !important;
-                        // &.active {
-                        //     border-bottom: 3px solid #8846ec;
-                        // }
-                        // &:hover {
-                        //     border-bottom: 3px solid #8846ec;
-                        // }
                     }
                 }
                 .me-auto2 {
+                    padding-left: auto;
                     .nav-link {
                         font-size: 18px;
                         font-weight: 500;
                         color: #5ee0dc !important;
-                        // &.active {
-                        //     border-bottom: 3px solid #8846ec;
-                        // }
-                        // &:hover {
-                        //     border-bottom: 3px solid #8846ec;
-                        // }
                     }
                     .quick-check-up-custom {
                         cursor: pointer;
@@ -84,18 +71,18 @@ body {
                     }
                 }
                 .custom-search {
+                    padding-left: 40px;
                     .me-2 {
                         border-radius: 20px;
                     }
                     width: 300px !important;
-                    /* border-radius: 50px !important; */
                 }
             }
         }
     }
     .app-body-container {
         .app-main {
-            padding: 10px 160px;
+            padding: 80px 160px;
         }
     }
     // .app-footer-container {

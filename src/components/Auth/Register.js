@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { IoArrowBackOutline } from "react-icons/io5";
 import "./Register.scss";
-
+import logo from "../../assets/image/logo.png";
 import { useNavigate } from "react-router-dom";
 import { postRegister } from "../../services/apiService";
 import { toast } from "react-toastify";
@@ -30,17 +28,17 @@ const Register = () => {
         const inValidEmail = validateEmail(email);
 
         if (!inValidEmail) {
-            toast.error("invalid email");
+            toast.error("Vui lòng nhập email !");
             return;
         }
 
         if (!password) {
-            toast.error("invalid password");
+            toast.error("Vui lòng nhập mật khẩu !");
             return;
         }
 
         if (!fullName) {
-            toast.error("invalid fullName");
+            toast.error("Vui lòng nhập họ và tên !");
             return;
         }
         //api
@@ -56,102 +54,76 @@ const Register = () => {
     };
 
     return (
-        <>
-            <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                className="image"
-                alt=""
-            />
+        <div className="register-container-custom">
             <div className="back">
                 <IoArrowBackOutline
                     onClick={() => {
-                        navigate("/");
+                        navigate("/login");
                     }}
                 />
             </div>
-            <div className="action-choose">
-                <button className="btn btn-light col-2" disabled>
-                    Đăng ký
-                </button>
-                <button
-                    className="btn btn-light "
-                    onClick={() => {
-                        navigate("/login");
-                    }}
-                >
-                    Đăng nhập
-                </button>
-            </div>
-            <div className="register-container col-4">
-                <div>
-                    <label className="form-label">Email(*)</label>
-                    <input
-                        type={"email"}
-                        className="form-control"
-                        name="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
+            <div className="register-body">
+                <div className="header-custom-register">
+                    <img src={logo} className="image" alt="" />
+                    <div>
+                        <span className="hospital-header-register">Phòng khám tư nhân</span>
+                        <span className="name-hospital-header-register"> BookingCare</span>
+                    </div>
                 </div>
-                <div>
-                    <label className="form-label">Tên đầy đủ(*)</label>
-                    <input
-                        type={"text"}
-                        className="form-control"
-                        name="fullName"
-                        value={fullName}
-                        onChange={(event) => setFullName(event.target.value)}
-                    />
-                </div>
-                <div className="password-custom">
-                    <label className="form-label">Mật khẩu(*)</label>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        name="password"
-                        autoComplete="off"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                    {showPassword ? (
-                        <span className="icons-eye" onClick={() => setShowPassword(false)}>
-                            <VscEye />
-                        </span>
-                    ) : (
-                        <span className="icons-eye" onClick={() => setShowPassword(true)}>
-                            <VscEyeClosed />
-                        </span>
-                    )}
-                </div>
-                <div>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                            handleRegister();
-                        }}
-                    >
-                        Đăng ký
-                    </button>
-                </div>
-
-                <div>
-                    <br />
-                </div>
-
-                <div>
-                    <button className="btn btn-light">
-                        <FcGoogle className="mx-2" />
-                        Tiếp tục với Google
-                    </button>
-                </div>
-                <div>
-                    <button className="btn btn-light">
-                        <FaFacebook className="mx-2" />
-                        Tiếp tục với Facebook
-                    </button>
+                <div className="register-content">
+                    <div>
+                        <label className="form-label">Email(*)</label>
+                        <input
+                            type={"email"}
+                            className="form-control"
+                            name="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="form-label">Tên đầy đủ(*)</label>
+                        <input
+                            type={"text"}
+                            className="form-control"
+                            name="fullName"
+                            value={fullName}
+                            onChange={(event) => setFullName(event.target.value)}
+                        />
+                    </div>
+                    <div className="password-custom">
+                        <label className="form-label">Mật khẩu(*)</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            className="form-control"
+                            name="password"
+                            autoComplete="off"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                        />
+                        {showPassword ? (
+                            <span className="icons-eye" onClick={() => setShowPassword(false)}>
+                                <VscEye />
+                            </span>
+                        ) : (
+                            <span className="icons-eye" onClick={() => setShowPassword(true)}>
+                                <VscEyeClosed />
+                            </span>
+                        )}
+                    </div>
+                    <div>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                handleRegister();
+                            }}
+                        >
+                            Đăng ký
+                        </button>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

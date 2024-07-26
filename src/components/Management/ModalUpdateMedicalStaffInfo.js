@@ -1,15 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { putMedicalStaff, getAllSpecialty, getAllPosition } from "../../services/apiService";
+import { putMedicalStaff, getAllSpecialty, getAllPosition, getOneMedicalStaff } from "../../services/apiService";
 import { useEffect, useState } from "react";
 import { MdFileUpload } from "react-icons/md";
-import { render } from "nprogress";
-import moment from "moment";
+import { doLogin } from "../../redux/action/userAction";
+import { useDispatch } from "react-redux";
 const ModalUpdateMedicalStaffInfo = (props) => {
     const { show, setShow, account } = props;
     const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyId, setSpecialtyId] = useState("");
+    const [specialtyIdList, setSpecialtyIdList] = useState([]);
     const [positionList, setPositionList] = useState([]);
     const [position, setPosition] = useState(account?.user?.Position?.positionName);
     const [positionId, setPositionId] = useState(account?.user?.Position?.id);
@@ -17,7 +18,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
     const [gender, setGender] = useState(account?.user?.gender);
     const [phone, setPhone] = useState(account?.user?.phone);
     const [price, setPrice] = useState(account?.user?.price);
-
+    const dispatch = useDispatch();
     const [description, setDescription] = useState(account?.user?.description);
     const [previewImgURL, setPreviewImgURL] = useState(`data:image/jpeg;base64,${account?.user?.image}`);
     const [imageBase64, setImageBase64] = useState(account?.user?.image);
@@ -40,6 +41,19 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             console.log("err");
         }
     };
+
+    const refreshData = async () => {
+        let res = await getOneMedicalStaff(account?.user?.id);
+        if (res && res.EC === 0) {
+            dispatch(doLogin(res));
+        }
+    };
+    const handleChooseSpecialty = (id) => {
+        console.log("id", id);
+        setSpecialtyId(id);
+        setSpecialtyIdList([...specialtyIdList, id]);
+    };
+    console.log(specialtyIdList);
     const formatNumber = (value) => {
         // Remove all non-digit characters
         value = value.replace(/\D/g, "");
@@ -96,13 +110,13 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             description: description,
             price: price,
             positionId: positionId,
-            //specialtyId: specialtyId,
-            //specialty: [3, 4],
+            specialty: specialtyIdList,
         };
         console.log(data);
         let res = await putMedicalStaff(data);
         if (res && res.EC === 0) {
             toast.success(res.EM);
+            refreshData();
             handleClose();
         }
         if (res && res.EC !== 0) {
@@ -153,7 +167,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                             <label className="form-label">Chuyên khoa</label>
                             <select
                                 className="form-select"
-                                onChange={(event) => setSpecialtyId(event.target.value)}
+                                onChange={(event) => handleChooseSpecialty(event.target.value)}
                                 value={specialtyId}
                             >
                                 {specialtyList &&
@@ -185,10 +199,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                                 onChange={(event) => handleChangePhone(event.target.value)}
                             />
                         </div>
-                        {/* <div className="col-md-6">
-                            <label className="form-label">Email</label>
-                            <input type="email" className="form-control" value={account?.email} disabled />
-                        </div> */}
                         <div className="col-md-6">
                             <label className="form-label">Giá khám</label>
                             <input

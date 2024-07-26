@@ -31,41 +31,37 @@ const HomePage = () => {
             <div className="homepage-content-header">
                 <img src={imageHomePage} alt="prop" className="custom-image-home" />
             </div>
-            <div className="homepage-content-for-you">
+            {/* <div className="homepage-content-for-you">
                 <div className="header-for-you">
                     <span className="header-div">Dành cho bạn</span>
                 </div>
                 <div className="body-for-you">
                     <div className="home-page-custom row-cols-md-6 ">
                         <div className="container">
-                            {/* <img src={`data:image/jpeg;base64,${item?.userId?.image}`} /> */}
                             <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
                             <span className="name-text">tên</span>
                         </div>
                     </div>
                     <div className="home-page-custom row-cols-md-6 ">
                         <div className="container">
-                            {/* <img src={`data:image/jpeg;base64,${item?.userId?.image}`} /> */}
                             <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
                             <span className="name-text">tên</span>
                         </div>
                     </div>
                     <div className="home-page-custom row-cols-md-6 ">
                         <div className="container">
-                            {/* <img src={`data:image/jpeg;base64,${item?.userId?.image}`} /> */}
                             <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
                             <span className="name-text">tên</span>
                         </div>
                     </div>
                     <div className="home-page-custom row-cols-md-6 ">
                         <div className="container">
-                            {/* <img src={`data:image/jpeg;base64,${item?.userId?.image}`} /> */}
                             <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
                             <span className="name-text">tên</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="homepage-content-specialty">
                 <div className="header-specialty">
                     <span className="header-div">Chuyên khoa</span>

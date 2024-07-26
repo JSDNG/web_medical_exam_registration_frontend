@@ -7,30 +7,31 @@ const ManageInformation = (props) => {
     const account = useSelector((state) => state?.user?.account);
     const dispatch = useDispatch();
     return (
-        <div className="">
-            <div className="row">
-                <label className="offset-md-3">Thông tin bệnh nhân</label>
-                <div className="col-md-6">
-                    <span className="form-label">Họ tên bệnh nhân: {account?.user?.fullName}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Số điện thoại: {account?.user?.phone}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Email: {account?.email}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Giới tính: {account?.user?.gender}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Ngày sinh: {account?.user?.dateOfBirth}</span>
-                </div>
-                <div className="col-md-6">
-                    <span className="form-label">Địa chỉ: {account?.user?.address} </span>
-                </div>
-                {/* <div className="col-md-6">
-                    <button className="btn btn-primary ">Cập nhật thông tin </button>
-                </div> */}
+        <div className=" row profile-info-custom">
+            <label className="offset-md-3 profile-title-custom">Thông tin bệnh nhân</label>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Họ tên:</label>
+                <span className="fw-semibold"> {account?.user?.fullName}</span>
+            </div>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Số điện thoại:</label>
+                <span className="fw-semibold"> {account?.user?.phone}</span>
+            </div>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Email:</label>
+                <span className="fw-semibold"> {account?.email}</span>
+            </div>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Giới tính:</label>
+                <span className="fw-semibold"> {account?.user?.gender}</span>
+            </div>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Ngày sinh:</label>
+                <span className="fw-semibold"> {account?.user?.dateOfBirth}</span>
+            </div>
+            <div className="col-md-6 mb-4 d-flex flex-column ">
+                <label className="form-label">Địa chỉ:</label>
+                <span className="fw-semibold"> {account?.user?.address} </span>
             </div>
         </div>
     );

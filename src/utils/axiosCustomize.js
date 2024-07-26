@@ -2,6 +2,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 import { toast } from "react-toastify";
 import { store } from "../redux/store";
+import axiosRetry from "axios-retry";
 NProgress.configure({
     showSpinner: false,
     // easing: "ease",
@@ -16,7 +17,15 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.defaults.withCredentials = true;
-
+axiosRetry(axiosInstance, {
+    retries: 3,
+    retryCondition: (error) => {
+        return error.response.status === 405;
+    },
+    retryDelay: (retryCount, error) => {
+        return retryCount * 100;
+    },
+});
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
     function (config) {
@@ -71,6 +80,12 @@ axiosInstance.interceptors.response.use(
             // not found
             case 404: {
                 return Promise.reject(error);
+            }
+
+            // Not Allowed
+            case 405: {
+                //toast.error("Please retry with a new token.");
+                return error.response.data;
             }
 
             // conflict

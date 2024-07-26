@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getAllMedication, postPrescription } from "../../../../services/apiService";
 import ReactToPrint from "react-to-print";
 import { FaRegHospital } from "react-icons/fa";
+import logo from "../../../../assets/image/logo.png";
 import moment from "moment";
 const ModalCreatePrescription = (props) => {
     const { showPrescription, setShowPrescription, medicalInfo, temp } = props;
@@ -21,38 +22,13 @@ const ModalCreatePrescription = (props) => {
         return `Ngày ${day} tháng ${month} năm ${year}`;
     };
     const formattedDate = formatDate(date);
-    const [invoice, setInvoice] = useState({
-        medicalRecord: {
-            diagnosis: "cxbxb",
-            specialtyMR: "Thần kinh",
-            doctor: "Nguyễn Tiến Lãng",
-        },
-        medications: [
-            {
-                medicationName: "Thuốc hạ huyết áp(Amlodipine)",
-                price: "70.000",
-                instruction: "Ngày uống 3 lần sáng, trưa và tối sau khi ăn",
-                quantity: 5,
-            },
-            {
-                medicationName: "Thuốc điều trị tiểu đường(Metformin)",
-                price: "80.000",
-                instruction: "Ngày uống 1 lần sau ăn tối",
-                quantity: 10,
-            },
-        ],
-        total: "1.450.000",
-    });
+    const [invoice, setInvoice] = useState({});
     const componentRef = useRef();
-    const handlePrint = () => {
-        window.print();
-    };
 
     const navigate = useNavigate();
     const handleClose = () => {
         setShowPrescription(false);
     };
-    console.log(">>>>>", temp);
     const [arrPrescription, setArrPrescription] = useState([]);
 
     useEffect(() => {
@@ -68,14 +44,15 @@ const ModalCreatePrescription = (props) => {
         }
     };
     const handleAddDeletePrescription = (type, id) => {
+        let index = arrPrescription.findIndex((item) => item.medicationId === +id);
+        console.log("index", index);
+        if (index > -1) {
+            return;
+        }
         if (type === "ADD") {
-            let index = arrPrescription.findIndex((item) => item.medicationId === id);
-            if (index > -1) {
-                return;
-            }
             let newPrescription = {
                 id: uuidv4(),
-                medicationName: medicationList[id]?.medicationName,
+                medicationName: medicationList[id - 1]?.medicationName,
                 instruction: "",
                 quantity: "",
                 medicationId: +id,
@@ -98,8 +75,6 @@ const ModalCreatePrescription = (props) => {
             }
         }
     };
-    console.log(arrPrescription);
-
     const handleSubmit = async (event) => {
         let arrClone = _.cloneDeep(arrPrescription);
         arrClone = arrClone.filter(
@@ -130,7 +105,6 @@ const ModalCreatePrescription = (props) => {
             toast.error(res.EM);
         }
     };
-    console.log(invoice);
     return (
         <>
             <Modal
@@ -141,14 +115,11 @@ const ModalCreatePrescription = (props) => {
                 backdrop="static"
                 className="modal-prescription"
             >
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Toa thuốc</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
-                        {/* <label className="offset-lg-6" style={{ fontSize: "18px" }}>
-                            Toa thuốc
-                        </label> */}
                         <div className="col-md-6">
                             <label>Họ tên: </label>
                             <span> {medicalInfo?.Patient?.fullName}</span>
@@ -252,7 +223,7 @@ const ModalCreatePrescription = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={() => setInvoice(true)}>
+                    <Button variant="primary" onClick={() => setShowInvoice(true)}>
                         Bỏ qua
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmit()}>
@@ -262,7 +233,7 @@ const ModalCreatePrescription = (props) => {
             </Modal>
             <Modal
                 show={showInvoice}
-                //onHide={handleClose}
+                onHide={handleClose}
                 animation={false}
                 size="lg"
                 backdrop="static"
@@ -272,7 +243,7 @@ const ModalCreatePrescription = (props) => {
                     <form ref={componentRef} className="row g-3 m-2">
                         <div className="d-flex align-items-center justify-content-between mb-3">
                             <div className="d-flex align-items-center" style={{ maxWidth: "350px" }}>
-                                <FaRegHospital style={{ fontSize: "75px", fontWeight: "200" }} />
+                                <img src={logo} style={{ fontSize: "75px", fontWeight: "200" }} />
                                 <span className="ms-3" style={{ fontSize: "25px", fontWeight: "500" }}>
                                     {" "}
                                     Phòng khám tư nhân BookingCare
@@ -390,7 +361,7 @@ const ModalCreatePrescription = (props) => {
                     <ReactToPrint
                         trigger={() => <Button variant="primary">Xuất hóa đơn</Button>}
                         content={() => componentRef.current}
-                        onClick={() => setShowInvoice(false)}
+                        onAfterPrint={() => setShowInvoice(false)}
                     />
                 </Modal.Footer>
             </Modal>

@@ -42,6 +42,7 @@ const ModalQuickCheckUp = (props) => {
         setStatus(true);
         setReason("");
         setMedicalHistory("");
+        setGender("Nữ");
     };
 
     useEffect(() => {
@@ -130,13 +131,9 @@ const ModalQuickCheckUp = (props) => {
         setDateOfBirth(dob);
     };
     const handleSubmitCreactUser = async () => {
-        if (!fullName || !phone || !gender || !address || !reason) {
+        console.log(gender);
+        if (!fullName || !phone || !gender || !address || !reason || !dateOfBirth) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
-            return;
-        }
-        let format = moment(dateOfBirth, "YYYY-MM-DD", true).isValid();
-        if (!format) {
-            toast.error("Vui lòng điền ngày sinh hợp lệ!");
             return;
         }
         if (!status) {

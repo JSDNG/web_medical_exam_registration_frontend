@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoArrowBackOutline } from "react-icons/io5";
 import "./Login.scss";
-
+import logo from "../../assets/image/logo.png";
 import { useNavigate } from "react-router-dom";
-import { postLogin } from "../../services/apiService";
+import { postLoginWithLocal } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
-
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
-
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { method } from "lodash";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -39,17 +39,17 @@ const Login = () => {
         const inValidEmail = validateEmail(email);
 
         if (!inValidEmail) {
-            toast.error("Vui lòng nhập email");
+            toast.error("Vui lòng nhập email !");
             return;
         }
 
         if (!password) {
-            toast.error("Vui lòng nhập mật khẩu");
+            toast.error("Vui lòng nhập mật khẩu !");
             return;
         }
 
         //api
-        let res = await postLogin({ email, password });
+        let res = await postLoginWithLocal({ email, password });
         if (res && res.EC === 0) {
             dispatch(doLogin(res));
             toast.success(res.EM);
@@ -68,13 +68,11 @@ const Login = () => {
         }
     };
 
+    const handleGoogleLogin = async () => {
+        window.location.href = "http://localhost:8081/api/v1/auth/google";
+    };
     return (
-        <>
-            <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                className="image"
-                alt=""
-            />
+        <div className="login-container-custom">
             <div className="back">
                 <IoArrowBackOutline
                     onClick={() => {
@@ -82,83 +80,81 @@ const Login = () => {
                     }}
                 />
             </div>
-            <div className="action-choose">
-                <button
-                    className="btn btn-light col-2"
-                    onClick={() => {
-                        navigate("/register");
-                    }}
-                >
-                    Đăng ký
-                </button>
-                <button className="btn btn-light" disabled>
-                    Đăng nhập
-                </button>
-            </div>
-            <div className="login-container col-4">
-                <div>
-                    <label className="form-label">Email(*)</label>
-                    <input
-                        type={"email"}
-                        className="form-control"
-                        name="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                </div>
-                <div className="password-custom">
-                    <label className="form-label">Mật khẩu(*)</label>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        name="password"
-                        autoComplete="off"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        onKeyDown={(event) => handleKeyDown(event)}
-                    />
-                    {showPassword ? (
-                        <span className="icons-eye" onClick={() => setShowPassword(false)}>
-                            <VscEye />
-                        </span>
-                    ) : (
-                        <span className="icons-eye" onClick={() => setShowPassword(true)}>
-                            <VscEyeClosed />
-                        </span>
-                    )}
-                </div>
-                <div className="forgot-password">
-                    <span>Quên mật khẩu?</span>
-                </div>
-                <div>
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                            handleLogin();
-                        }}
-                    >
-                        <span>Đăng nhập</span>
-                    </button>
+            <div className="login-body">
+                <div className="header-custom-login">
+                    <img src={logo} className="image" alt="" />
+                    <div>
+                        <span className="hospital-header-login">Phòng khám tư nhân</span>
+                        <span className="name-hospital-header-login"> BookingCare</span>
+                    </div>
                 </div>
 
-                <div>
-                    <br />
-                </div>
+                <div className="login-content">
+                    <div>
+                        <label className="form-label">Email(*)</label>
+                        <input
+                            type={"email"}
+                            className="form-control"
+                            name="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </div>
+                    <div className="password-custom">
+                        <label className="form-label">Mật khẩu(*)</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            className="form-control"
+                            name="password"
+                            autoComplete="off"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            onKeyDown={(event) => handleKeyDown(event)}
+                        />
+                        {showPassword ? (
+                            <span className="icons-eye" onClick={() => setShowPassword(false)}>
+                                <VscEye />
+                            </span>
+                        ) : (
+                            <span className="icons-eye" onClick={() => setShowPassword(true)}>
+                                <VscEyeClosed />
+                            </span>
+                        )}
+                    </div>
 
-                <div>
-                    <button className="btn btn-light">
-                        <FcGoogle className="mx-2" />
-                        Tiếp tục với Google
-                    </button>
+                    <div>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                handleLogin();
+                            }}
+                        >
+                            <span>Đăng nhập</span>
+                        </button>
+                    </div>
+                    <div className="custom-login-with-google">
+                        <button className="btn btn-light" onClick={() => handleGoogleLogin()}>
+                            <FcGoogle className="mx-2" />
+                            Tiếp tục với Google
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <button className="btn btn-light">
-                        <FaFacebook className="mx-2" />
-                        Tiếp tục với Facebook
-                    </button>
+                <div className="action-choose">
+                    <div className="forgot-password">
+                        <span>Quên mật khẩu?</span>
+                    </div>
+                    <div className="btn-register-custom">
+                        <span
+                            onClick={() => {
+                                navigate("/register");
+                            }}
+                        >
+                            Đăng ký
+                        </span>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
