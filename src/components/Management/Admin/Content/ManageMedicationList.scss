@@ -13,18 +13,13 @@
         .manage-detail-medication-custom {
             display: flex;
             gap: 20px;
-            align-items: center;
+            flex-direction: column;
             padding-bottom: 10px;
             cursor: pointer;
-            .manage-image-medication-custom {
-                width: 190px;
-                height: 130px;
-            }
-            .manage-info-medication-custom {
-                .medication-name-custom {
-                    font-size: 19px;
-                    font-weight: 400;
-                }
+            .manage-medication-name-custom {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
             }
         }
     }

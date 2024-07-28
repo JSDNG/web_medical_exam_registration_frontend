@@ -1,6 +1,6 @@
 .medical-staff-info-container-custom {
     .label-title-custom {
-        padding-top: 10px;
+        padding: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -22,7 +22,10 @@
     }
 }
 
-.modal-add-user {
+.modal-update-user {
+    .div-specialty-custom {
+       
+    }
     .lbl-upload-image {
         padding: 5px;
         border-radius: 3px;

@@ -8,9 +8,13 @@ const MedicalAppointmentScheduleList = (props) => {
     const { medicalAppointmentList, index } = props;
     const [show, setShow] = useState(false);
     const [medicalInfo, setMedicalInfo] = useState({});
-    const handleOnClick = (item) => {
+    const handleOnClick = (item, medicalIndex) => {
         let date = new Date(Date.now());
         if (moment(date).format("YYYY-MM-DD") === medicalAppointmentList[index].date) {
+            if (+medicalIndex !== 0) {
+                toast.error("Yêu cầu khám bệnh theo thứ tự !");
+                return;
+            }
             setShow(true);
             setMedicalInfo(item);
         } else {
@@ -20,7 +24,7 @@ const MedicalAppointmentScheduleList = (props) => {
     return (
         <div className="medical-appointment-list-container-client">
             <div className="custom-table-for-medical">
-                <table className="table table-bordered table-hover table-medical-custom">
+                <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
                             <th>Số thứ tự</th>
@@ -35,7 +39,11 @@ const MedicalAppointmentScheduleList = (props) => {
                             medicalAppointmentList[index]?.data.length > 0 &&
                             medicalAppointmentList[index]?.data.map((item, index) => {
                                 return (
-                                    <tr key={index} onClick={() => handleOnClick(item)}>
+                                    <tr
+                                        key={index}
+                                        onClick={() => handleOnClick(item, index)}
+                                        className="custom-tr-table"
+                                    >
                                         <td>{item?.appointmentNumber}</td>
                                         <td>{item?.MedicalRecord?.specialtyMR}</td>
                                         <td>{item?.Patient?.fullName}</td>

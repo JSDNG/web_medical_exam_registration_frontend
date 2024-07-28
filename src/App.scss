@@ -41,20 +41,21 @@ body {
             .custom-collapse {
                 display: flex;
                 align-items: center;
-                gap: 55px;
+                gap: 60px;
                 .me-auto1 {
                     display: flex;
                     align-items: center;
                     gap: 20px;
                     .nav-link {
-                        font-size: 18px;
+                        font-size: 20px;
+                        //font-weight: 500;
                         color: black !important;
                     }
                 }
                 .me-auto2 {
                     padding-left: auto;
                     .nav-link {
-                        font-size: 18px;
+                        font-size: 20px;
                         font-weight: 500;
                         color: #5ee0dc !important;
                     }

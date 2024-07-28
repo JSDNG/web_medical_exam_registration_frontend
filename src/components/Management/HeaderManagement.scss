@@ -1,9 +1,10 @@
 .body-header-manage-custom {
     height: 50px;
-    background-color: #2163fe;
+    background-color: #1fdb4e;
     font-size: 20px;
     font-weight: 500;
     .custom-collapse-manage {
+        padding: 0px 135px;
         .dropdown-toggle::after {
             display: none !important;
         }

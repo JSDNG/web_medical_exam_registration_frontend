@@ -15,15 +15,15 @@ const MedicalRecordRelative = (props) => {
     return (
         <div className="medical-record-relative-container-manage-custom">
             <div className="medical-record-relative-body-manage-custom">
-                <table className="table table-bordered table-hover table-medical-custom">
+                <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Số thứ tự khám</th>
                             <th>Chuyên khoa</th>
                             <th>Họ và tên</th>
-                            <th>Lịch sử bệnh án</th>
                             <th>Lí do khám</th>
+                            <th>Chẩn đoán</th>
                             <th>Số điện thoại</th>
                             <th>Trạng thái</th>
                             <th>Ngày</th>
@@ -40,8 +40,8 @@ const MedicalRecordRelative = (props) => {
                                         <td>{item?.appointmentNumber}</td>
                                         <td>{item?.specialtyMR}</td>
                                         <td>{item?.Patient?.fullName}</td>
-                                        <td>{item?.medicalHistory}</td>
                                         <td>{item?.reason}</td>
+                                        <td>{item?.diagnosis}</td>
                                         <td>{item?.Patient?.phone}</td>
                                         <td>{item?.statusMR}</td>
                                         <td>{item?.date}</td>

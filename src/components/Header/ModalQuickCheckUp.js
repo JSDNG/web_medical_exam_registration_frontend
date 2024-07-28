@@ -4,7 +4,24 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpecialty, getAllRelative, putUpdatePatient, createQuickCheckUp } from "../../services/apiService";
+import {
+    getAllSpecialty,
+    getAllRelative,
+    putUpdatePatient,
+    createQuickCheckUp,
+    getScheduleForPatient,
+} from "../../services/apiService";
+import { CgCalendarDates } from "react-icons/cg";
+import { BiHourglass } from "react-icons/bi";
+import { FaTransgender } from "react-icons/fa";
+import { MdLocalPhone } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { IoPersonSharp } from "react-icons/io5";
+import { FaStethoscope } from "react-icons/fa";
+import { IoIosPricetags } from "react-icons/io";
+import { MdAddLocationAlt } from "react-icons/md";
+import { CgTime } from "react-icons/cg";
 const ModalQuickCheckUp = (props) => {
     const { showQuickCheckUp, setShowQuickCheckUp } = props;
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
@@ -13,7 +30,9 @@ const ModalQuickCheckUp = (props) => {
 
     const [result, setResult] = useState({});
     const [show, setShow] = useState(false);
-
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [schedule, setSchedule] = useState({});
+    const [timeDelay, setTimeDelay] = useState("");
     const [status, setStatus] = useState(true);
     const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyId, setSpecialtyId] = useState("");
@@ -130,8 +149,49 @@ const ModalQuickCheckUp = (props) => {
         }
         setDateOfBirth(dob);
     };
+    const convertMinutesToHours = (minutes) => {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+        return `${hours} giờ ${remainingMinutes} phút`;
+    };
+    const handleSubmitFindSchedule = async () => {
+        if (!fullName || !phone || !gender || !address || !reason || !dateOfBirth) {
+            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+            return;
+        }
+        if (!status) {
+            const inValidEmail = validateEmail(email);
+            if (!inValidEmail) {
+                toast.error("Vui lòng nhập email!");
+                return;
+            }
+        }
+        const date = moment(new Date(Date.now())).format("YYYY-MM-DD HH:mm:ss");
+        let res = await getScheduleForPatient(date, specialtyList[specialtyId - 1].specialtyName);
+        if (res && res.EC === 0 && res.DT.length === 0) {
+            toast.warning("Không tìm thấy lịch khám phù hợp nào !");
+            return;
+        }
+        if (res && res.EC === 0 && res.DT) {
+            setSchedule(res.DT);
+            setShowQuickCheckUp(false);
+            setShowConfirm(true);
+
+            const [startTimeString] = res.DT?.timeId?.time.split(" - ");
+            const [startHours, startMinutes] = startTimeString.split(":").map(Number);
+
+            // Convert "08:00" to minutes
+            const startTimeInMinutes = startHours * 60 + startMinutes;
+
+            // Get current time in minutes
+            const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+            setTimeDelay(convertMinutesToHours(startTimeInMinutes - currentTimeInMinutes));
+        }
+        if (res && res.EC !== 0) {
+            toast.error(res.EM);
+        }
+    };
     const handleSubmitCreactUser = async () => {
-        console.log(gender);
         if (!fullName || !phone || !gender || !address || !reason || !dateOfBirth) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
             return;
@@ -144,8 +204,7 @@ const ModalQuickCheckUp = (props) => {
             }
         }
         let data = {
-            specialty: specialtyList[specialtyId - 1].specialtyName,
-            dateQuickCheckUp: moment(new Date(Date.now())).format("YYYY-MM-DD HH:mm:ss"),
+            schedule: schedule,
             medicalRecord: {
                 medicalHistory: medicalHistory,
                 reason: reason,
@@ -166,13 +225,13 @@ const ModalQuickCheckUp = (props) => {
                 patientId: account?.user?.id,
             };
         }
-        console.log(data);
         let res = await createQuickCheckUp(data);
         if (res && res.EC === 0 && res.DT) {
             toast.success(res.EM);
             handleClose();
             setResult(res.DT);
             setShow(true);
+            setShowConfirm(false);
         }
         if ((res && res.EC !== 0) || res.DT.length === 0) {
             toast.error(res.EM);
@@ -193,7 +252,7 @@ const ModalQuickCheckUp = (props) => {
                     <Modal.Title>Đặt lịch khám nhanh trong ngày</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form className="row g-3" style={{ maxHeight: "520px", overflowY: "auto" }}>
+                    <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
                         <div className="col-md-6 offset-md-3">
                             <select className="form-select" onChange={handleChange}>
                                 <option value={true}>Đặt cho mình</option>
@@ -325,12 +384,54 @@ const ModalQuickCheckUp = (props) => {
                     <Button variant="primary" className="btn btn-light" onClick={() => handleRefresh()}>
                         Làm mới thông tin
                     </Button>
-                    <Button variant="primary" onClick={() => handleSubmitCreactUser()}>
+                    <Button variant="primary" onClick={() => handleSubmitFindSchedule()}>
                         Hoàn thành
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+            <Modal
+                show={showConfirm}
+                animation={false}
+                //onHide={() => setShow(false)}
+                size="md"
+                backdrop="static"
+                className="modal-time"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title style={{ paddingLeft: "145px" }}>Lịch khám bệnh</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form className="row g-3">
+                        <div className="row">
+                            <div className="col-md-12 mt-2">
+                                <span
+                                    className="form-label"
+                                    style={{ fontSize: "20px", fontWeight: "500", paddingLeft: "70px" }}
+                                >
+                                    Giờ khám: {schedule?.timeId?.time} hôm nay.
+                                </span>
+                            </div>
+                            <div className="col-md-12 mt-2">
+                                <span
+                                    className="form-label"
+                                    style={{ fontSize: "20px", fontWeight: "500", paddingLeft: "60px" }}
+                                >
+                                    Thời gian chờ dự kiến: {timeDelay}.
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" className="btn btn-light" onClick={() => setShowConfirm(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="primary" onClick={() => handleSubmitCreactUser()}>
+                        Xác nhận
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <Modal
                 show={show}
                 animation={false}
@@ -345,68 +446,118 @@ const ModalQuickCheckUp = (props) => {
                 <Modal.Body>
                     <form className="row g-3">
                         <div className="row">
-                            <label className="offset-md-3">Thông tin lịch khám bệnh</label>
-                            <div className="col-md-12">
-                                <span className="form-label">
-                                    Số thứ tự khám: {result?.appointmentInfo?.appointmentNumber}
+                            <label
+                                className="offset-md-3"
+                                style={{ fontSize: "20px", fontWeight: "500", paddingLeft: "70px" }}
+                            >
+                                Thông tin lịch khám bệnh
+                            </label>
+                            <div className="col-md-12 mb-2" style={{ fontSize: "16px" }}>
+                                <span className="form-label">Số thứ tự khám: </span>
+                                <span className="form-label fw-semibold">
+                                    {result?.appointmentInfo?.appointmentNumber}
                                 </span>
                             </div>
-                            <div className="col-md-6 ">
-                                <span className="form-label">Ngày khám: {result?.schedule?.date}</span>
+                            <div className="col-md-6 mb-2 ">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    {" "}
+                                    <CgCalendarDates style={{ fontSize: "25px" }} /> {result?.schedule?.date}
+                                </span>
                             </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Giờ khám: {result?.schedule?.timeId?.time}</span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <label className="offset-md-3">Thông tin bệnh nhân</label>
-                            <div className="col-md-12 ">
-                                <span className="form-label">Chuyên khoa: {result?.specialtyInfo?.specialtyName}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Họ tên bệnh nhân: {result?.patientInfo?.fullName}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Số điện thoại: {result?.patientInfo?.phone}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Email: {result?.patientInfo?.email}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Giới tính: {result?.patientInfo?.gender}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Ngày sinh: {result?.patientInfo?.dateOfBirth}</span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Địa chỉ: {result?.patientInfo?.address} </span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Lí do khám: {result?.medicalRecordInfo?.reason} </span>
-                            </div>
-                            <div className="col-md-6">
-                                <span className="form-label">
-                                    Lịch sử bệnh án: {result?.medicalRecordInfo?.medicalHistory}
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    <CgTime style={{ fontSize: "25px" }} /> {result?.schedule?.timeId?.time}
                                 </span>
                             </div>
                         </div>
                         <div className="row">
-                            <label className="offset-md-3">Thông tin bác sĩ</label>
-                            <div className="col-md-6">
-                                <span className="form-label">Họ tên bác sĩ: {result?.doctorInfo?.fullName}</span>
+                            <label
+                                className="offset-md-3"
+                                style={{ fontSize: "20px", fontWeight: "500", paddingLeft: "80px" }}
+                            >
+                                Thông tin bệnh nhân
+                            </label>
+                            <div className="col-md-12 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    {" "}
+                                    <FaStethoscope style={{ fontSize: "25px" }} />{" "}
+                                    {result?.specialtyInfo?.specialtyName}
+                                </span>
                             </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Số điện thoại: {result?.doctorInfo?.phone}</span>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    {" "}
+                                    <IoPersonSharp style={{ fontSize: "25px" }} /> {result?.patientInfo?.fullName}
+                                </span>
                             </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Giới tính: {result?.doctorInfo?.gender}</span>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    <MdLocalPhone style={{ fontSize: "25px" }} /> {result?.patientInfo?.phone}
+                                </span>
                             </div>
-                            <div className="col-md-6">
-                                <span className="form-label">Giá khám: {result?.doctorInfo?.price} đ</span>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold ">
+                                    <MdOutlineMarkEmailRead style={{ fontSize: "25px" }} /> {result?.patientInfo?.email}
+                                </span>
                             </div>
-                            <div className="col-md-6">
-                                <span className="form-label">
-                                    Địa chỉ phòng khám: 97 Man Thiện, phường Hiệp Phú, TP Thủ Đức
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    <FaTransgender style={{ fontSize: "25px" }} /> {result?.patientInfo?.gender}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    <CgCalendarDates style={{ fontSize: "25px" }} />
+                                    {result?.patientInfo?.dateOfBirth}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label fw-semibold d-flex align-items-center gap-1">
+                                    <FaHome style={{ fontSize: "25px" }} /> {result?.patientInfo?.address}{" "}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2 " style={{ fontSize: "16px" }}>
+                                <span className="form-label">Lí do khám: </span>
+                                <span className="form-label fw-semibold">{result?.medicalRecordInfo?.reason} </span>
+                            </div>
+                            <div className="col-md-6 mb-2" style={{ fontSize: "16px" }}>
+                                <span className="form-label">Lịch sử bệnh án: </span>
+                                <span className="form-label fw-semibold">
+                                    {result?.medicalRecordInfo?.medicalHistory}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="row fw-semibold">
+                            <label
+                                className="offset-md-3"
+                                style={{ fontSize: "20px", fontWeight: "500", paddingLeft: "100px" }}
+                            >
+                                Thông tin bác sĩ
+                            </label>
+                            <div className="col-md-6 mb-2 ">
+                                <span className="form-label d-flex align-items-center gap-1">
+                                    <IoPersonSharp style={{ fontSize: "25px" }} /> {result?.doctorInfo?.fullName}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label d-flex align-items-center gap-1">
+                                    <MdLocalPhone style={{ fontSize: "25px" }} /> {result?.doctorInfo?.phone}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label d-flex align-items-center gap-1">
+                                    <FaTransgender style={{ fontSize: "25px" }} /> {result?.doctorInfo?.gender}
+                                </span>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <span className="form-label d-flex align-items-center gap-1">
+                                    <IoIosPricetags style={{ fontSize: "25px" }} /> {result?.doctorInfo?.price} đ
+                                </span>
+                            </div>
+                            <div className="col-md-12 mb-2">
+                                <span className="form-label d-flex align-items-center gap-1">
+                                    <MdAddLocationAlt style={{ fontSize: "25px" }} /> 97 Man Thiện, phường Hiệp Phú, TP
+                                    Thủ Đức
                                 </span>
                             </div>
                         </div>

@@ -7,12 +7,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { MdScheduleSend } from "react-icons/md";
+
 const ManageSchedule = (props) => {
     const [scheduleList, setSchedulelList] = useState([]);
     const [arrTime, setArrTime] = useState([]);
     const [startDate, setStartDate] = useState("");
     const [dataCreate, setDataCreate] = useState([]);
     const [dataDelete, setDataDelete] = useState([]);
+    const [dateList, setDateList] = useState([]);
     const account = useSelector((state) => state?.user?.account);
 
     useEffect(() => {
@@ -23,6 +26,10 @@ const ManageSchedule = (props) => {
         let res = await getAllSchedule(account?.user?.id);
         if (res && res.EC === 0) {
             setSchedulelList(res.DT);
+            // Lọc các lịch trình theo điều kiện Appointment
+            let date = moment(new Date(Date.now())).format("YYYY-MM-DD");
+            const result = res.DT.filter((item) => item.schedules.length > 0 && item.date >= date);
+            setDateList(result.map((item) => item.date));
         }
     };
     const getTimeData = async () => {
@@ -99,22 +106,25 @@ const ManageSchedule = (props) => {
                 toast.error("Lỗi");
             }
         } else {
-            const [startTimeString] = time.split(" - ");
-            const [startHours, startMinutes] = startTimeString.split(":").map(Number);
+            const currentDate = moment().format("YYYY-MM-DD");
+            const selectedDate = moment(startDate).format("YYYY-MM-DD");
 
-            // Chuyển đổi "08:00" thành thời gian dạng số (phút)
-            const startTimeInMinutes = startHours * 60 + startMinutes;
+            if (selectedDate === currentDate) {
+                const [startTimeString] = time.split(" - ");
+                const [startHours, startMinutes] = startTimeString.split(":").map(Number);
 
-            // Thời gian hiện tại từ chuỗi "Mon Jul 22 2024 18:17:31 GMT+0700 (Giờ Đông Dương)"
-            let date = new Date(Date.now());
-            const currentTimeInMinutes = date.getHours() * 60 + date.getMinutes();
+                // Convert "08:00" to minutes
+                const startTimeInMinutes = startHours * 60 + startMinutes;
 
-            // So sánh thời gian
-            if (currentTimeInMinutes > startTimeInMinutes) {
-                toast.error("Vui lòng chọn thời gian lớn hơn thời gian hiện tại !");
-                return;
+                // Get current time in minutes
+                const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
+                // Compare times
+                if (currentTimeInMinutes > startTimeInMinutes) {
+                    toast.error("Vui lòng chọn thời gian lớn hơn thời gian hiện tại !");
+                    return;
+                }
             }
-            //const dateString = moment(startDate).format("YYYY-MM-DD");
             const updatedArrTime = arrTime.map((item) => {
                 if (item.id === timeId) {
                     return { ...item, isSelected: !item.isSelected };
@@ -166,8 +176,8 @@ const ManageSchedule = (props) => {
             </div>
             <div className="schedule-body-manage-custom">
                 <div className="schedule-content-manage">
-                    <div className="col-md-6">
-                        <label className="form-label">Chọn ngày</label>
+                    <div className="d-flex gap-3 align-items-center">
+                        <label className="form-label">Chọn ngày:</label>
                         <DatePicker
                             className="form-control"
                             selected={startDate}
@@ -199,9 +209,28 @@ const ManageSchedule = (props) => {
                     </div>
                 </div>
                 <div>
-                    <button className="btn btn-primary" onClick={() => handleSubmitCreactSchedule()}>
+                    <button
+                        className="btn btn-primary custom-btn-save-schedule"
+                        onClick={() => handleSubmitCreactSchedule()}
+                    >
                         Lưu
                     </button>
+                </div>
+                <div className="d-flex gap-2 align-items-center">
+                    <span className="d-flex gap-2 align-items-center" style={{ color: "yellowgreen" }}>
+                        <MdScheduleSend style={{ fontSize: "30px" }} />
+                        Ngày làm việc:{" "}
+                    </span>
+                    {dateList &&
+                        dateList.length > 0 &&
+                        dateList.map((item, index) => {
+                            return (
+                                <span key={index} style={{ fontWeight: 600 }}>
+                                    {" "}
+                                    {item},{" "}
+                                </span>
+                            );
+                        })}
                 </div>
             </div>
         </div>

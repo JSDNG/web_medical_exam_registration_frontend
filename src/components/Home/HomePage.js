@@ -1,18 +1,23 @@
 import imageHomePage from "../../assets/image/image_home.png";
-import imageHomePagedoctor from "../../assets/image/image_doctor.jpg";
-import imageHomePageSpecialty from "../../assets/image/image_specialty.jpg";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getListOfFamousDoctors, getAllSpecialty } from "../../services/apiService";
+import { getListOfFamousDoctors, getAllSpecialty, getPatientInfo, logout } from "../../services/apiService";
 import "./HomePage.scss";
+import { doLogin } from "../../redux/action/userAction";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 const HomePage = () => {
     const [doctorList, setDoctorList] = useState([]);
     const [specialtyList, setSpecialtyList] = useState([]);
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-    const account = useSelector((state) => state.user.account);
-
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const navigate = useNavigate();
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    };
+
     useEffect(() => {
         getData();
     }, []);
@@ -25,43 +30,25 @@ const HomePage = () => {
         if (res1 && res1.EC === 0) {
             setSpecialtyList(res1.DT.slice(0, 3));
         }
+        if (isAuthenticated === false) {
+            let res2 = await getPatientInfo(getCookie("id"));
+            if (res2 && res2.EC === 0) {
+                dispatch(doLogin(res2));
+                toast.success("Đăng nhập với google thành công.");
+                navigate("/");
+            }
+            if (res2 && res2.EC !== 0) {
+                await logout();
+                navigate("/login");
+            }
+        }
     };
+
     return (
         <div className="homepage-container">
             <div className="homepage-content-header">
                 <img src={imageHomePage} alt="prop" className="custom-image-home" />
             </div>
-            {/* <div className="homepage-content-for-you">
-                <div className="header-for-you">
-                    <span className="header-div">Dành cho bạn</span>
-                </div>
-                <div className="body-for-you">
-                    <div className="home-page-custom row-cols-md-6 ">
-                        <div className="container">
-                            <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
-                            <span className="name-text">tên</span>
-                        </div>
-                    </div>
-                    <div className="home-page-custom row-cols-md-6 ">
-                        <div className="container">
-                            <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
-                            <span className="name-text">tên</span>
-                        </div>
-                    </div>
-                    <div className="home-page-custom row-cols-md-6 ">
-                        <div className="container">
-                            <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
-                            <span className="name-text">tên</span>
-                        </div>
-                    </div>
-                    <div className="home-page-custom row-cols-md-6 ">
-                        <div className="container">
-                            <img src={imageHomePagedoctor} alt="prop" className="custom-image-home" />
-                            <span className="name-text">tên</span>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
             <div className="homepage-content-specialty">
                 <div className="header-specialty">
                     <span className="header-div">Chuyên khoa</span>

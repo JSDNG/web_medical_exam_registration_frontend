@@ -6,15 +6,13 @@ import MedicalAppointmentScheduleList from "./MedicalAppointmentScheduleList";
 const ManageMedicalAppointment = (props) => {
     const [medicalAppointmentList, setMedicalAppointmentList] = useState([]);
     const [dateList, setDateList] = useState([]);
-
     const [index, setIndex] = useState(0);
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     useEffect(() => {
         getData();
     }, []);
     const getData = async () => {
-        let res = await getAllAppointmentFromDoctor(account?.user?.id);
+        let res = await getAllAppointmentFromDoctor(account?.user?.id, 2);
         if (res && res.EC === 0) {
             setMedicalAppointmentList(res.DT);
             setDateList(res.DT.map((item) => item.date));
@@ -30,6 +28,7 @@ const ManageMedicalAppointment = (props) => {
             </div>
             <div className="medical-appointment-content">
                 <div className="medical-appointment-body">
+                    <label className="form-label">Chọn ngày</label>
                     <select
                         className="form-select pick-date-medical-appointment-custom"
                         onChange={(event) => setIndex(event.target.value)}

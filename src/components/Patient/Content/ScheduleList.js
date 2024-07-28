@@ -15,7 +15,7 @@ const ScheduleList = (props) => {
     return (
         <div className="schedule-container-client">
             <div className="custom-booking-schedule">
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center gap-2">
                     <FaCalendarAlt />
                     <span>LỊCH KHÁM</span>
                 </div>
@@ -51,7 +51,7 @@ const ScheduleList = (props) => {
             <div className="vertical-separator"></div>
             <div className="custom-extra">
                 <span>ĐỊA CHỈ KHÁM</span>
-                <span>97 Man Thiện, phường Hiệp Phú, TP. Thủ Đức</span>
+                <span className="fw-semibold">97 Man Thiện, phường Hiệp Phú, TP. Thủ Đức</span>
                 <hr />
                 <span>GIÁ KHÁM: {doctorInfor?.price} đ</span>
             </div>

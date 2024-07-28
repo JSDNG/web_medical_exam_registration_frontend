@@ -18,14 +18,13 @@ const AppointmentList = (props) => {
     return (
         <div className="approve-appointment-container-manage-custom">
             <div className="approve-appointment-body-manage-custom">
-                <table className="table table-bordered table-hover table-medical-custom">
+                <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Số thứ tự khám</th>
+                            <th>Số thứ tự</th>
                             <th>Chuyên khoa</th>
                             <th>Họ và tên</th>
-                            <th>Lịch sử bệnh án</th>
                             <th>Lí do khám</th>
                             <th>Số điện thoại</th>
                             <th>Trạng thái</th>
@@ -43,7 +42,6 @@ const AppointmentList = (props) => {
                                         <td>{item?.appointmentNumber}</td>
                                         <td>{item?.MedicalRecord?.specialtyMR}</td>
                                         <td>{item?.Patient?.fullName}</td>
-                                        <td>{item?.MedicalRecord?.medicalHistory}</td>
                                         <td>{item?.MedicalRecord?.reason}</td>
                                         <td>{item?.Patient?.phone}</td>
                                         <td>{item?.statusAM}</td>

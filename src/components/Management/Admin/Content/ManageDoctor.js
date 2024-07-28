@@ -1,14 +1,11 @@
 import ModalCreactDoctor from "./ModalCreactDoctor";
-import "./ManageUser.scss";
+import "./ManageDoctor.scss";
 import TableDoctor from "./TableDoctor";
 import { useEffect, useState } from "react";
-import ModalDeleteUser from "./ModalDeleteUser";
-import TableUserPaginate from "./TableUserPaginate";
-import { getAllDoctor } from "../../../../services/apiService";
+import { getAllMedicalStaff } from "../../../../services/apiService";
 const ManageDoctor = (props) => {
     const limitUsers = 4;
     const [showModalCreactUser, setShowModalCreactUser] = useState(false);
-    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
     const [doctorList, setDoctorList] = useState([]);
     const [data, setData] = useState({});
     const [pageCount, setPageCount] = useState(0);
@@ -20,23 +17,17 @@ const ManageDoctor = (props) => {
     }, []);
 
     const fetchDoctorList = async () => {
-        let res = await getAllDoctor("bac-si");
+        let res = await getAllMedicalStaff("bac-si");
         if (res && res.EC === 0) {
             setDoctorList(res.DT);
         }
     };
-
     const fetchListUsersWithPage = async (page) => {
         // let res = await getUserWithPage(page, limitUsers);
         // if (res.EC === 0) {
         //     setListUser(res.DT.users);
         //     setPageCount(res.DT.totalPages);
         // }
-    };
-
-    const handleClickBtnDelete = (user) => {
-        setShowModalDeleteUser(true);
-        setData(user);
     };
 
     return (
@@ -59,7 +50,6 @@ const ManageDoctor = (props) => {
                     /> */}
                     <TableDoctor
                         doctorList={doctorList}
-                        handleClickBtnDelete={handleClickBtnDelete}
                         fetchListUsersWithPage={fetchListUsersWithPage}
                         pageCount={pageCount}
                         currentPage={currentPage}
@@ -70,17 +60,6 @@ const ManageDoctor = (props) => {
                     show={showModalCreactUser}
                     setShow={setShowModalCreactUser}
                     fetchDoctorList={fetchDoctorList}
-                />
-
-                <ModalDeleteUser
-                    show={showModalDeleteUser}
-                    setShow={setShowModalDeleteUser}
-                    dataDelete={data}
-                    setDataDelete={setData}
-                    //fetchListUsers={fetchListUsers}
-                    fetchListUsersWithPage={fetchListUsersWithPage}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
                 />
             </div>
         </div>

@@ -9,13 +9,11 @@ import { useDispatch } from "react-redux";
 const ModalUpdateMedicalStaffInfo = (props) => {
     const { show, setShow, account } = props;
     const [specialtyList, setSpecialtyList] = useState([]);
-    const [specialtyId, setSpecialtyId] = useState("");
     const [specialtyIdList, setSpecialtyIdList] = useState([]);
     const [positionList, setPositionList] = useState([]);
-    const [position, setPosition] = useState(account?.user?.Position?.positionName);
     const [positionId, setPositionId] = useState(account?.user?.Position?.id);
     const [fullName, setFullName] = useState(account?.user?.fullName);
-    const [gender, setGender] = useState(account?.user?.gender);
+    const [gender, setGender] = useState(account.user.gender ? account?.user?.gender: "Nữ");
     const [phone, setPhone] = useState(account?.user?.phone);
     const [price, setPrice] = useState(account?.user?.price);
     const dispatch = useDispatch();
@@ -29,16 +27,18 @@ const ModalUpdateMedicalStaffInfo = (props) => {
         getData();
     }, []);
     const getData = async () => {
-        let resSpecialty = await getAllSpecialty();
-        let resPosition = await getAllPosition();
-        if (resPosition && resPosition.EC === 0) {
-            setPositionList(resPosition.DT);
-        }
-        if (resSpecialty && resSpecialty.EC === 0) {
-            setSpecialtyList(resSpecialty.DT);
-        }
-        if (resSpecialty && resSpecialty.EC !== 0) {
-            console.log("err");
+        if (account?.role === "Bác sĩ") {
+            let resSpecialty = await getAllSpecialty();
+            let resPosition = await getAllPosition();
+            if (resPosition && resPosition.EC === 0) {
+                setPositionList(resPosition.DT);
+            }
+            if (resSpecialty && resSpecialty.EC === 0) {
+                setSpecialtyList(resSpecialty.DT);
+            }
+            if (resSpecialty && resSpecialty.EC !== 0) {
+                console.log("err");
+            }
         }
     };
 
@@ -48,12 +48,11 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             dispatch(doLogin(res));
         }
     };
-    const handleChooseSpecialty = (id) => {
-        console.log("id", id);
-        setSpecialtyId(id);
-        setSpecialtyIdList([...specialtyIdList, id]);
+    const handleChooseSpecialty = (event) => {
+        const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
+        console.log(selectedValues);
+        setSpecialtyIdList(selectedValues);
     };
-    console.log(specialtyIdList);
     const formatNumber = (value) => {
         // Remove all non-digit characters
         value = value.replace(/\D/g, "");
@@ -97,7 +96,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
         }
     };
     const handleSubmitUpdate = async () => {
-        if (!fullName || !phone || !gender || !price) {
+        if (!fullName || !phone || !gender) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
             return;
         }
@@ -129,31 +128,66 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                 show={show}
                 onHide={handleClose}
                 animation={false}
-                size="xl"
+                size="lg"
                 backdrop="static"
-                className="modal-add-user"
+                className="modal-update-user"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Cập nhật thông tin cá nhân</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
-                        <div className="col-md-6" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                            <label className="form-label">Chức danh</label>
-                            <select
-                                className="form-select"
-                                onChange={(event) => setPositionId(event.target.value)}
-                                value={positionId}
-                            >
-                                {positionList &&
-                                    positionList.length > 0 &&
-                                    positionList.map((item, index) => (
-                                        <option key={`${index}-m`} value={item?.id}>
-                                            {item?.positionName}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
+                        {account?.role === "Bác sĩ" ? (
+                            <>
+                                <div className="col-md-6" style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                    <label className="form-label">Chức danh</label>
+                                    <select
+                                        className="form-select"
+                                        onChange={(event) => setPositionId(event.target.value)}
+                                        value={positionId}
+                                    >
+                                        {positionList &&
+                                            positionList.length > 0 &&
+                                            positionList.map((item, index) => (
+                                                <option key={`${index}-m`} value={item?.id}>
+                                                    {item?.positionName}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+
+                                <div className="col-md-6 " style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                    <label className="form-label">Chuyên khoa</label>
+                                    <select
+                                        className="form-select"
+                                        onChange={(event) => handleChooseSpecialty(event)}
+                                        value={specialtyIdList}
+                                        multiple
+                                    >
+                                        {specialtyList &&
+                                            specialtyList.length > 0 &&
+                                            specialtyList.map((item, index) => (
+                                                <option key={`${index}-m`} value={item?.id}>
+                                                    {item?.specialtyName}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+                                <div className="col-md-6">
+                                    <label className="form-label">Giá khám</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={price}
+                                        onChange={(event) => handleChangePrice(event.target.value)}
+                                        placeholder="Ví dụ: 300.000 đ"
+                                    />
+                                </div>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+
                         <div className="col-md-6">
                             <label className="form-label">Họ tên</label>
                             <input
@@ -162,22 +196,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                                 value={fullName}
                                 onChange={(event) => setFullName(event.target.value)}
                             />
-                        </div>
-                        <div className="col-md-6" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                            <label className="form-label">Chuyên khoa</label>
-                            <select
-                                className="form-select"
-                                onChange={(event) => handleChooseSpecialty(event.target.value)}
-                                value={specialtyId}
-                            >
-                                {specialtyList &&
-                                    specialtyList.length > 0 &&
-                                    specialtyList.map((item, index) => (
-                                        <option key={`${index}-m`} value={item?.id}>
-                                            {item?.specialtyName}
-                                        </option>
-                                    ))}
-                            </select>
                         </div>
                         <div className="col-md-6">
                             <label className="form-label">Giới tính</label>
@@ -199,16 +217,7 @@ const ModalUpdateMedicalStaffInfo = (props) => {
                                 onChange={(event) => handleChangePhone(event.target.value)}
                             />
                         </div>
-                        <div className="col-md-6">
-                            <label className="form-label">Giá khám</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={price}
-                                onChange={(event) => handleChangePrice(event.target.value)}
-                                placeholder="Ví dụ: 300.000 đ"
-                            />
-                        </div>
+
                         <div className="col-md-6">
                             <input id="previewImg" type="file" hidden onChange={(event) => handleOnchangeImg(event)} />
                             <MdFileUpload />

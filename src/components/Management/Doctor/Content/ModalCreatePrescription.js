@@ -1,14 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation } from "react-router-dom";
 import { getAllMedication, postPrescription } from "../../../../services/apiService";
 import ReactToPrint from "react-to-print";
-import { FaRegHospital } from "react-icons/fa";
 import logo from "../../../../assets/image/logo.png";
 import moment from "moment";
 const ModalCreatePrescription = (props) => {
@@ -25,7 +23,6 @@ const ModalCreatePrescription = (props) => {
     const [invoice, setInvoice] = useState({});
     const componentRef = useRef();
 
-    const navigate = useNavigate();
     const handleClose = () => {
         setShowPrescription(false);
     };
@@ -96,7 +93,7 @@ const ModalCreatePrescription = (props) => {
         console.log(data);
         let res = await postPrescription(data);
         if (res && res.EC === 0) {
-            toast.success(res.EM);
+            toast.success("Tạo toa thuốc thành công.");
             setShowInvoice(true);
             setInvoice(res.DT);
             handleClose();
@@ -169,9 +166,8 @@ const ModalCreatePrescription = (props) => {
                                     return (
                                         <div key={`${index}-prescription`} className="prescription-main-container">
                                             <div className="prescriptions-content container">
-                                                <div>
-                                                    <span>{index + 1}</span>
-                                                </div>
+                                                <span>{index + 1}</span>
+
                                                 <div className="col-md-6 card-prescription-custom">
                                                     <div>
                                                         <span>{item.medicationName} </span>
@@ -192,11 +188,10 @@ const ModalCreatePrescription = (props) => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="prescription-price-custom">
+                                                <div className="prescription-quantity-custom">
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         className="form-control "
-                                                        placeholder="Số lượng"
                                                         value={item.quantity}
                                                         onChange={(event) =>
                                                             handelOnChange(
@@ -207,7 +202,7 @@ const ModalCreatePrescription = (props) => {
                                                         }
                                                     />
                                                 </div>
-                                                <div className="prescription-header-1 container">
+                                                <div className="prescription-header-1">
                                                     <Button
                                                         className="btn btn-danger"
                                                         onClick={() => handleAddDeletePrescription("DELETE", item.id)}
@@ -227,7 +222,7 @@ const ModalCreatePrescription = (props) => {
                         Bỏ qua
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmit()}>
-                        Lưu
+                        Tiếp
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -246,7 +241,7 @@ const ModalCreatePrescription = (props) => {
                                 <img src={logo} style={{ fontSize: "75px", fontWeight: "200" }} />
                                 <span className="ms-3" style={{ fontSize: "25px", fontWeight: "500" }}>
                                     {" "}
-                                    Phòng khám tư nhân BookingCare
+                                    Phòng khám tư nhân HealthBooking
                                 </span>
                             </div>
                             <div className="d-flex flex-column" style={{ maxWidth: "300px" }}>

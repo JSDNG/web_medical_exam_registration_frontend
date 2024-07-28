@@ -40,7 +40,7 @@ const ModalCreateAppointment = (props) => {
 
         let res = await putExaminingDoctor(data);
         if (res && res.EC === 0) {
-            toast.success(res.EM);
+            toast.success("Khám bệnh thành công.");
             props.getData();
             handleClose();
             setShowPrescription(true);
@@ -117,7 +117,7 @@ const ModalCreateAppointment = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={() => handleSubmit()}>
-                        Lưu
+                        Tiếp
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -1,7 +1,26 @@
-const TableDoctor = (props) => {
-    const { doctorList } = props;
+import { useState, useEffect } from "react";
+import { getAllMedicalStaff } from "../../../../services/apiService";
+import ModalCreateStaff from "./ModalCreactStaff";
+const ManageStaff = (props) => {
+    const [show, setShow] = useState(false);
+    const [staffList, setStaffList] = useState([]);
+    useEffect(() => {
+        getData();
+    }, []);
+    const getData = async () => {
+        let res = await getAllMedicalStaff("nhan-vien");
+        if (res && res.EC === 0) {
+            setStaffList(res.DT);
+        }
+    };
     return (
-        <>
+        <div className="manage-staff-container">
+            <div className="title">Quản lý Nhân viên</div>
+            <div className="btn-add-staff">
+                <button className="btn btn-primary" onClick={() => setShow(true)}>
+                    Thêm mới
+                </button>
+            </div>
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -13,9 +32,9 @@ const TableDoctor = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {doctorList &&
-                        doctorList.length > 0 &&
-                        doctorList.map((item, index) => {
+                    {staffList &&
+                        staffList.length > 0 &&
+                        staffList.map((item, index) => {
                             return (
                                 <tr key={`table-user${index}`}>
                                     <td>{index + 1}</td>
@@ -34,15 +53,16 @@ const TableDoctor = (props) => {
                                 </tr>
                             );
                         })}
-                    {doctorList && doctorList.length === 0 && (
+                    {staffList && staffList.length === 0 && (
                         <tr>
                             <td colSpan={"5"}>Not found data</td>
                         </tr>
                     )}
                 </tbody>
             </table>
-        </>
+            <ModalCreateStaff show={show} setShow={setShow} getData={getData} />
+        </div>
     );
 };
 
-export default TableDoctor;
+export default ManageStaff;

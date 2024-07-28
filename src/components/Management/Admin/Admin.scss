@@ -3,13 +3,25 @@
     .admin-header {
     }
     .admin-main {
-        padding: 10px 100px;
+        padding: 20px 50px;
         .container-dash-board-admin {
-            padding: 40px 200px;
+            padding: 20px 150px;
             .dash-board-admin-custom {
                 display: flex;
                 gap: 50px;
-                padding-bottom: 100px;
+                padding-bottom: 40px;
+            }
+        }
+        .manage-staff-container {
+            .title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 25px;
+                font-weight: 500;
+            }
+            .btn-add-staff {
+                margin: 10px 0px;
             }
         }
     }

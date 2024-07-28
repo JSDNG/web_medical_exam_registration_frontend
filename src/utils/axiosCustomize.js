@@ -59,16 +59,16 @@ axiosInstance.interceptors.response.use(
         switch (status) {
             // authentication (token related issues)
             case 401: {
-                toast.error("Not authenticated the user");
-                //checkCookie();
+                //toast.error("Not authenticated the user");
+                localStorage.removeItem("persist:root");
                 window.location.href = "/login";
-                //return Promise.reject(error);
                 return error.response.data;
             }
 
             // forbidden (permission related issues)
             case 403: {
-                toast.error(`you don't have the permission to access this resource...`);
+                window.location.href = "/forbidden";
+                //toast.error(`you don't have the permission to access this resource...`);
                 return Promise.reject(error);
             }
 

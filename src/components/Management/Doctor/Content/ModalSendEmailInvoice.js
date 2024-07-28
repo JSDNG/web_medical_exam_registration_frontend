@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { postSendEmailInvoice } from "../../../../services/apiService";
 import { useSelector } from "react-redux";
+import { Buffer } from "buffer/";
 const ModalSendEmailInvoice = (props) => {
     const { show, setShow, data } = props;
     const [imageBase64, setImageBase64] = useState("");
@@ -36,11 +37,11 @@ const ModalSendEmailInvoice = (props) => {
         let result = {
             email: data?.Patient?.email,
             patientName: data?.Patient?.fullName,
+            //file: Buffer.from(imageBase64, "base64"),
             file: imageBase64,
             doctorId: account?.user?.id,
             recordId: data?.MedicalRecord?.id,
         };
-        console.log(result);
         let res = await postSendEmailInvoice(result);
         if (res && res.EC === 0) {
             toast.success(res.EM);
@@ -78,7 +79,7 @@ const ModalSendEmailInvoice = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={() => handleSubmit()}>
-                        Lưu
+                        Gửi
                     </Button>
                 </Modal.Footer>
             </Modal>

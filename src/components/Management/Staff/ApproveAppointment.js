@@ -20,14 +20,13 @@ const ApproveAppointment = (props) => {
     };
     return (
         <div className="approve-appointment-container-manage-custom">
-            <table className="table table-bordered table-hover approve-appointment-custom">
+            <table className="table table-hover approve-appointment-custom">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Số thứ tự khám</th>
+                        <th>Số thứ tự</th>
                         <th>Chuyên khoa</th>
                         <th>Họ và tên</th>
-                        <th>Lịch sử bệnh án</th>
                         <th>Lí do khám</th>
                         <th>Số điện thoại</th>
                         <th>Trạng thái</th>
@@ -49,7 +48,6 @@ const ApproveAppointment = (props) => {
                                     <td>{item?.appointmentNumber}</td>
                                     <td>{item?.MedicalRecord?.specialtyMR}</td>
                                     <td>{item?.Patient?.fullName}</td>
-                                    <td>{item?.MedicalRecord?.medicalHistory}</td>
                                     <td>{item?.MedicalRecord?.reason}</td>
                                     <td>{item?.Patient?.phone}</td>
                                     <td>{item?.statusAM}</td>

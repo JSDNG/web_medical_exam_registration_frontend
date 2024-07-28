@@ -1,6 +1,6 @@
 .medical-appointment-container {
-    .medical-appointment-list-header-manage-custom{
-        .title-custom{
+    .medical-appointment-list-header-manage-custom {
+        .title-custom {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -11,7 +11,11 @@
     .medical-appointment-content {
         .medical-appointment-body {
             padding: 20px 0px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
             .pick-date-medical-appointment-custom {
+                cursor: pointer;
                 width: 200px;
             }
         }

@@ -1,9 +1,12 @@
 import "./ManageMedicationList.scss";
 import { useNavigate } from "react-router-dom";
-import { IoHome } from "react-icons/io5";
 import { getAllMedication } from "../../../../services/apiService";
 import { useState, useEffect } from "react";
 import ModalCreactAndUpdateMedication from "./ModalCreactAndUpdateMedication";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { GiMedicines } from "react-icons/gi";
+import { IoIosPricetags } from "react-icons/io";
+import { CgArrowLongRightR } from "react-icons/cg";
 const ManageMedicationList = (props) => {
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -55,16 +58,21 @@ const ManageMedicationList = (props) => {
                                     className="manage-detail-medication-custom"
                                     onClick={() => handleClick(item)}
                                 >
-                                    <div className="manage-info-medication-custom">
-                                        <div className="manage-medication-name-custom">
-                                            <span>{item?.medicationName} </span>
-                                        </div>
-                                        <div className="manage-medication-name-custom">
-                                            <span>{item?.price} </span>
-                                        </div>
-                                        <div className="manage-medication-name-custom">
-                                            <span>{item?.description} </span>
-                                        </div>
+                                    <div className="manage-medication-name-custom">
+                                        <span className="d-flex gap-2 align-items-center">
+                                            <GiMedicines style={{ fontSize: "25px" }} />
+                                            {item?.medicationName}{" "}
+                                        </span>
+                                        <span className="d-flex gap-2 align-items-center">
+                                            <IoIosPricetags style={{ fontSize: "20px" }} /> {item?.price} đ
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span className="d-flex gap-2 align-items-center">
+                                            {" "}
+                                            <CgArrowLongRightR style={{ fontSize: "20px" }}/>
+                                            {item?.description}{" "}
+                                        </span>
                                     </div>
                                 </div>
                                 <hr />

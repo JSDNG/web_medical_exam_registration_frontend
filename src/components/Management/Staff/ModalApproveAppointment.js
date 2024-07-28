@@ -35,7 +35,7 @@ const ModalApproveAppointment = (props) => {
                 staffId: account?.user?.id,
             });
             if (res && res.EC === 0) {
-                toast.success(res.EM);
+                toast.success("Duyệt lịch khám bệnh thành công.");
                 props.getData();
                 handleClose();
             }
@@ -52,7 +52,7 @@ const ModalApproveAppointment = (props) => {
                 animation={false}
                 size="lg"
                 backdrop="static"
-                className="modal-add-user"
+                className="modal-approve"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Phê duyệt lịch khám bệnh</Modal.Title>
@@ -63,8 +63,8 @@ const ModalApproveAppointment = (props) => {
                             <label className="offset-md-3" style={{ fontSize: "18px" }}>
                                 Thông tin lịch khám bệnh
                             </label>
-                            <div className="col-md-6 ">
-                                <FaStethoscope />
+                            <div className="col-md-6">
+                                <FaStethoscope className="custom-div-approve" />
                                 <span className="form-label"> {data?.MedicalRecord?.specialtyMR}</span>
                             </div>
                             <div className="col-md-6">

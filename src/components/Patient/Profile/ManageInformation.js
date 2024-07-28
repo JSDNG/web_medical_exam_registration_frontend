@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-//import { getAllMedicalRecordfromPatient } from "../../../services/apiService";
-import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import ModalUpdatePatientInfo from "./ModalUpdatePatientInfo";
 const ManageInformation = (props) => {
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const [show, setShow] = useState(false);
     const account = useSelector((state) => state?.user?.account);
-    const dispatch = useDispatch();
     return (
         <div className=" row profile-info-custom">
-            <label className="offset-md-3 profile-title-custom">Thông tin bệnh nhân</label>
+            <label className="profile-title-custom">Thông tin bệnh nhân</label>
             <div className="col-md-6 mb-4 d-flex flex-column ">
                 <label className="form-label">Họ tên:</label>
                 <span className="fw-semibold"> {account?.user?.fullName}</span>
@@ -33,6 +31,12 @@ const ManageInformation = (props) => {
                 <label className="form-label">Địa chỉ:</label>
                 <span className="fw-semibold"> {account?.user?.address} </span>
             </div>
+            <div className="col-md-12">
+                <button className="btn btn-primary" onClick={() => setShow(true)}>
+                    Cập nhật thông tin
+                </button>
+            </div>
+            <ModalUpdatePatientInfo show={show} setShow={setShow} account={account} />
         </div>
     );
 };

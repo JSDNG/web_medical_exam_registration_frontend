@@ -9,9 +9,9 @@ import { logout } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import { useState } from "react";
-import { FaRegHospital } from "react-icons/fa";
-import logo from "../../assets/image/logo.png"
+import logo from "../../assets/image/logo.png";
 import ModalQuickCheckUp from "./ModalQuickCheckUp";
+import { IoSettings } from "react-icons/io5";
 const Header = (props) => {
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
@@ -35,7 +35,7 @@ const Header = (props) => {
             <Container>
                 <img src={logo} className="custom-icon-header" />
                 <NavLink to="/" className="navbar-brand header-custom">
-                    BookingCare
+                    HealthBooking
                 </NavLink>
                 {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
                 <Navbar.Collapse id="basic-navbar-nav" className="custom-collapse">
@@ -64,31 +64,26 @@ const Header = (props) => {
                             showQuickCheckUp={showQuickCheckUp}
                             setShowQuickCheckUp={setShowQuickCheckUp}
                         />
-                        {isAuthenticated === false ? (
-                            <NavLink to="/login" className="nav-link">
-                                Đăng nhập
-                            </NavLink>
-                        ) : (
-                            <NavDropdown title={"Cài đặt"} id="basic-nav-dropdown">
-                                <NavDropdown.Item> {account?.user?.fullName}</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item
-                                    onClick={() => {
-                                        navigate("/ho-so");
-                                    }}
-                                >
-                                    Hồ sơ
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item
-                                    onClick={() => {
-                                        handleLogOut();
-                                    }}
-                                >
-                                    Đăng xuất
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        )}
+
+                        <NavDropdown title={<IoSettings style={{ fontSize: "28px" }} />} id="basic-nav-dropdown">
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    navigate("/ho-so");
+                                }}
+                            >
+                                {" "}
+                                {account?.user?.fullName}
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    handleLogOut();
+                                }}
+                            >
+                                Đăng xuất
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

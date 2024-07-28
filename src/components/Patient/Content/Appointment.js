@@ -1,8 +1,6 @@
 import "./Appointment.scss";
-import { FaBars } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import ScheduleList from "./ScheduleList";
-import imagedoctor from "../../../assets/image/image_doctor.jpg";
 import { IoHome } from "react-icons/io5";
 import { getAllSchedule } from "../../../services/apiService";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -34,7 +32,8 @@ const Appointment = (props) => {
                     return !schedule.Appointment || schedule.Appointment.id === null;
                 });
             });
-            const result = res.DT.filter((item) => item.schedules.length > 0);
+            let date = moment(new Date(Date.now())).format("YYYY-MM-DD");
+            const result = res.DT.filter((item) => item.schedules.length > 0 && item.date > date);
             setScheduleList(result);
             setDateList(result.map((item) => item.date));
         }
@@ -75,7 +74,13 @@ const Appointment = (props) => {
                             ))}
                     </select>
 
-                    <ScheduleList scheduleList={scheduleList} dateList={dateList} index={index} doctorInfor={doctorInfor} getData={getData} />
+                    <ScheduleList
+                        scheduleList={scheduleList}
+                        dateList={dateList}
+                        index={index}
+                        doctorInfor={doctorInfor}
+                        getData={getData}
+                    />
                 </div>
                 <hr />
                 <div className="appointment-footer">

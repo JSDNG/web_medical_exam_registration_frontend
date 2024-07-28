@@ -19,9 +19,15 @@
 
 .management-container {
     width: 100%;
+    .management-header-container {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
     .management-body-container {
         .management-main {
-            padding: 10px 160px;
+            padding: 50px 160px;
         }
     }
     // .management-footer-container {

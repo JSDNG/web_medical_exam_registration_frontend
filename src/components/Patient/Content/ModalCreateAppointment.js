@@ -4,7 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { postCreateAppointment, putUpdatePatient, getAllRelative } from "../../../services/apiService";
+import { doLogin } from "../../../redux/action/userAction";
+import { postCreateAppointment, putUpdatePatient, getAllRelative, getPatientInfo } from "../../../services/apiService";
 const ModalCreateAppointment = (props) => {
     const {
         showAppointment,
@@ -17,7 +18,7 @@ const ModalCreateAppointment = (props) => {
         dateList,
         index,
     } = props;
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const dispatch = useDispatch();
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
 
@@ -131,6 +132,12 @@ const ModalCreateAppointment = (props) => {
         }
         setDateOfBirth(dob);
     };
+    const refreshData = async () => {
+        let res = await getPatientInfo(account?.user?.id);
+        if (res && res.EC === 0) {
+            dispatch(doLogin(res));
+        }
+    };
     const handleSubmitCreactUser = async () => {
         if (!fullName || !phone || !gender || !address || !reason) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
@@ -165,6 +172,7 @@ const ModalCreateAppointment = (props) => {
         };
         if (status) {
             await putUpdatePatient({ id: account?.user?.id, fullName, gender, phone, dateOfBirth, address });
+            refreshData();
         } else {
             data.relative = {
                 fullName: fullName,
@@ -179,7 +187,7 @@ const ModalCreateAppointment = (props) => {
 
         let res = await postCreateAppointment(data);
         if (res && res.EC === 0) {
-            toast.success(res.EM);
+            toast.success("Đặt lịch khám bệnh thành công.");
             handleClose();
             props.getData();
         }
@@ -210,7 +218,7 @@ const ModalCreateAppointment = (props) => {
                                     {doctorInfor?.Position?.positionName}, Bác sĩ {doctorInfor?.fullName}
                                 </span>
                                 <span className="time-text">
-                                    {time} {dateList?.[index]}
+                                    {time}, {dateList?.[index]}
                                 </span>
                                 <span>Giá khám: {doctorInfor?.price} đ</span>
                             </div>

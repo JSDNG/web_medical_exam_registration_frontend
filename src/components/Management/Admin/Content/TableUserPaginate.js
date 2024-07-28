@@ -8,7 +8,7 @@ const TableUserPaginate = (props) => {
     };
     return (
         <>
-            <table className="table table-bordered table-hover">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>

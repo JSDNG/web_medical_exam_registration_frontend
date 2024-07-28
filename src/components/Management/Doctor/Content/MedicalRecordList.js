@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllAppointmentById, getAllInvoiceByDoctorId } from "../../../../services/apiService";
+import { getAllAppointmentFromDoctor, getAllInvoiceByDoctorId } from "../../../../services/apiService";
 import ModalSendEmailInvoice from "./ModalSendEmailInvoice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -14,7 +14,7 @@ const MedicalRecordList = (props) => {
     }, []);
 
     const getData = async () => {
-        let res = await getAllAppointmentById(3);
+        let res = await getAllAppointmentFromDoctor(account?.user?.id,3);
         if (res && res.EC === 0) {
             setMedicalRecordList(res.DT);
         }
@@ -40,7 +40,7 @@ const MedicalRecordList = (props) => {
                 <span className="title-custom">DANH SÁCH BỆNH ÁN ĐÃ KHÁM</span>
             </div>
             <div className="medical-record-list-body-manage-custom">
-                <table className="table table-bordered table-hover table-medical-custom">
+                <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
                             <th>ID</th>

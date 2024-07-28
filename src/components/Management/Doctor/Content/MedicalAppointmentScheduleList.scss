@@ -1,7 +1,9 @@
-.schedule-container-client {
+.medical-appointment-list-container-client {
     .custom-table-for-medical {
         .table-medical-custom {
-            cursor: pointer;
+            .custom-tr-table {
+                cursor: pointer;
+            }
         }
     }
 }
@@ -22,7 +24,7 @@
         align-items: center;
         padding-bottom: 15px;
         .pick-medication-custom {
-            width: 500px;
+            width: 400px;
             height: 40px;
         }
     }
@@ -36,9 +38,11 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+                width: 560px;
             }
-            .prescription-price-custom {
-                width: 300px;
+            .prescription-quantity-custom {
+                padding: 0px 10px;
+                width: 100px;
             }
         }
     }

@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 10px 20px;
     .schedule-header-manage-custom {
         .title-custom {
             display: flex;
@@ -14,6 +13,7 @@
     }
     .schedule-body-manage-custom {
         .schedule-content-manage {
+            padding: 10px 0px;
             .pick-hour {
                 margin: 20px 0;
                 display: flex;
@@ -30,6 +30,10 @@
                     }
                 }
             }
+        }
+        .custom-btn-save-schedule {
+            display: flex;
+            margin-left: auto;
         }
     }
 }

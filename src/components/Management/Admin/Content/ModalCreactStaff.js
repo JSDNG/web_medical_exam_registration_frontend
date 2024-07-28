@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { postRegister } from "../../../../services/apiService";
-const ModalCreactDoctor = (props) => {
+const ModalCreateStaff = (props) => {
     const { show, setShow } = props;
 
     const handleClose = () => {
@@ -34,7 +34,7 @@ const ModalCreactDoctor = (props) => {
             setPhone(cleanedValue);
         }
     };
-    const handleSubmitCreactDoctor = async () => {
+    const handleSubmitCreactStaff = async () => {
         //validate
         const inValidEmail = validateEmail(email);
 
@@ -58,12 +58,12 @@ const ModalCreactDoctor = (props) => {
             return;
         }
 
-        let res = await postRegister({ email, password, accountType: "MedicalStaff", fullName, phone, roleId: 2 });
+        let res = await postRegister({ email, password, accountType: "MedicalStaff", fullName, phone, roleId: 3 });
 
         if (res && res.EC === 0) {
             toast.success(res.EM);
             handleClose();
-            props.fetchDoctorList();
+            props.getData();
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
@@ -80,7 +80,7 @@ const ModalCreactDoctor = (props) => {
                 className="modal-add-user"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm mới bác sĩ</Modal.Title>
+                    <Modal.Title>Thêm mới nhân viên</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -125,7 +125,7 @@ const ModalCreactDoctor = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={() => handleSubmitCreactDoctor()}>
+                    <Button variant="primary" onClick={() => handleSubmitCreactStaff()}>
                         Tạo
                     </Button>
                 </Modal.Footer>
@@ -134,4 +134,4 @@ const ModalCreactDoctor = (props) => {
     );
 };
 
-export default ModalCreactDoctor;
+export default ModalCreateStaff;

@@ -3,13 +3,13 @@
     .doctor-header {
     }
     .doctor-main {
-        padding: 10px 50px;
+        padding: 20px 50px;
         .container-dash-board-doctor {
-            padding: 40px 200px;
+            padding: 20px 150px;
             .dash-board-doctor-custom {
                 display: flex;
                 gap: 50px;
-                padding-bottom: 100px;
+                padding-bottom: 40px;
             }
         }
         .medical-record-list-container-manage-custom {
@@ -20,7 +20,7 @@
                     align-items: center;
                     font-size: 25px;
                     font-weight: 500;
-                    padding-bottom: 10px;
+                    padding-bottom: 20px;
                 }
             }
         }

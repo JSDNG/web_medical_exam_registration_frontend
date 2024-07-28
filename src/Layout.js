@@ -5,6 +5,7 @@ import Management from "./components/Management/Management";
 import Admin from "./components/Management/Admin/Admin";
 import DashBoardAdmin from "./components/Management/Admin/Content/DashBoard";
 import ManageDoctor from "./components/Management/Admin/Content/ManageDoctor";
+import ManageStaff from "./components/Management/Admin/Content/ManageStaff"; 
 import ManageSpecialtyList from "./components/Management/Admin/Content/ManageSpecialtyList";
 import ManageMedicationList from "./components/Management/Admin/Content/ManageMedicationList";
 import Doctor from "./components/Management/Doctor/Doctor";
@@ -36,8 +37,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import NotFound from "./components/ErrorPage/NotPound";
+import Forbidden from "./components/ErrorPage/Forbidden";
 
+import { useSelector } from "react-redux";
 const Layout = (props) => {
+    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     return (
         <>
             <Routes>
@@ -68,6 +73,7 @@ const Layout = (props) => {
                     <Route path="/quan-ly/quan-tri-vien" element={<Admin />}>
                         <Route index element={<DashBoardAdmin />} />
                         <Route path="quan-ly-bac-si" element={<ManageDoctor />} />
+                        <Route path="quan-ly-nhan-vien" element={<ManageStaff />} />
                         <Route path="quan-ly-chuyen-khoa" element={<ManageSpecialtyList />} />
                         <Route path="quan-ly-thuoc" element={<ManageMedicationList />} />
                     </Route>
@@ -86,7 +92,8 @@ const Layout = (props) => {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                {/* <Route path="*" element={<NotFound />} /> */}
+                <Route path="*" element={<NotFound />} />
+                <Route path="/forbidden" element={<Forbidden />} />
             </Routes>
             <ToastContainer
                 position="top-right"

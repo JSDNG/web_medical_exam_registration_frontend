@@ -8,20 +8,20 @@ import moment from "moment";
 const AppointmentListPatient = (props) => {
     const [show, setShow] = useState(false);
     const [appointmentListPatient, setAppointmentListPatient] = useState([]);
+    const account = useSelector((state) => state?.user?.account);
     useEffect(() => {
         getData();
     }, []);
     const getData = async () => {
-        let res = await getAllMedicalRecordfromPatient(1, 6);
+        let res = await getAllMedicalRecordfromPatient(account?.user?.id, 6);
         if (res && res.EC === 0) {
             setAppointmentListPatient(res.DT.MedicalRecordPatient);
         }
     };
-    console.log(appointmentListPatient);
     return (
         <div className="appointment-history-patient-container-manage-custom">
             <div className="appointment-history-patient-body-manage-custom">
-                <table className="table table-bordered table-hover table-medical-custom">
+                <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -57,7 +57,7 @@ const AppointmentListPatient = (props) => {
                             })}
                         {appointmentListPatient && appointmentListPatient.length === 0 && (
                             <tr>
-                                <td colSpan={"4"}>Không có dữ liệu</td>
+                                <td colSpan={"10"}>Không có dữ liệu</td>
                             </tr>
                         )}
                     </tbody>

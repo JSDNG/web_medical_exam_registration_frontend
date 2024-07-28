@@ -1,13 +1,7 @@
 import axios from "../utils/axiosCustomize";
 
-const getUserWithPage = (page, limit) => {
-    return axios.get(`/api/v1/participant?page=${page}&limit=${limit}`);
-};
 const postLoginWithLocal = (data) => {
     return axios.post("/api/v1/login", { ...data });
-};
-const postLoginWithGoogle = () => {
-    return axios.get("/api/v1/auth/google/callback");
 };
 const postRegister = (data) => {
     return axios.post("/api/v1/register", { ...data });
@@ -41,7 +35,7 @@ const postMedication = (data) => {
 const putMedication = (data) => {
     return axios.put(`/api/v1/admin/medication`, { ...data });
 };
-const getAllDoctor = (data) => {
+const getAllMedicalStaff = (data) => {
     return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
 };
 const getListOfFamousDoctors = (data) => {
@@ -49,8 +43,8 @@ const getListOfFamousDoctors = (data) => {
 };
 
 // Doctor
-const getAllAppointmentFromDoctor = (id) => {
-    return axios.get(`/api/v1/doctor/appointment-from-one-doctor/all?id=${id}`);
+const getAllAppointmentFromDoctor = (doctorId, statusId) => {
+    return axios.get(`/api/v1/doctor/appointment-from-one-doctor/all?doctorId=${doctorId}&statusId=${statusId}`);
 };
 const putExaminingDoctor = (data) => {
     return axios.put("/api/v1/doctor/examining-doctor", { ...data });
@@ -70,13 +64,16 @@ const deleteOneSchedule = (id) => {
 };
 //Appointment
 const postCreateAppointment = (data) => {
-    console.log(data);
     return axios.post(`/api/v1/patient/appointment`, { ...data });
 };
 
 //Patient
 const createQuickCheckUp = (data) => {
     return axios.post(`/api/v1/patient/quick-check-up`, { ...data });
+};
+
+const getPatientInfo = (id) => {
+    return axios.get(`/api/v1/patient/information?id=${id}`);
 };
 
 const putUpdatePatient = (data) => {
@@ -86,7 +83,11 @@ const putUpdatePatient = (data) => {
 const getAllRelative = (id) => {
     return axios.get(`/api/v1/relative/all?id=${id}`);
 };
-
+const getScheduleForPatient = (dateQuickCheckUp, specialty) => {
+    return axios.get(
+        `/api/v1/patient/find-the-right-schedule?dateQuickCheckUp=${dateQuickCheckUp}&specialty=${specialty}`
+    );
+};
 const getAllMedicalRecordfromPatient = (patientId, statusId) => {
     return axios.get(`/api/v1/patient/medical-record/all?patientId=${patientId}&statusId=${statusId}`);
 };
@@ -114,15 +115,14 @@ const putMedicalStaff = (data) => {
 };
 
 const postSendEmailInvoice = (data) => {
+    console.log(data);
     return axios.post(`/api/v1/doctor/send-email-invoice`, { ...data });
 };
 const getAllInvoiceByDoctorId = (id) => {
     return axios.get(`/api/v1/doctor/invoice?id=${id}`);
 };
 export {
-    getUserWithPage,
     postLoginWithLocal,
-    postLoginWithGoogle,
     postRegister,
     logout,
     getAllTime,
@@ -130,7 +130,7 @@ export {
     getAllSpecialty,
     postSpecialty,
     putSpecialty,
-    getAllDoctor,
+    getAllMedicalStaff,
     postCreateSchedule,
     getAllSchedule,
     deleteOneSchedule,
@@ -154,4 +154,6 @@ export {
     postSendEmailInvoice,
     getAllInvoiceByDoctorId,
     getOneMedicalStaff,
+    getPatientInfo,
+    getScheduleForPatient,
 };

@@ -6,37 +6,8 @@
             height: 400px;
         }
     }
-    .homepage-content-for-you {
-        padding: 20px 0px;
-        .header-for-you {
-            font-size: 25px;
-            font-weight: 500;
-        }
-        .body-for-you {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px 10px;
-            .home-page-custom {
-                .container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    .custom-image-home {
-                        margin: 10px;
-                        border-radius: 50%;
-                        width: 220px;
-                        height: 220px;
-                        object-fit: cover;
-                    }
-                    .name-text {
-                        font-size: 18px;
-                        font-weight: 500;
-                    }
-                }
-            }
-        }
-    }
     .homepage-content-specialty {
+        padding-top: 20px;
         .header-specialty {
             font-size: 25px;
             font-weight: 500;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoArrowBackOutline } from "react-icons/io5";
 import "./Login.scss";
@@ -8,18 +8,16 @@ import { postLoginWithLocal } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import { method } from "lodash";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const account = useSelector((state) => state?.user?.account);
     const handleKeyDown = (event) => {
         if (event && event.key === "Enter") {
             handleLogin();
@@ -33,7 +31,17 @@ const Login = () => {
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             );
     };
-
+    useEffect(() => {
+        if (isAuthenticated === true && account.role === "Bệnh nhân") {
+            navigate("/");
+        } else if (isAuthenticated === true && account.role === "Nhân viên") {
+            navigate("/quan-ly/nhan-vien");
+        } else if (isAuthenticated === true && account.role === "Bác sĩ") {
+            navigate("/quan-ly/bac-si");
+        } else if (isAuthenticated === true && account.role === "Quản trị viên") {
+            navigate("/quan-ly/quan-tri-vien");
+        }
+    }, [navigate]);
     const handleLogin = async () => {
         //validate
         const inValidEmail = validateEmail(email);
@@ -67,10 +75,10 @@ const Login = () => {
             toast.error(res.EM);
         }
     };
-
     const handleGoogleLogin = async () => {
         window.location.href = "http://localhost:8081/api/v1/auth/google";
     };
+
     return (
         <div className="login-container-custom">
             <div className="back">
@@ -85,7 +93,7 @@ const Login = () => {
                     <img src={logo} className="image" alt="" />
                     <div>
                         <span className="hospital-header-login">Phòng khám tư nhân</span>
-                        <span className="name-hospital-header-login"> BookingCare</span>
+                        <span className="name-hospital-header-login"> HealthBooking</span>
                     </div>
                 </div>
 
