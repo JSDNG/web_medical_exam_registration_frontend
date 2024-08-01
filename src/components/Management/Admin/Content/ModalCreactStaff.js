@@ -37,9 +37,17 @@ const ModalCreateStaff = (props) => {
     const handleSubmitCreactStaff = async () => {
         //validate
         const inValidEmail = validateEmail(email);
+        if (!fullName) {
+            toast.error("Vui lòng nhập họ tên nhân viên !");
+            return;
+        }
 
+        if (!phone) {
+            toast.error("Vui lòng nhập số điện thoại !");
+            return;
+        }
         if (!inValidEmail) {
-            toast.error("Vui lòng nhập email !");
+            toast.error("Vui lòng nhập email hợp lệ !");
             return;
         }
 
@@ -48,16 +56,10 @@ const ModalCreateStaff = (props) => {
             return;
         }
 
-        if (!fullName) {
-            toast.error("Vui lòng nhập họ tên bác sĩ !");
+        if (password.length < 6) {
+            toast.error("Vui lòng nhập mật khẩu tối thiểu 6 ký tự !");
             return;
         }
-
-        if (!phone) {
-            toast.error("Vui lòng nhập số điện thoại !");
-            return;
-        }
-
         let res = await postRegister({ email, password, accountType: "MedicalStaff", fullName, phone, roleId: 3 });
 
         if (res && res.EC === 0) {
@@ -109,6 +111,7 @@ const ModalCreateStaff = (props) => {
                                 className="form-control"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
+                                placeholder="abc@gmail.com"
                             />
                         </div>
                         <div className="col-md-12">

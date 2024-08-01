@@ -36,7 +36,7 @@ const TableDoctor = (props) => {
                         })}
                     {doctorList && doctorList.length === 0 && (
                         <tr>
-                            <td colSpan={"5"}>Not found data</td>
+                            <td colSpan={"5"}>Không có bác sĩ nào</td>
                         </tr>
                     )}
                 </tbody>

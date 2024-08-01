@@ -1,14 +1,15 @@
 .body-header-manage-custom {
-    height: 50px;
-    background-color: #1fdb4e;
-    font-size: 20px;
+    width: 1230px;
+    margin: 0 auto;
+    font-size: 22px;
     font-weight: 500;
     .custom-collapse-manage {
-        padding: 0px 135px;
         .dropdown-toggle::after {
             display: none !important;
         }
         .custom-header-mamage {
+            display: flex;
+            align-items: center;
             margin-left: auto;
             .nav-link-custom {
                 cursor: pointer;

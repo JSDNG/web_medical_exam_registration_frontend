@@ -34,6 +34,10 @@ const ModalSendEmailInvoice = (props) => {
         }
     };
     const handleSubmit = async () => {
+        if(!imageBase64){
+            toast.error("Vui lòng chọn hóa đơn !")
+            return;
+        }
         let result = {
             email: data?.Patient?.email,
             patientName: data?.Patient?.fullName,

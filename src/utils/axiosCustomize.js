@@ -11,7 +11,7 @@ NProgress.configure({
     trickleSpeed: 100,
 });
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8081",
+    baseURL: process.env.REACT_APP_BACKEND_URL,
     // timeout: 1000,
     // headers: { "X-Custom-Header": "foobar" },
 });
@@ -61,13 +61,13 @@ axiosInstance.interceptors.response.use(
             case 401: {
                 //toast.error("Not authenticated the user");
                 localStorage.removeItem("persist:root");
-                window.location.href = "/login";
+                window.location.href = "/dang-nhap";
                 return error.response.data;
             }
 
             // forbidden (permission related issues)
             case 403: {
-                window.location.href = "/forbidden";
+                window.location.href = "/cam";
                 //toast.error(`you don't have the permission to access this resource...`);
                 return Promise.reject(error);
             }

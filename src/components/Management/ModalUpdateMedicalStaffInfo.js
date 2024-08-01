@@ -111,7 +111,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             positionId: positionId,
             specialty: specialtyIdList,
         };
-        console.log(data);
         let res = await putMedicalStaff(data);
         if (res && res.EC === 0) {
             toast.success(res.EM);

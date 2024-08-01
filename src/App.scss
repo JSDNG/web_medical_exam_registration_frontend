@@ -23,26 +23,33 @@ body {
         top: 0;
         width: 100%;
         z-index: 1000;
+        background-color: rgb(233, 252, 240) !important;
         .body-header-custom {
-            padding: 10px 145px;
-            z-index: 10;
-            background-color: rgb(233, 252, 240) !important;
-            .custom-icon-header {
-                width: 45px;
-                padding-right: 2px;
-            }
-            .header-custom {
-                color: #ffb516;
-                font-size: 26px;
-                font-weight: 700;
-                justify-content: center;
-                padding-right: 20px;
-            }
+            display: flex;
+            width: 1247px;
+            align-items: center;
+            margin: 0 auto;
+            padding: 5px;
             .custom-collapse {
                 display: flex;
                 align-items: center;
-                gap: 60px;
-                .me-auto1 {
+                gap: 20px;
+                .me-auto-header {
+                    display: flex;
+                    align-items: center;
+                    // .custom-icon-header {
+                    //     width: 40px;
+                    //     padding-right: 2px;
+                    // }
+                    .header-custom {
+                        color: #ffb516;
+                        font-size: 25px;
+                        font-weight: 700;
+                        justify-content: center;
+                        padding-right: 20px;
+                    }
+                }
+                .me-auto-center {
                     display: flex;
                     align-items: center;
                     gap: 20px;
@@ -51,9 +58,18 @@ body {
                         //font-weight: 500;
                         color: black !important;
                     }
+                    .custom-search {
+                        padding-left: 40px;
+                        .me-2 {
+                            border-radius: 20px;
+                        }
+                        width: 300px !important;
+                    }
                 }
-                .me-auto2 {
-                    padding-left: auto;
+                .me-auto-end {
+                    margin-left: auto;
+                    display: flex;
+                    align-items: center;
                     .nav-link {
                         font-size: 20px;
                         font-weight: 500;
@@ -71,19 +87,18 @@ body {
                         display: none !important;
                     }
                 }
-                .custom-search {
-                    padding-left: 40px;
-                    .me-2 {
-                        border-radius: 20px;
-                    }
-                    width: 300px !important;
-                }
             }
         }
     }
     .app-body-container {
         .app-main {
-            padding: 80px 160px;
+            padding: 90px 0px;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            align-items: center;
+            height: 100%;
+            margin: 0 auto;
         }
     }
     // .app-footer-container {

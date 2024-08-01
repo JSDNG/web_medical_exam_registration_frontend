@@ -9,7 +9,6 @@ const App = () => {
                 <Header />
             </div>
             <div className="app-body-container">
-                <div className="app-sidenav-container"></div>
                 <div className="app-main">
                     <Outlet />
                 </div>

@@ -2,13 +2,15 @@
     .homepage-content-header {
         .custom-image-home {
             border-radius: 25px;
-            width: 100%;
+            width: 1200px;
             height: 400px;
         }
     }
     .homepage-content-specialty {
-        padding-top: 20px;
+        padding-top: 40px;
         .header-specialty {
+            display: flex;
+            justify-content: center;
             font-size: 25px;
             font-weight: 500;
             .btn-header-good-doctor-custom {
@@ -18,29 +20,63 @@
         }
         .body-specialty {
             display: flex;
-            justify-content: space-between;
-            padding: 20px 10px;
-            .custom-card-home-page {
-                flex-direction: column;
-                align-items: center;
-                cursor: pointer;
-                .card-img-top {
-                    margin: 15px;
-                    width: 100%;
-                    height: 100%;
+            align-items: center;
+            .body-btn-left-right {
+                position: relative; /* Đặt vị trí tương đối cho thẻ chứa */
+                display: inline-block; /* Để bao bọc đúng nội dung bên trong */
+                .btn-left-right {
+                    position: absolute; /* Đặt vị trí tuyệt đối cho nút */
+                    left: -20px; /* Khoảng cách từ mép trái của hình ảnh */
+                    top: 50%; /* Đặt nút ở giữa chiều cao của hình ảnh */
+                    transform: translateY(-50%); /* Canh giữa nút theo chiều dọc */
+                    display: flex;
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid #4bc27a;
+                    border-radius: 8px;
+                    align-items: center;
+                    justify-content: center; /* Canh giữa nội dung bên trong nút */
+                    cursor: pointer;
+                    background-color: white; /* Đặt màu nền nếu cần thiết */
+                    z-index: 10; /* Đảm bảo nút nằm trên hình ảnh */
                 }
             }
-            .card-text {
-                font-size: 20px;
-                font-weight: 600;
+            .content-specialty {
+                display: flex;
+                flex-direction: row;
+                padding: 40px 0px;
+                gap: 75px;
+                width: 1200px;
+                .custom-card-home-page {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    border: 2px solid #ededed;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    padding-bottom: 20px;
+                    .card-img-top {
+                        width: 317px;
+                        margin: 15px;
+                        border-radius: 10px;
+                    }
+                    .card-body-custom {
+                        .card-text-custom {
+                            font-size: 20px;
+                            font-weight: 600;
+                        }
+                    }
+                }
             }
         }
     }
     .homepage-content-good-doctor {
-        padding: 20px 0px;
         .header-good-doctor {
+            display: flex;
+            justify-content: center;
             font-size: 25px;
             font-weight: 500;
+
             .btn-header-good-doctor-custom {
                 display: flex;
                 margin-left: auto;
@@ -48,24 +84,58 @@
         }
         .body-good-doctor {
             display: flex;
-            justify-content: space-between;
-            padding: 20px 10px;
-            flex-direction: row;
-            .container-custom {
+            align-items: center;
+            padding-bottom: 20px;
+            .btn-left {
+                position: relative;
+                left: -15px;
                 display: flex;
-                flex-direction: column;
+                width: 40px;
+                height: 40px;
+                border: 1px solid #4bc27a;
+                border-radius: 8px;
                 align-items: center;
+                padding-left: 9px;
+                margin-left: -5px;
                 cursor: pointer;
-                .custom-image-home {
-                    margin: 10px;
-                    border-radius: 50%;
-                    width: 220px;
-                    height: 220px;
-                    object-fit: cover;
-                }
-                .name-text {
-                    font-size: 18px;
-                    font-weight: 500;
+            }
+            .btn-right {
+                position: relative;
+                left: 20px;
+                display: flex;
+                width: 40px;
+                height: 40px;
+                border: 1px solid #4bc27a;
+                border-radius: 8px;
+                align-items: center;
+                padding-left: 9px;
+                cursor: pointer;
+            }
+            .content-good-doctor {
+                display: flex;
+                padding: 20px 10px;
+                gap: 75px;
+                flex-direction: row;
+                .container-custom {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    cursor: pointer;
+                    .custom-image-home {
+                        margin: 10px 0px;
+                        border-radius: 50%;
+                        width: 220px;
+                        height: 220px;
+                        object-fit: cover;
+                    }
+                    .name-text {
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
+                    .div-specilty-list-custom {
+                        text-align: center;
+                        max-width: 220px;
+                    }
                 }
             }
         }

@@ -5,7 +5,7 @@ import Management from "./components/Management/Management";
 import Admin from "./components/Management/Admin/Admin";
 import DashBoardAdmin from "./components/Management/Admin/Content/DashBoard";
 import ManageDoctor from "./components/Management/Admin/Content/ManageDoctor";
-import ManageStaff from "./components/Management/Admin/Content/ManageStaff"; 
+import ManageStaff from "./components/Management/Admin/Content/ManageStaff";
 import ManageSpecialtyList from "./components/Management/Admin/Content/ManageSpecialtyList";
 import ManageMedicationList from "./components/Management/Admin/Content/ManageMedicationList";
 import Doctor from "./components/Management/Doctor/Doctor";
@@ -28,6 +28,8 @@ import AppointmentListPatient from "./components/Patient/AppointmentHistory/Appo
 import AppointmentListRelative from "./components/Patient/AppointmentHistory/AppointmentListRelative";
 
 import HomePage from "./components/Home/HomePage";
+import SearchPage from "./components/Home/SearchPage";
+import HealthyLivingPage from "./components/Home/HealthyLivingPage";
 import SpecialtyListExamination from "./components/Patient/Content/SpecialtyListExamination";
 import AllDoctorfromOneSpecialty from "./components/Patient/Content/AllDoctorfromOneSpecialty";
 import Appointment from "./components/Patient/Content/Appointment";
@@ -53,7 +55,8 @@ const Layout = (props) => {
                         path="/dich-vu-y-te/kham-chuyen-khoa/danh-sach-bac-si/:id"
                         element={<AllDoctorfromOneSpecialty />}
                     />
-
+                    <Route path="/tim-kiem/:id" element={<SearchPage />} />
+                    <Route path="/song-khoe" element={<HealthyLivingPage />} />
                     <Route path="/danh-sach/bac-si/noi-bat" element={<ListOfFamousDoctors />} />
                     <Route path="/dich-vu-y-te/kham-chuyen-khoa/bac-si/:id" element={<Appointment />} />
 
@@ -90,10 +93,10 @@ const Layout = (props) => {
                         <Route path="danh-sach" element={<AppointmentList />} />
                     </Route>
                 </Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/dang-nhap" element={<Login />} />
+                <Route path="/dang-ky" element={<Register />} />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/forbidden" element={<Forbidden />} />
+                <Route path="/cam" element={<Forbidden />} />
             </Routes>
             <ToastContainer
                 position="top-right"

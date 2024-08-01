@@ -25,7 +25,7 @@ const Header = (props) => {
         if (res && res.EC === 0) {
             dispatch(doLogout());
             toast.success(res.EM);
-            navigate("/login");
+            navigate("/dang-nhap");
         } else {
             toast.error(res.EM);
         }
@@ -38,7 +38,7 @@ const Header = (props) => {
                     <Nav.Link
                         onClick={() => navigate("/quan-ly/quan-tri-vien")}
                         style={{ color: "white" }}
-                        className="d-flex align-items-center mt-1"
+                        className="d-flex align-items-center"
                     >
                         <IoArrowBackOutline style={{ fontSize: "30px" }} />
                     </Nav.Link>
@@ -63,7 +63,7 @@ const Header = (props) => {
                         <Nav.Link
                             onClick={() => navigate("/quan-ly/quan-tri-vien/quan-ly-chuyen-khoa")}
                             style={{ color: "white" }}
-                            className="d-flex align-items-center mt-1 gap-1"
+                            className="d-flex align-items-center gap-1 mt-1"
                         >
                             <FaRegListAlt style={{ fontSize: "30px" }} />
                             Chuyên khoa
@@ -88,7 +88,7 @@ const Header = (props) => {
                         <Nav.Link
                             onClick={() => navigate("/quan-ly/bac-si")}
                             style={{ color: "white" }}
-                            className="d-flex align-items-center mt-1"
+                            className="d-flex align-items-center"
                         >
                             <IoArrowBackOutline style={{ fontSize: "30px" }} />
                         </Nav.Link>
@@ -151,7 +151,7 @@ const Header = (props) => {
                             {account?.user?.fullName}
                         </Nav>
                         <NavDropdown
-                            title={<IoSettingsOutline style={{ color: "white", fontSize: "30px" }} />}
+                            title={<IoSettingsOutline style={{ color: "white", fontSize: "35px" }} />}
                             id="basic-nav-dropdown"
                             style={{ color: "white" }}
                         >

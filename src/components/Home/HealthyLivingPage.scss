@@ -1,0 +1,34 @@
+.container-healthy-living {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    .header-healthy-living {
+        .title-custom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: 500;
+        }
+    }
+    .main-content-healthy-living {
+        background: #fff;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        h5 {
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+        p {
+            line-height: 1.6;
+        }
+        ul {
+            margin: 20px 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+    }
+}

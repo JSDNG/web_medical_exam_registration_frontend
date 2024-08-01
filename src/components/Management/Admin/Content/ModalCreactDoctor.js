@@ -37,17 +37,6 @@ const ModalCreactDoctor = (props) => {
     const handleSubmitCreactDoctor = async () => {
         //validate
         const inValidEmail = validateEmail(email);
-
-        if (!inValidEmail) {
-            toast.error("Vui lòng nhập email !");
-            return;
-        }
-
-        if (!password) {
-            toast.error("Vui lòng nhập mật khẩu !");
-            return;
-        }
-
         if (!fullName) {
             toast.error("Vui lòng nhập họ tên bác sĩ !");
             return;
@@ -55,6 +44,19 @@ const ModalCreactDoctor = (props) => {
 
         if (!phone) {
             toast.error("Vui lòng nhập số điện thoại !");
+            return;
+        }
+        if (!inValidEmail) {
+            toast.error("Vui lòng nhập email hợp lệ!");
+            return;
+        }
+
+        if (!password) {
+            toast.error("Vui lòng nhập mật khẩu !");
+            return;
+        }
+        if (password.length < 6) {
+            toast.error("Vui lòng nhập mật khẩu tối thiểu 6 ký tự !");
             return;
         }
 
@@ -109,6 +111,7 @@ const ModalCreactDoctor = (props) => {
                                 className="form-control"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
+                                placeholder="abc@gmail.com"
                             />
                         </div>
                         <div className="col-md-12">

@@ -1,4 +1,7 @@
 .specialty-list-container-client-custom {
+    position: absolute;
+    margin-right: auto;
+    width: 1200px;
     .custom-link-header-1 {
         .custom-link-1 {
             color: aquamarine;
@@ -17,8 +20,8 @@
                 width: 190px;
                 height: 130px;
             }
-            .info-specialty-custom{
-                .specialty-name-custom{
+            .info-specialty-custom {
+                .specialty-name-custom {
                     font-size: 19px;
                     font-weight: 400;
                 }

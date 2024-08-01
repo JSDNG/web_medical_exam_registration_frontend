@@ -1,33 +1,39 @@
-// body {
-//     padding: 0px;
-//     margin: 0;
-//     font-family: -managementle-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-//         "Droid Sans", "Helvetica Neue", sans-serif;
-//     -webkit-font-smoothing: antialiased;
-//     -moz-osx-font-smoothing: grayscale;
-// }
-// @media (min-width: 1400px) {
-//     .container,
-//     .container-lg,
-//     .container-md,
-//     .container-sm,
-//     .container-xl,
-//     .container-xxl {
-//         max-width: 1500px !important;
-//     }
-// }
+body {
+    padding: 0px;
+    margin: 0;
+    font-family: -managementle-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+        "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+@media (min-width: 1400px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1500px !important;
+    }
+}
 
 .management-container {
-    width: 100%;
     .management-header-container {
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 1000;
+        background-color: #1fdb4e;
     }
     .management-body-container {
         .management-main {
-            padding: 50px 160px;
+            padding: 50px 0px;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            align-items: center;
+            height: 100%;
+            margin: 0 auto;
         }
     }
     // .management-footer-container {

@@ -16,8 +16,8 @@ const getAllPosition = () => {
     return axios.get(`/api/v1/admin/position/all`);
 };
 // specialty
-const getAllSpecialty = () => {
-    return axios.get(`/api/v1/admin/specialty/all`);
+const getAllSpecialty = (page, limit) => {
+    return axios.get(`/api/v1/admin/specialty/all?page=${page}&limit=${limit}`);
 };
 const postSpecialty = (data) => {
     return axios.post(`/api/v1/admin/specialty`, { ...data });
@@ -35,11 +35,11 @@ const postMedication = (data) => {
 const putMedication = (data) => {
     return axios.put(`/api/v1/admin/medication`, { ...data });
 };
-const getAllMedicalStaff = (data) => {
-    return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}`);
+const getAllMedicalStaff = (data, search) => {
+    return axios.get(`/api/v1/admin/medical-staff/all?medicalstaff=${data}&search=${search}`);
 };
-const getListOfFamousDoctors = (data) => {
-    return axios.get(`/api/v1/admin/list-of-famous-doctors`);
+const getListOfFamousDoctors = (page, limit) => {
+    return axios.get(`/api/v1/admin/list-of-famous-doctors?page=${page}&limit=${limit}`);
 };
 
 // Doctor

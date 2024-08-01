@@ -34,7 +34,7 @@ const ListOfFamousDoctors = (props) => {
                         return (
                             <>
                                 <div
-                                    key={index}
+                                    key={`${index}-sp`}
                                     className="detail-good-doctor-custom"
                                     onClick={() =>
                                         navigate(`/dich-vu-y-te/kham-chuyen-khoa/bac-si/${item.id}`, {

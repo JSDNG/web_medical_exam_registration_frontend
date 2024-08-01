@@ -1,5 +1,8 @@
 .prominent-doctor-list-container-client-custom {
-    .custom-link-header {
+    position: absolute;
+    margin-right: auto;
+    width: 1200px;
+    .custom-link-header1 {
         .custom-link {
             color: aquamarine;
             cursor: pointer;
@@ -16,7 +19,7 @@
             font-size: 16px;
             font-weight: 500;
         }
-        .span-specialty-custom{
+        .span-specialty-custom {
             width: 50%;
         }
     }
@@ -36,19 +39,18 @@
                     height: 80px;
                     border-radius: 50%;
                 }
-                .doctor-specialty-custom{
+                .doctor-specialty-custom {
                     display: flex;
                     gap: 5px;
                     flex-direction: column;
                     width: 600px;
                     height: 120px;
-                    .doctor-name-custom{
+                    .doctor-name-custom {
                         font-size: 20px;
                         font-weight: 600;
                         color: #3bf50c;
                     }
                 }
-                
             }
         }
     }

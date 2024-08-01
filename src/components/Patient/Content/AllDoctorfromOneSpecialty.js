@@ -25,7 +25,7 @@ const AllDoctorfromOneSpecialty = (props) => {
     };
     return (
         <div className="prominent-doctor-list-container-client-custom">
-            <div className="custom-link-header">
+            <div className="custom-link-header1">
                 <IoHome onClick={() => navigate("/")} className="custom-link" />
                 <span className="custom-link" onClick={() => navigate("/dich-vu-y-te/kham-chuyen-khoa")}>
                     {" "}

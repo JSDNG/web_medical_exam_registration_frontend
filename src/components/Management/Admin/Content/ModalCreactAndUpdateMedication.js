@@ -14,7 +14,6 @@ const ModalCreateAndUpdateMedication = (props) => {
         setDescription("");
         setPrice("");
     };
-    console.log(medicationDetail);
     useEffect(() => {
         setDescription(medicationDetail?.description);
         setMedicationName(medicationDetail?.medicationName);

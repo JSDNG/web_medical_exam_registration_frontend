@@ -68,6 +68,25 @@ const ManageSchedule = (props) => {
         setArrTime(arrTimeClone);
     };
     const handleOnClickTime = async (status, time, timeId) => {
+        const currentDate = moment().format("YYYY-MM-DD");
+        const selectedDate = moment(startDate).format("YYYY-MM-DD");
+
+        if (selectedDate === currentDate) {
+            const [startTimeString] = time.split(" - ");
+            const [startHours, startMinutes] = startTimeString.split(":").map(Number);
+
+            // Convert "08:00" to minutes
+            const startTimeInMinutes = startHours * 60 + startMinutes;
+
+            // Get current time in minutes
+            const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
+
+            // Compare times
+            if (currentTimeInMinutes > startTimeInMinutes) {
+                toast.error("Vui lòng chọn thời gian lớn hơn thời gian hiện tại !");
+                return;
+            }
+        }
         if (status === true) {
             try {
                 const dateString = moment(startDate).format("YYYY-MM-DD");
@@ -106,25 +125,6 @@ const ManageSchedule = (props) => {
                 toast.error("Lỗi");
             }
         } else {
-            const currentDate = moment().format("YYYY-MM-DD");
-            const selectedDate = moment(startDate).format("YYYY-MM-DD");
-
-            if (selectedDate === currentDate) {
-                const [startTimeString] = time.split(" - ");
-                const [startHours, startMinutes] = startTimeString.split(":").map(Number);
-
-                // Convert "08:00" to minutes
-                const startTimeInMinutes = startHours * 60 + startMinutes;
-
-                // Get current time in minutes
-                const currentTimeInMinutes = new Date().getHours() * 60 + new Date().getMinutes();
-
-                // Compare times
-                if (currentTimeInMinutes > startTimeInMinutes) {
-                    toast.error("Vui lòng chọn thời gian lớn hơn thời gian hiện tại !");
-                    return;
-                }
-            }
             const updatedArrTime = arrTime.map((item) => {
                 if (item.id === timeId) {
                     return { ...item, isSelected: !item.isSelected };
