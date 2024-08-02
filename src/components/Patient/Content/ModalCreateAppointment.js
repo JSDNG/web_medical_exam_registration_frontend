@@ -21,7 +21,7 @@ const ModalCreateAppointment = (props) => {
     const dispatch = useDispatch();
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
-
+    const [relativeId, setRelativeId] = useState("");
     const [status, setStatus] = useState(true);
     const [specialtyId, setSpecialtyId] = useState("");
     const [fullName, setFullName] = useState(account?.user?.fullName);
@@ -33,6 +33,7 @@ const ModalCreateAppointment = (props) => {
     const [reason, setReason] = useState("");
     const [medicalHistory, setMedicalHistory] = useState("");
     const handleRefresh = () => {
+        setRelativeId("");
         setFullName("");
         setAddress("");
         setEmail("");
@@ -49,6 +50,7 @@ const ModalCreateAppointment = (props) => {
         setStatus(true);
         setReason("");
         setMedicalHistory("");
+        setSpecialtyId(specialties?.[0]?.id);
     };
 
     useEffect(() => {
@@ -59,23 +61,32 @@ const ModalCreateAppointment = (props) => {
         if (status === true) {
             setFullName(account?.user?.fullName);
             setAddress(account?.user?.address);
+            setEmail(account?.user?.email);
             setGender(account?.user?.gender);
             setPhone(account?.user?.phone);
             setDateOfBirth(account?.user?.dateOfBirth);
-            setSpecialtyId(specialties?.[0]?.id);
-            setReason("");
-            setMedicalHistory("");
         } else {
-            setFullName(relativeList?.[0]?.fullName);
-            setEmail(relativeList?.[0]?.email);
-            setAddress(relativeList?.[0]?.address);
-            setGender(relativeList?.[0]?.gender);
-            setPhone(relativeList?.[0]?.phone);
-            setDateOfBirth(relativeList?.[0]?.dateOfBirth);
-            //setSpecialtyId(specialties?.[0]?.id);
-            setMedicalHistory("");
-            setReason("");
+            if (relativeList.length === 0) {
+                setFullName("");
+                setEmail("");
+                setAddress("");
+                setGender("Nữ");
+                setPhone("");
+                setDateOfBirth("");
+                setRelativeId("");
+            } else {
+                setFullName(relativeList[0]?.fullName || "");
+                setEmail(relativeList[0]?.email || "");
+                setAddress(relativeList[0]?.address || "");
+                setGender(relativeList[0]?.gender || "Nữ");
+                setPhone(relativeList[0]?.phone || "");
+                setDateOfBirth(relativeList[0]?.dateOfBirth || "");
+                setRelativeId(relativeList[0]?.id);
+            }
         }
+        setReason("");
+        setMedicalHistory("");
+        setSpecialtyId(specialties?.[0]?.id);
     }, [status, relativeList]);
 
     const getData = async () => {
@@ -99,6 +110,7 @@ const ModalCreateAppointment = (props) => {
             console.error("Error parsing JSON", e);
             return;
         }
+        setRelativeId(relative?.id);
         setFullName(relative?.fullName);
         setEmail(relative?.email);
         setAddress(relative?.address);
@@ -132,6 +144,43 @@ const ModalCreateAppointment = (props) => {
         }
         setDateOfBirth(dob);
     };
+    // Function to validate the formatted date
+    const isValidDate = (dateString) => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!regex.test(dateString)) {
+            return false;
+        }
+
+        const parts = dateString.split("-");
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+
+        const currentYear = new Date().getFullYear();
+
+        // Additional validations
+        if (year > currentYear || month < 1 || month > 12 || day < 1 || day > 31) {
+            return false;
+        }
+
+        const date = new Date(year, month - 1, day);
+
+        if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+            return false;
+        }
+
+        return true;
+    };
+    const handleChangePhone = (phone) => {
+        // Xóa tất cả các ký tự không phải là số
+        const cleanedValue = phone.replace(/[^0-9]/g, "");
+
+        // Giới hạn số ký tự nhập vào là 10
+        if (cleanedValue.length <= 10) {
+            setPhone(cleanedValue);
+        }
+    };
     const refreshData = async () => {
         let res = await getPatientInfo(account?.user?.id);
         if (res && res.EC === 0) {
@@ -139,23 +188,48 @@ const ModalCreateAppointment = (props) => {
         }
     };
     const handleSubmitCreactUser = async () => {
-        if (!fullName || !phone || !gender || !address || !reason) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+        if (!fullName) {
+            toast.error("Vui lòng tên bệnh nhân!");
             return;
         }
-        let format = moment(dateOfBirth, "YYYY-MM-DD", true).isValid();
-        if (!format) {
-            toast.error("Vui lòng điền ngày sinh hợp lệ!");
+        if (!phone) {
+            toast.error("Vui lòng số điện thoại bệnh nhân!");
             return;
         }
         if (!status) {
             const inValidEmail = validateEmail(email);
             if (!inValidEmail) {
-                toast.error("Vui lòng nhập email!");
+                toast.error("Vui lòng nhập email hợp lệ!");
                 return;
             }
         }
+        if (!gender) {
+            toast.error("Vui lòng chọn giới tính bệnh nhân!");
+            return;
+        }
+        if (!dateOfBirth) {
+            toast.error("Vui lòng nhập ngày sinh!");
+            return;
+        }
+        // Set the date of birth if it's a valid date
+        if (!isValidDate(dateOfBirth)) {
+            toast.error("Ngày sinh không hợp lệ!");
+            return;
+        }
+        if (!address) {
+            toast.error("Vui lòng nhập địa chỉ bệnh nhân!");
+            return;
+        }
+        if (!reason) {
+            toast.error("Vui lòng nhập lý do khám bệnh!");
+            return;
+        }
 
+        let format = moment(dateOfBirth, "YYYY-MM-DD", true).isValid();
+        if (!format) {
+            toast.error("Vui lòng điền ngày sinh hợp lệ!");
+            return;
+        }
         let data = {
             appointment: {
                 statusId: 1,
@@ -175,6 +249,7 @@ const ModalCreateAppointment = (props) => {
             refreshData();
         } else {
             data.relative = {
+                id: relativeId,
                 fullName: fullName,
                 dateOfBirth: dateOfBirth,
                 gender: gender,
@@ -189,6 +264,7 @@ const ModalCreateAppointment = (props) => {
         if (res && res.EC === 0) {
             toast.success("Đặt lịch khám bệnh thành công.");
             handleClose();
+            getData();
             props.getData();
         }
         if (res && res.EC !== 0) {
@@ -209,7 +285,7 @@ const ModalCreateAppointment = (props) => {
                     <Modal.Title>Đặt lịch khám</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
+                    <form className="row g-3">
                         <div className="custom-img-modal-appointment">
                             <img src={`data:image/jpeg;base64,${doctorInfor?.image}`} className="img-top" alt="..." />
 
@@ -217,10 +293,10 @@ const ModalCreateAppointment = (props) => {
                                 <span className="name-text">
                                     {doctorInfor?.Position?.positionName}, Bác sĩ {doctorInfor?.fullName}
                                 </span>
-                                <span className="time-text">
+                                <span className="time-text fw-semibold">
                                     {time}, {dateList?.[index]}
                                 </span>
-                                <span>Giá khám: {doctorInfor?.price} đ</span>
+                                <span className="fw-semibold">Giá khám: {doctorInfor?.price} đ</span>
                             </div>
                         </div>
                         <div className="col-md-12 div-appointment-booking-custom">
@@ -278,7 +354,7 @@ const ModalCreateAppointment = (props) => {
                                 type="text"
                                 className="form-control"
                                 value={phone}
-                                onChange={(event) => setPhone(event.target.value)}
+                                onChange={(event) => handleChangePhone(event.target.value)}
                             />
                         </div>
                         {status === false ? (

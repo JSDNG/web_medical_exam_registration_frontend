@@ -38,7 +38,7 @@ const Header = (props) => {
             //clear redux
             dispatch(doLogout());
             toast.success(res.EM);
-            navigate("/dang-nhap");
+            navigate("/");
         } else {
             toast.error(res.EM);
         }

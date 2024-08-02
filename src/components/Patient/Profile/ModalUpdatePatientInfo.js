@@ -50,9 +50,40 @@ const ModalUpdatePatientInfo = (props) => {
             setPhone(cleanedValue);
         }
     };
+    const isValidDate = (dateString) => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!regex.test(dateString)) {
+            return false;
+        }
+
+        const parts = dateString.split("-");
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+
+        const currentYear = new Date().getFullYear();
+
+        // Additional validations
+        if (year > currentYear || month < 1 || month > 12 || day < 1 || day > 31) {
+            return false;
+        }
+
+        const date = new Date(year, month - 1, day);
+
+        if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+            return false;
+        }
+
+        return true;
+    };
     const handleSubmitUpdate = async () => {
-        if (!fullName || !phone || !gender || !address) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+        if (!fullName) {
+            toast.error("Vui lòng điền họ tên!");
+            return;
+        }
+        if (!isValidDate(dateOfBirth)) {
+            toast.error("Ngày sinh không hợp lệ!");
             return;
         }
         let data = {

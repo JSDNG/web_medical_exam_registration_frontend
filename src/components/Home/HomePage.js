@@ -22,17 +22,7 @@ const HomePage = () => {
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(";").shift();
     };
-    useEffect(() => {
-        if (isAuthenticated === true && account.role === "Bệnh nhân") {
-            navigate("/");
-        } else if (isAuthenticated === true && account.role === "Nhân viên") {
-            navigate("/quan-ly/nhan-vien");
-        } else if (isAuthenticated === true && account.role === "Bác sĩ") {
-            navigate("/quan-ly/bac-si");
-        } else if (isAuthenticated === true && account.role === "Quản trị viên") {
-            navigate("/quan-ly/quan-tri-vien");
-        }
-    }, [navigate]);
+
     useEffect(() => {
         getData(currentSpecialtyPage);
     }, [currentSpecialtyPage]);
@@ -42,7 +32,7 @@ const HomePage = () => {
         if (res && res.EC === 0) {
             setSpecialtyList(res.DT);
         }
-        if (isAuthenticated === false && getCookie("id" !== null)) {
+        if (isAuthenticated === false && getCookie("id") !== undefined) {
             let res2 = await getPatientInfo(getCookie("id"));
             if (res2 && res2.EC === 0) {
                 dispatch(doLogin(res2));
@@ -71,7 +61,17 @@ const HomePage = () => {
             setDoctorList(res.DT);
         }
     };
-
+    useEffect(() => {
+        if (account && account.role === "Bệnh nhân") {
+            navigate("/");
+        } else if (account && account.role === "Nhân viên") {
+            navigate("/quan-ly/nhan-vien");
+        } else if (account && account.role === "Bác sĩ") {
+            navigate("/quan-ly/bac-si");
+        } else if (account && account.role === "Quản trị viên") {
+            navigate("/quan-ly/quan-tri-vien");
+        }
+    }, [navigate]);
     const handleClickArrow = (status) => {
         if (status === "decrease") {
             if (currentDoctorPage - 1 === 0) return;

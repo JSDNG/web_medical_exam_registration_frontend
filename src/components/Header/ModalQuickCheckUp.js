@@ -28,7 +28,7 @@ const ModalQuickCheckUp = (props) => {
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
     const account = useSelector((state) => state?.user?.account);
     const [relativeList, setRelativeList] = useState([]);
-
+    const [relativeId, setRelativeId] = useState("");
     const [result, setResult] = useState({});
     const [show, setShow] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -46,6 +46,7 @@ const ModalQuickCheckUp = (props) => {
     const [reason, setReason] = useState("");
     const [medicalHistory, setMedicalHistory] = useState("");
     const handleRefresh = () => {
+        setRelativeId("");
         setFullName("");
         setAddress("");
         setEmail("");
@@ -61,8 +62,10 @@ const ModalQuickCheckUp = (props) => {
         setShowQuickCheckUp(false);
         setStatus(true);
         setReason("");
+        setShowConfirm(false);
         setMedicalHistory("");
         setGender("Nữ");
+        setSpecialtyId(specialtyList?.[0]?.id);
     };
 
     useEffect(() => {
@@ -73,7 +76,6 @@ const ModalQuickCheckUp = (props) => {
             setGender(account?.user?.gender || "Nữ");
             setPhone(account?.user?.phone || "");
             setDateOfBirth(account?.user?.dateOfBirth || "");
-            setSpecialtyId(specialtyList?.[0]?.id || "");
         } else {
             if (relativeList.length === 0) {
                 setFullName("");
@@ -82,7 +84,7 @@ const ModalQuickCheckUp = (props) => {
                 setGender("Nữ");
                 setPhone("");
                 setDateOfBirth("");
-                setSpecialtyId("");
+                setRelativeId("");
             } else {
                 setFullName(relativeList[0]?.fullName || "");
                 setEmail(relativeList[0]?.email || "");
@@ -90,13 +92,13 @@ const ModalQuickCheckUp = (props) => {
                 setGender(relativeList[0]?.gender || "Nữ");
                 setPhone(relativeList[0]?.phone || "");
                 setDateOfBirth(relativeList[0]?.dateOfBirth || "");
-                setSpecialtyId(specialtyList?.[0]?.id || "");
+                setRelativeId(relativeList[0]?.id);
             }
         }
         setMedicalHistory("");
         setReason("");
+        setSpecialtyId(specialtyList?.[0]?.id);
     }, [status, account, relativeList, specialtyList]);
-
     useEffect(() => {
         getData();
     }, [account]);
@@ -119,6 +121,15 @@ const ModalQuickCheckUp = (props) => {
         const value = event.target.value === "true";
         setStatus(value);
     };
+    const handleChangePhone = (phone) => {
+        // Xóa tất cả các ký tự không phải là số
+        const cleanedValue = phone.replace(/[^0-9]/g, "");
+
+        // Giới hạn số ký tự nhập vào là 10
+        if (cleanedValue.length <= 10) {
+            setPhone(cleanedValue);
+        }
+    };
     const handleRelativeInfo = (event) => {
         let relative;
         try {
@@ -127,6 +138,7 @@ const ModalQuickCheckUp = (props) => {
             console.error("Error parsing JSON", e);
             return;
         }
+        setRelativeId(relative?.id);
         setFullName(relative?.fullName);
         setEmail(relative?.email);
         setAddress(relative?.address);
@@ -134,7 +146,6 @@ const ModalQuickCheckUp = (props) => {
         setPhone(relative?.phone);
         setDateOfBirth(relative?.dateOfBirth);
     };
-
     const validateEmail = (email) => {
         return String(email)
             .toLowerCase()
@@ -158,13 +169,44 @@ const ModalQuickCheckUp = (props) => {
         if (dob.length > 10) {
             dob = dob.slice(0, 10);
         }
+
         setDateOfBirth(dob);
     };
+    // Function to validate the formatted date
+    const isValidDate = (dateString) => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (!regex.test(dateString)) {
+            return false;
+        }
+
+        const parts = dateString.split("-");
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+
+        const currentYear = new Date().getFullYear();
+
+        // Additional validations
+        if (year > currentYear || month < 1 || month > 12 || day < 1 || day > 31) {
+            return false;
+        }
+
+        const date = new Date(year, month - 1, day);
+
+        if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+            return false;
+        }
+
+        return true;
+    };
+
     const convertMinutesToHours = (minutes) => {
         const hours = Math.floor(minutes / 60);
         const remainingMinutes = minutes % 60;
         return `${hours} giờ ${remainingMinutes} phút`;
     };
+
     const handleSubmitFindSchedule = async () => {
         if (!fullName) {
             toast.error("Vui lòng tên bệnh nhân!");
@@ -186,7 +228,12 @@ const ModalQuickCheckUp = (props) => {
             return;
         }
         if (!dateOfBirth) {
-            toast.error("Vui lòng nhập ngày tháng năm sinh!");
+            toast.error("Vui lòng nhập ngày sinh!");
+            return;
+        }
+        // Set the date of birth if it's a valid date
+        if (!isValidDate(dateOfBirth)) {
+            toast.error("Ngày sinh không hợp lệ!");
             return;
         }
         if (!address) {
@@ -248,6 +295,7 @@ const ModalQuickCheckUp = (props) => {
             await putUpdatePatient({ id: account?.user?.id, fullName, gender, phone, dateOfBirth, address });
         } else {
             data.relative = {
+                id: relativeId,
                 fullName: fullName,
                 dateOfBirth: dateOfBirth,
                 gender: gender,
@@ -260,6 +308,7 @@ const ModalQuickCheckUp = (props) => {
         let res = await createQuickCheckUp(data);
         if (res && res.EC === 0 && res.DT) {
             toast.success(res.EM);
+            getData();
             handleClose();
             setResult(res.DT);
             setShow(true);
@@ -343,7 +392,7 @@ const ModalQuickCheckUp = (props) => {
                                 type="text"
                                 className="form-control"
                                 value={phone}
-                                onChange={(event) => setPhone(event.target.value)}
+                                onChange={(event) => handleChangePhone(event.target.value)}
                             />
                         </div>
                         {status === false ? (
@@ -458,7 +507,7 @@ const ModalQuickCheckUp = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" className="btn btn-light" onClick={() => setShowConfirm(false)}>
+                    <Button variant="primary" className="btn btn-light" onClick={() => handleClose()}>
                         Hủy
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmitCreactUser()}>
@@ -486,7 +535,7 @@ const ModalQuickCheckUp = (props) => {
                             >
                                 Thông tin lịch khám bệnh
                             </label>
-                            <div className="col-md-12 mb-2" style={{ fontSize: "16px" }}>
+                            <div className="col-md-12 mb-2" style={{ fontSize: "17px" }}>
                                 <span className="form-label">Số thứ tự khám: </span>
                                 <span className="form-label fw-semibold">
                                     {result?.appointmentInfo?.appointmentNumber}
@@ -495,12 +544,12 @@ const ModalQuickCheckUp = (props) => {
                             <div className="col-md-6 mb-2 ">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
                                     {" "}
-                                    <CgCalendarDates style={{ fontSize: "25px" }} /> {result?.schedule?.date}
+                                    <CgCalendarDates style={{ fontSize: "22px" }} /> {result?.schedule?.date}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
-                                    <CgTime style={{ fontSize: "25px" }} /> {result?.schedule?.timeId?.time}
+                                    <CgTime style={{ fontSize: "22px" }} /> {result?.schedule?.timeId?.time}
                                 </span>
                             </div>
                         </div>
@@ -514,47 +563,47 @@ const ModalQuickCheckUp = (props) => {
                             <div className="col-md-12 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
                                     {" "}
-                                    <FaStethoscope style={{ fontSize: "25px" }} />{" "}
+                                    <FaStethoscope style={{ fontSize: "22px" }} />{" "}
                                     {result?.specialtyInfo?.specialtyName}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
                                     {" "}
-                                    <IoPersonSharp style={{ fontSize: "25px" }} /> {result?.patientInfo?.fullName}
+                                    <IoPersonSharp style={{ fontSize: "22px" }} /> {result?.patientInfo?.fullName}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
-                                    <MdLocalPhone style={{ fontSize: "25px" }} /> {result?.patientInfo?.phone}
+                                    <MdLocalPhone style={{ fontSize: "22px" }} /> {result?.patientInfo?.phone}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold ">
-                                    <MdOutlineMarkEmailRead style={{ fontSize: "25px" }} /> {result?.patientInfo?.email}
+                                    <MdOutlineMarkEmailRead style={{ fontSize: "22px" }} /> {result?.patientInfo?.email}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
-                                    <FaTransgender style={{ fontSize: "25px" }} /> {result?.patientInfo?.gender}
+                                    <FaTransgender style={{ fontSize: "22px" }} /> {result?.patientInfo?.gender}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
-                                    <CgCalendarDates style={{ fontSize: "25px" }} />
+                                    <CgCalendarDates style={{ fontSize: "22px" }} />
                                     {result?.patientInfo?.dateOfBirth}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label fw-semibold d-flex align-items-center gap-1">
-                                    <FaHome style={{ fontSize: "25px" }} /> {result?.patientInfo?.address}{" "}
+                                    <FaHome style={{ fontSize: "22px" }} /> {result?.patientInfo?.address}{" "}
                                 </span>
                             </div>
-                            <div className="col-md-6 mb-2 " style={{ fontSize: "16px" }}>
+                            <div className="col-md-6 mb-2 " style={{ fontSize: "17px" }}>
                                 <span className="form-label">Lí do khám: </span>
                                 <span className="form-label fw-semibold">{result?.medicalRecordInfo?.reason} </span>
                             </div>
-                            <div className="col-md-6 mb-2" style={{ fontSize: "16px" }}>
+                            <div className="col-md-6 mb-2" style={{ fontSize: "17px" }}>
                                 <span className="form-label">Lịch sử bệnh án: </span>
                                 <span className="form-label fw-semibold">
                                     {result?.medicalRecordInfo?.medicalHistory}
@@ -570,27 +619,27 @@ const ModalQuickCheckUp = (props) => {
                             </label>
                             <div className="col-md-6 mb-2 ">
                                 <span className="form-label d-flex align-items-center gap-1">
-                                    <IoPersonSharp style={{ fontSize: "25px" }} /> {result?.doctorInfo?.fullName}
+                                    <IoPersonSharp style={{ fontSize: "22px" }} /> {result?.doctorInfo?.fullName}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label d-flex align-items-center gap-1">
-                                    <MdLocalPhone style={{ fontSize: "25px" }} /> {result?.doctorInfo?.phone}
+                                    <MdLocalPhone style={{ fontSize: "22px" }} /> {result?.doctorInfo?.phone}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label d-flex align-items-center gap-1">
-                                    <FaTransgender style={{ fontSize: "25px" }} /> {result?.doctorInfo?.gender}
+                                    <FaTransgender style={{ fontSize: "22px" }} /> {result?.doctorInfo?.gender}
                                 </span>
                             </div>
                             <div className="col-md-6 mb-2">
                                 <span className="form-label d-flex align-items-center gap-1">
-                                    <IoIosPricetags style={{ fontSize: "25px" }} /> {result?.doctorInfo?.price} đ
+                                    <IoIosPricetags style={{ fontSize: "22px" }} /> {result?.doctorInfo?.price} đ
                                 </span>
                             </div>
                             <div className="col-md-12 mb-2">
                                 <span className="form-label d-flex align-items-center gap-1">
-                                    <MdAddLocationAlt style={{ fontSize: "25px" }} /> 97 Man Thiện, phường Hiệp Phú, TP
+                                    <MdAddLocationAlt style={{ fontSize: "22px" }} /> 97 Man Thiện, phường Hiệp Phú, TP
                                     Thủ Đức
                                 </span>
                             </div>

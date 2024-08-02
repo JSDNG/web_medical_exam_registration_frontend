@@ -5,9 +5,10 @@ import ModalUpdateMedicalStaffInfo from "./ModalUpdateMedicalStaffInfo";
 const MedicalStaffInfo = (props) => {
     const [show, setShow] = useState(false);
     const account = useSelector((state) => state?.user?.account);
+    
     return (
         <div className="medical-staff-info-container-custom">
-            <label className="label-title-custom">Thông tin {account?.user?.fullName}</label>
+            <label className="label-title-custom">Thông tin cá nhân</label>
             <div className="medical-staff-info-header-custom">
                 <div className="div-img-info-custom">
                     <img src={`data:image/jpeg;base64,${account?.user?.image}`} className="card-img-top" />

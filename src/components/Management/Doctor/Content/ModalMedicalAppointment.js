@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { putExaminingDoctor } from "../../../../services/apiService";
+import { deleteAppointment, putExaminingDoctor } from "../../../../services/apiService";
 import ModalCreatePrescription from "./ModalCreatePrescription";
 import { CgCalendarDates } from "react-icons/cg";
 import { FaTransgender } from "react-icons/fa";
@@ -20,7 +20,6 @@ const ModalCreateAppointment = (props) => {
     };
     const [diagnosis, setDiagnosis] = useState("");
     const [temp, setTemp] = useState("");
-    console.log(medicalInfo);
     const handleSubmit = async () => {
         if (!diagnosis) {
             toast.error("Vui lòng chuẩn đoán bệnh án!");
@@ -45,6 +44,17 @@ const ModalCreateAppointment = (props) => {
             handleClose();
             setShowPrescription(true);
             setTemp(diagnosis);
+        }
+        if (res && res.EC !== 0) {
+            toast.error(res.EM);
+        }
+    };
+    const handleDelete = async () => {
+        let res = await deleteAppointment(medicalInfo.id);
+        if (res && res.EC === 0) {
+            toast.success("Xóa bệnh án thành công");
+            props.getData();
+            handleClose();
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
@@ -116,6 +126,9 @@ const ModalCreateAppointment = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="primary" onClick={() => handleDelete()}>
+                        Hủy
+                    </Button>
                     <Button variant="primary" onClick={() => handleSubmit()}>
                         Tiếp
                     </Button>

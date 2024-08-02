@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ModalUpdatePatientInfo from "./ModalUpdatePatientInfo";
 const ManageInformation = (props) => {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
     const account = useSelector((state) => state?.user?.account);
+    useEffect(() => {
+        if (!account.role) {
+            navigate("/");
+        }
+    }, [navigate]);
     return (
         <div className=" row profile-info-custom">
             <label className="profile-title-custom">Thông tin bệnh nhân</label>

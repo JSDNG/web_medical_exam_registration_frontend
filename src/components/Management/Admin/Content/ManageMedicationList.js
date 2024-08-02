@@ -71,7 +71,7 @@ const ManageMedicationList = (props) => {
                                         <span className="d-flex gap-2 align-items-center">
                                             {" "}
                                             <CgArrowLongRightR style={{ fontSize: "20px" }}/>
-                                            {item?.description}{" "}
+                                            Mô tả: {item?.description}{" "}
                                         </span>
                                     </div>
                                 </div>

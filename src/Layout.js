@@ -44,7 +44,8 @@ import Forbidden from "./components/ErrorPage/Forbidden";
 
 import { useSelector } from "react-redux";
 const Layout = (props) => {
-    const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const role = useSelector((state) => state?.user?.account?.role);
+    console.log(window.location.pathname);
     return (
         <>
             <Routes>
