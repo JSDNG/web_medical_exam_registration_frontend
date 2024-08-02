@@ -79,7 +79,7 @@ const Login = () => {
         }
     };
     const handleGoogleLogin = async () => {
-        window.location.href = `${process.env.REACT_APP_BACKEND_URL}api/v1/auth/google`;
+        window.location.href = "/api/v1/auth/google";
     };
 
     return (

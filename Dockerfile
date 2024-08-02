@@ -16,5 +16,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 #docker build -t tdq11111/frontend_reactjs_medical .
 #docker push tdq11111/frontend_reactjs_medical 
+#docker rm -f frontend_reactjs_medical 
+#docker rmi <images_id>
 #docker run -d --name frontend_reactjs_medical --network health-booking-network -p 80:80 tdq11111/frontend_reactjs_medical
 

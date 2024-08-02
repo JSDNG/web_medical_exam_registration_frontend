@@ -15,13 +15,24 @@ const HomePage = () => {
     const [currentSpecialtyPage, setCurrentSpecialtyPage] = useState(1);
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state?.user?.isAuthenticated);
+    const account = useSelector((state) => state?.user?.account);
     const navigate = useNavigate();
     const getCookie = (name) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(";").shift();
     };
-
+    useEffect(() => {
+        if (isAuthenticated === true && account.role === "Bệnh nhân") {
+            navigate("/");
+        } else if (isAuthenticated === true && account.role === "Nhân viên") {
+            navigate("/quan-ly/nhan-vien");
+        } else if (isAuthenticated === true && account.role === "Bác sĩ") {
+            navigate("/quan-ly/bac-si");
+        } else if (isAuthenticated === true && account.role === "Quản trị viên") {
+            navigate("/quan-ly/quan-tri-vien");
+        }
+    }, [navigate]);
     useEffect(() => {
         getData(currentSpecialtyPage);
     }, [currentSpecialtyPage]);
@@ -31,7 +42,7 @@ const HomePage = () => {
         if (res && res.EC === 0) {
             setSpecialtyList(res.DT);
         }
-        if (isAuthenticated === false) {
+        if (isAuthenticated === false && getCookie("id" !== null)) {
             let res2 = await getPatientInfo(getCookie("id"));
             if (res2 && res2.EC === 0) {
                 dispatch(doLogin(res2));

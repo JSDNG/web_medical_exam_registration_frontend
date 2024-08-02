@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { postSendEmailInvoice } from "../../../../services/apiService";
 import { useSelector } from "react-redux";
 import { Buffer } from "buffer/";
+
 const ModalSendEmailInvoice = (props) => {
     const { show, setShow, data } = props;
     const [imageBase64, setImageBase64] = useState("");
@@ -34,14 +35,13 @@ const ModalSendEmailInvoice = (props) => {
         }
     };
     const handleSubmit = async () => {
-        if(!imageBase64){
-            toast.error("Vui lòng chọn hóa đơn !")
+        if (!imageBase64) {
+            toast.error("Vui lòng chọn hóa đơn !");
             return;
         }
         let result = {
             email: data?.Patient?.email,
             patientName: data?.Patient?.fullName,
-            //file: Buffer.from(imageBase64, "base64"),
             file: imageBase64,
             doctorId: account?.user?.id,
             recordId: data?.MedicalRecord?.id,

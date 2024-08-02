@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./ModalQuickCheckUp.scss";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
@@ -65,30 +66,40 @@ const ModalQuickCheckUp = (props) => {
     };
 
     useEffect(() => {
-        getData();
-    }, []);
-    useEffect(() => {
-        if (status === true) {
-            setFullName(account?.user?.fullName);
-            setAddress(account?.user?.address);
-            setGender(account?.user?.gender);
-            setPhone(account?.user?.phone);
-            setDateOfBirth(account?.user?.dateOfBirth);
-            setSpecialtyId(specialtyList?.[0]?.id);
-            setReason("");
-            setMedicalHistory("");
+        if (status) {
+            setFullName(account?.user?.fullName || "");
+            setEmail(account?.user?.email || "");
+            setAddress(account?.user?.address || "");
+            setGender(account?.user?.gender || "Nữ");
+            setPhone(account?.user?.phone || "");
+            setDateOfBirth(account?.user?.dateOfBirth || "");
+            setSpecialtyId(specialtyList?.[0]?.id || "");
         } else {
-            setFullName(relativeList?.[0]?.fullName);
-            setEmail(relativeList?.[0]?.email);
-            setAddress(relativeList?.[0]?.address);
-            setGender(relativeList?.[0]?.gender);
-            setPhone(relativeList?.[0]?.phone);
-            //setDateOfBirth(relativeList?.[0]?.dateOfBirth);
-            setSpecialtyId(specialtyList?.[0]?.id);
-            setMedicalHistory("");
-            setReason("");
+            if (relativeList.length === 0) {
+                setFullName("");
+                setEmail("");
+                setAddress("");
+                setGender("Nữ");
+                setPhone("");
+                setDateOfBirth("");
+                setSpecialtyId("");
+            } else {
+                setFullName(relativeList[0]?.fullName || "");
+                setEmail(relativeList[0]?.email || "");
+                setAddress(relativeList[0]?.address || "");
+                setGender(relativeList[0]?.gender || "Nữ");
+                setPhone(relativeList[0]?.phone || "");
+                setDateOfBirth(relativeList[0]?.dateOfBirth || "");
+                setSpecialtyId(specialtyList?.[0]?.id || "");
+            }
         }
-    }, [status, relativeList]);
+        setMedicalHistory("");
+        setReason("");
+    }, [status, account, relativeList, specialtyList]);
+
+    useEffect(() => {
+        getData();
+    }, [account]);
 
     const getData = async () => {
         let res1 = await getAllSpecialty();
@@ -155,17 +166,38 @@ const ModalQuickCheckUp = (props) => {
         return `${hours} giờ ${remainingMinutes} phút`;
     };
     const handleSubmitFindSchedule = async () => {
-        if (!fullName || !phone || !gender || !address || !reason || !dateOfBirth) {
-            toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+        if (!fullName) {
+            toast.error("Vui lòng tên bệnh nhân!");
+            return;
+        }
+        if (!phone) {
+            toast.error("Vui lòng số điện thoại bệnh nhân!");
             return;
         }
         if (!status) {
             const inValidEmail = validateEmail(email);
             if (!inValidEmail) {
-                toast.error("Vui lòng nhập email!");
+                toast.error("Vui lòng nhập email hợp lệ!");
                 return;
             }
         }
+        if (!gender) {
+            toast.error("Vui lòng chọn giới tính bệnh nhân!");
+            return;
+        }
+        if (!dateOfBirth) {
+            toast.error("Vui lòng nhập ngày tháng năm sinh!");
+            return;
+        }
+        if (!address) {
+            toast.error("Vui lòng nhập địa chỉ bệnh nhân!");
+            return;
+        }
+        if (!reason) {
+            toast.error("Vui lòng nhập lý do khám bệnh!");
+            return;
+        }
+
         const date = moment(new Date(Date.now())).format("YYYY-MM-DD HH:mm:ss");
         let res = await getScheduleForPatient(date, specialtyList[specialtyId - 1].specialtyName);
         if (res && res.EC === 0 && res.DT.length === 0) {
@@ -246,39 +278,17 @@ const ModalQuickCheckUp = (props) => {
                 animation={false}
                 size="xl"
                 backdrop="static"
-                className="modal-add-user"
+                className="modal-quick-check-up"
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Đặt lịch khám nhanh trong ngày</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
-                        <div className="col-md-6 offset-md-3">
-                            <select className="form-select" onChange={handleChange}>
-                                <option value={true}>Đặt cho mình</option>
-                                <option value={false}>Đặt cho người thân</option>
-                            </select>
-                        </div>
-                        {status === true ? (
-                            <></>
-                        ) : (
-                            <div className="col-md-6 offset-md-3" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                                <select
-                                    className="form-select pick-date-medical-appointment-custom"
-                                    onChange={handleRelativeInfo}
-                                >
-                                    {relativeList &&
-                                        relativeList.length > 0 &&
-                                        relativeList.map((item, index) => (
-                                            <option key={`${index}-ma`} value={JSON.stringify(item)}>
-                                                {item?.fullName}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        )}
-                        <div className="col-md-6 offset-md-3" style={{ maxHeight: "300px", overflowY: "auto" }}>
-                            <label className="form-label">Chuyên khoa</label>
+                        <div
+                            className="col-md-6 div-quick-check-up-custom"
+                            style={{ maxHeight: "300px", overflowY: "auto" }}
+                        >
                             <select
                                 className="form-select"
                                 onChange={(event) => setSpecialtyId(event.target.value)}
@@ -293,6 +303,30 @@ const ModalQuickCheckUp = (props) => {
                                     ))}
                             </select>
                         </div>
+                        <div className="col-md-6 div-quick-check-up-custom">
+                            <select className="form-select" onChange={handleChange}>
+                                <option value={true}>Đặt cho mình</option>
+                                <option value={false}>Đặt cho người thân</option>
+                            </select>
+                        </div>
+                        {status === true ? (
+                            <></>
+                        ) : (
+                            <div
+                                className="col-md-6 div-quick-check-up-custom"
+                                style={{ maxHeight: "300px", overflowY: "auto" }}
+                            >
+                                <select className="form-select " onChange={handleRelativeInfo}>
+                                    {relativeList &&
+                                        relativeList.length > 0 &&
+                                        relativeList.map((item, index) => (
+                                            <option key={`${index}-ma`} value={JSON.stringify(item)}>
+                                                {item?.fullName}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                        )}
 
                         <div className="col-md-6">
                             <label className="form-label">Họ tên bệnh nhân (bắt buộc)</label>

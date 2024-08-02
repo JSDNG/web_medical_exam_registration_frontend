@@ -7,8 +7,8 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { getAllMedication, postPrescription } from "../../../../services/apiService";
 import ReactToPrint from "react-to-print";
-import logo from "../../../../assets/image/logo.png";
 import moment from "moment";
+import { GiWingfoot } from "react-icons/gi";
 const ModalCreatePrescription = (props) => {
     const { showPrescription, setShowPrescription, medicalInfo, temp } = props;
     const [medicationList, setMedicationList] = useState([]);
@@ -238,8 +238,8 @@ const ModalCreatePrescription = (props) => {
                     <form ref={componentRef} className="row g-3 m-2">
                         <div className="d-flex align-items-center justify-content-between mb-3">
                             <div className="d-flex align-items-center" style={{ maxWidth: "350px" }}>
-                                <img src={logo} style={{ fontSize: "75px", fontWeight: "200" }} />
-                                <span className="ms-3" style={{ fontSize: "25px", fontWeight: "500" }}>
+                                <GiWingfoot style={{ fontSize: "90px", color: "#2bc740" }} />
+                                <span style={{ fontSize: "25px", fontWeight: "500" }}>
                                     {" "}
                                     Phòng khám tư nhân HealthBooking
                                 </span>

@@ -17,7 +17,7 @@ const ManageDoctor = (props) => {
     }, []);
 
     const fetchDoctorList = async () => {
-        let res = await getAllMedicalStaff("bac-si");
+        let res = await getAllMedicalStaff("bac-si",);
         if (res && res.EC === 0) {
             setDoctorList(res.DT);
         }

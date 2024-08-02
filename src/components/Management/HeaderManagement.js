@@ -151,7 +151,7 @@ const Header = (props) => {
                             {account?.user?.fullName}
                         </Nav>
                         <NavDropdown
-                            title={<IoSettingsOutline style={{ color: "white", fontSize: "35px" }} />}
+                            title={<IoSettingsOutline style={{ color: "white", fontSize: "30px" }} />}
                             id="basic-nav-dropdown"
                             style={{ color: "white" }}
                         >

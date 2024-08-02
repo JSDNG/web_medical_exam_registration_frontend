@@ -24,6 +24,9 @@ const Header = (props) => {
     const [showQuickCheckUp, setShowQuickCheckUp] = useState(false);
     const [search, setSearch] = useState("");
     const handleKeyDown = (event) => {
+        if (search.length === 0) {
+            return;
+        }
         if (event && event.key === "Enter") {
             navigate(`/tim-kiem/${search}`);
         }
