@@ -222,7 +222,7 @@ const ModalCreatePrescription = (props) => {
                         Bỏ qua
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmit()}>
-                        Tiếp
+                        Tạo toa thuốc
                     </Button>
                 </Modal.Footer>
             </Modal>

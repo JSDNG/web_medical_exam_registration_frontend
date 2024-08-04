@@ -21,7 +21,6 @@ const ManageMedicalAppointment = (props) => {
             console.log("err");
         }
     };
-    console.log(dateList);
     return (
         <div className="medical-appointment-container">
             <div className="medical-appointment-list-header-manage-custom">

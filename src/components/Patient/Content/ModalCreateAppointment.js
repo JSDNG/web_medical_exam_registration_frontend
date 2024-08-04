@@ -282,7 +282,7 @@ const ModalCreateAppointment = (props) => {
                 className="modal-add-appointment"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Đặt lịch khám</Modal.Title>
+                    <Modal.Title>Đăng ký lịch khám</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">

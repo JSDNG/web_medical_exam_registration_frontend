@@ -49,6 +49,9 @@ const getAllAppointmentFromDoctor = (doctorId, statusId) => {
 const putExaminingDoctor = (data) => {
     return axios.put("/api/v1/doctor/examining-doctor", { ...data });
 };
+const postReExamination = (data) => {
+    return axios.post(`/api/v1/doctor/re-examination`, { ...data });
+};
 const postPrescription = (data) => {
     return axios.post(`/api/v1/doctor/prescription`, { ...data });
 };
@@ -156,4 +159,5 @@ export {
     getOneMedicalStaff,
     getPatientInfo,
     getScheduleForPatient,
+    postReExamination,
 };

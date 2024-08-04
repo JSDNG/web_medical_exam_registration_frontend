@@ -22,7 +22,7 @@ const ModalCreateAppointment = (props) => {
     const [temp, setTemp] = useState("");
     const handleSubmit = async () => {
         if (!diagnosis) {
-            toast.error("Vui lòng chuẩn đoán bệnh án!");
+            toast.error("Vui lòng chẩn đoán bệnh án!");
             return;
         }
         let data = {
@@ -115,7 +115,7 @@ const ModalCreateAppointment = (props) => {
                             <span> {medicalInfo?.MedicalRecord?.medicalHistory}</span>
                         </div>
                         <div className="col-md-12">
-                            <label className="form-label">Chuẩn đoán: </label>
+                            <label className="form-label">Chẩn đoán: </label>
                             <textarea
                                 type="text"
                                 className="form-control"
@@ -130,7 +130,7 @@ const ModalCreateAppointment = (props) => {
                         Hủy
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmit()}>
-                        Tiếp
+                        Tiếp tục
                     </Button>
                 </Modal.Footer>
             </Modal>

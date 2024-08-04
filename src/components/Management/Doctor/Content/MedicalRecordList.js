@@ -3,18 +3,21 @@ import { getAllAppointmentFromDoctor, getAllInvoiceByDoctorId } from "../../../.
 import ModalSendEmailInvoice from "./ModalSendEmailInvoice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ModalReExamination from "./ModalReExamination";
 const MedicalRecordList = (props) => {
     const [medicalRecordList, setMedicalRecordList] = useState([]);
     const [invoiceList, setInvoiceList] = useState([]);
     const [show, setShow] = useState(false);
+    const [showReExamination, setShowReExamination] = useState(false);
     const [data, setData] = useState({});
+    const [data1, setData1] = useState({});
     const account = useSelector((state) => state?.user?.account);
     useEffect(() => {
         getData();
     }, []);
 
     const getData = async () => {
-        let res = await getAllAppointmentFromDoctor(account?.user?.id,3);
+        let res = await getAllAppointmentFromDoctor(account?.user?.id, 3);
         if (res && res.EC === 0) {
             setMedicalRecordList(res.DT);
         }
@@ -34,6 +37,10 @@ const MedicalRecordList = (props) => {
         }
         setShow(true);
     };
+    const handleClickReExamination = (item) => {
+        setShowReExamination(true);
+        setData1(item);
+    };
     return (
         <div className="medical-record-list-container-manage-custom">
             <div className="medical-record-list-header-manage-custom">
@@ -44,14 +51,13 @@ const MedicalRecordList = (props) => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>STT</th>
                             <th>Chuyên khoa</th>
                             <th>Họ và tên</th>
                             <th>Số điện thoại</th>
                             <th>Trạng thái</th>
                             <th>Thời gian</th>
                             <th>Ngày</th>
-                            <th>Hành động</th>
+                            <th width="250px">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +67,6 @@ const MedicalRecordList = (props) => {
                                 return (
                                     <tr key={index} onClick={() => handleClick(item)}>
                                         <td>{index + 1}</td>
-                                        <td>{item?.appointmentNumber}</td>
                                         <td>{item?.MedicalRecord?.specialtyMR}</td>
                                         <td>{item?.Patient?.fullName}</td>
                                         <td>{item?.Patient?.phone}</td>
@@ -70,10 +75,16 @@ const MedicalRecordList = (props) => {
                                         <td>{item?.date}</td>
                                         <td>
                                             <button
-                                                className="btn btn-primary"
+                                                className="btn btn-primary "
                                                 onClick={() => handleClickInvoice(item?.MedicalRecord?.id)}
                                             >
                                                 Gửi hóa đơn
+                                            </button>
+                                            <button
+                                                className="btn btn-primary mx-3"
+                                                onClick={() => handleClickReExamination(item)}
+                                            >
+                                                Tái khám
                                             </button>
                                         </td>
                                     </tr>
@@ -87,6 +98,12 @@ const MedicalRecordList = (props) => {
                     </tbody>
                 </table>
                 <ModalSendEmailInvoice show={show} setShow={setShow} data={data} getData={getData} />
+                <ModalReExamination
+                    showReExamination={showReExamination}
+                    setShowReExamination={setShowReExamination}
+                    data={data1}
+                    getData={getData}
+                />
             </div>
         </div>
     );

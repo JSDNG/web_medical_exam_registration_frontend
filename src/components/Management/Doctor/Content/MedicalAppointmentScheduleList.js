@@ -32,6 +32,7 @@ const MedicalAppointmentScheduleList = (props) => {
                             <th>Tên bệnh nhân</th>
                             <th>Số điện thoại</th>
                             <th>Khoảng thời gian </th>
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +50,7 @@ const MedicalAppointmentScheduleList = (props) => {
                                         <td>{item?.Patient?.fullName}</td>
                                         <td>{item?.Patient?.phone}</td>
                                         <td>{item?.time}</td>
+                                        <td>{item?.statusAp}</td>
                                     </tr>
                                 );
                             })}

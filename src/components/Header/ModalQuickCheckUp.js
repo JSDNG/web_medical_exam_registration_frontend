@@ -330,7 +330,7 @@ const ModalQuickCheckUp = (props) => {
                 className="modal-quick-check-up"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Đặt lịch khám nhanh trong ngày</Modal.Title>
+                    <Modal.Title>Đăng ký khám nhanh trong ngày</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3" style={{ maxHeight: "500px", overflowY: "auto" }}>
@@ -468,7 +468,7 @@ const ModalQuickCheckUp = (props) => {
                         Làm mới thông tin
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmitFindSchedule()}>
-                        Hoàn thành
+                        Tiếp tục
                     </Button>
                 </Modal.Footer>
             </Modal>
