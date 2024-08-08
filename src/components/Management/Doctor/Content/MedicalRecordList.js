@@ -4,10 +4,12 @@ import ModalSendEmailInvoice from "./ModalSendEmailInvoice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ModalReExamination from "./ModalReExamination";
+import ModalRecordView from "./ModalRecordView";
 const MedicalRecordList = (props) => {
     const [medicalRecordList, setMedicalRecordList] = useState([]);
     const [invoiceList, setInvoiceList] = useState([]);
     const [show, setShow] = useState(false);
+    const [showView, setShowView] = useState(false);
     const [showReExamination, setShowReExamination] = useState(false);
     const [data, setData] = useState({});
     const [data1, setData1] = useState({});
@@ -28,6 +30,7 @@ const MedicalRecordList = (props) => {
     };
     const handleClick = (data) => {
         setData(data);
+        setShowView(true);
     };
     const handleClickInvoice = (id) => {
         let index = invoiceList.findIndex((item) => item.recordId === id);
@@ -104,6 +107,7 @@ const MedicalRecordList = (props) => {
                     data={data1}
                     getData={getData}
                 />
+                <ModalRecordView showView={showView} setShowView={setShowView} data={data} />
             </div>
         </div>
     );

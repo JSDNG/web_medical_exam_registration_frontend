@@ -43,7 +43,24 @@ const ModalCreateAndUpdateSpecialty = (props) => {
             // console.log(base64);
         }
     };
+    const replaceImagePrefix = (imageBase64) => {
+        const prefixPatterns = [
+            /^data:image\/png;base64,/,
+            /^data:image\/jpg;base64,/,
+            /^data:image\/jpeg;base64,/,
+            /^data:image\/gif;base64,/,
+            // Thêm các định dạng khác nếu cần
+        ];
 
+        for (const pattern of prefixPatterns) {
+            if (pattern.test(imageBase64)) {
+                return imageBase64.replace(pattern, "");
+            }
+        }
+
+        // Trả về chuỗi gốc nếu không tìm thấy tiền tố nào phù hợp
+        return imageBase64;
+    };
     const handleSubmit = async () => {
         if (!specialtyName || !description || !imageBase64) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
@@ -52,7 +69,7 @@ const ModalCreateAndUpdateSpecialty = (props) => {
 
         const data = {
             specialtyName: specialtyName,
-            image: imageBase64.replace("data:image/png;base64,", ""),
+            image: replaceImagePrefix(imageBase64),
             description: description,
         };
 

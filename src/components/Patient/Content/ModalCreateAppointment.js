@@ -40,7 +40,6 @@ const ModalCreateAppointment = (props) => {
         setGender("Nữ");
         setPhone("");
         setDateOfBirth("");
-        setSpecialtyId(specialties?.[0]?.id);
         setReason("");
         setMedicalHistory("");
     };
@@ -48,10 +47,14 @@ const ModalCreateAppointment = (props) => {
     const handleClose = () => {
         setShowAppointment(false);
         setStatus(true);
+        setGender("Nữ");
         setReason("");
         setMedicalHistory("");
         setSpecialtyId(specialties?.[0]?.id);
     };
+    useEffect(() => {
+        setSpecialtyId(specialties?.[0]?.id);
+    }, [specialties]);
 
     useEffect(() => {
         getData();
@@ -62,7 +65,7 @@ const ModalCreateAppointment = (props) => {
             setFullName(account?.user?.fullName);
             setAddress(account?.user?.address);
             setEmail(account?.user?.email);
-            setGender(account?.user?.gender);
+            setGender(account?.user?.gender || "Nữ");
             setPhone(account?.user?.phone);
             setDateOfBirth(account?.user?.dateOfBirth);
         } else {
@@ -86,7 +89,6 @@ const ModalCreateAppointment = (props) => {
         }
         setReason("");
         setMedicalHistory("");
-        setSpecialtyId(specialties?.[0]?.id);
     }, [status, relativeList]);
 
     const getData = async () => {
@@ -188,12 +190,16 @@ const ModalCreateAppointment = (props) => {
         }
     };
     const handleSubmitCreactUser = async () => {
+        if (!specialtyId) {
+            toast.error("Vui lòng chọn chuyên khoa!");
+            return;
+        }
         if (!fullName) {
-            toast.error("Vui lòng tên bệnh nhân!");
+            toast.error("Vui lòng nhập tên bệnh nhân!");
             return;
         }
         if (!phone) {
-            toast.error("Vui lòng số điện thoại bệnh nhân!");
+            toast.error("Vui lòng nhập số điện thoại bệnh nhân!");
             return;
         }
         if (!status) {

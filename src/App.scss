@@ -26,7 +26,7 @@ body {
         background-color: rgb(233, 252, 240) !important;
         .body-header-custom {
             display: flex;
-            width: 1247px;
+            width: 78em;
             align-items: center;
             margin: 0 auto;
             padding: 5px;
@@ -36,11 +36,8 @@ body {
                 gap: 20px;
                 .me-auto-header {
                     display: flex;
+                    flex-direction: row;
                     align-items: center;
-                    // .custom-icon-header {
-                    //     width: 40px;
-                    //     padding-right: 2px;
-                    // }
                     .header-custom {
                         color: #ffb516;
                         font-size: 25px;
@@ -51,11 +48,11 @@ body {
                 }
                 .me-auto-center {
                     display: flex;
+                    flex-direction: row;
                     align-items: center;
                     gap: 20px;
                     .nav-link {
                         font-size: 20px;
-                        //font-weight: 500;
                         color: black !important;
                     }
                     .custom-search {
@@ -69,6 +66,7 @@ body {
                 .me-auto-end {
                     margin-left: auto;
                     display: flex;
+                    flex-direction: row;
                     align-items: center;
                     .nav-link {
                         font-size: 20px;
@@ -88,14 +86,42 @@ body {
                     }
                 }
             }
+            @media (max-width: 400px) {
+                .me-auto-end-sm {
+                    display: flex; /* Hoặc các thuộc tính khác để điều chỉnh hiển thị */
+                }
+            }
+            .me-auto-end-sm {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px; /* khoảng cách giữa các item */
+                align-items: center;
+                .nav-link {
+                    font-size: 20px;
+                    font-weight: 500;
+                    color: #5ee0dc !important;
+                }
+                .quick-check-up-custom {
+                    cursor: pointer;
+                }
+                .dropdown-menu[data-bs-popper] {
+                    left: auto;
+                    right: 0;
+                }
+
+                .dropdown-toggle::after {
+                    display: none !important;
+                }
+            }
         }
     }
+
     .app-body-container {
         .app-main {
             padding: 90px 0px;
             display: flex;
             flex-direction: column;
-            max-width: 1200px;
+            max-width: 75em;
             align-items: center;
             height: 100%;
             margin: 0 auto;

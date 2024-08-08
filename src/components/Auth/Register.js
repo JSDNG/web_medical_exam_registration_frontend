@@ -71,73 +71,77 @@ const Register = () => {
 
     return (
         <div className="root-register">
-            <div className="register-container-custom">
-                <div className="register-body">
-                    <div className="back-login">
-                        <IoArrowBackOutline
-                            onClick={() => {
-                                navigate("/dang-nhap");
-                            }}
-                        />
-                    </div>
-                    <div className="header-custom-register">
-                        <img src={logo} className="image" alt="" />
-                        <div>
-                            <span className="hospital-header-register">Phòng khám tư nhân</span>
-                            <span className="name-hospital-header-register"> HealthBooking</span>
-                        </div>
-                    </div>
-                    <div className="register-content">
-                        <div>
-                            <label className="form-label">Email(*)</label>
-                            <input
-                                type={"email"}
-                                className="form-control"
-                                name="email"
-                                value={email}
-                                onChange={(event) => setEmail(event.target.value)}
-                                placeholder="abc1@gmail.com"
-                            />
-                        </div>
-                        <div>
-                            <label className="form-label">Tên đầy đủ(*)</label>
-                            <input
-                                type={"text"}
-                                className="form-control"
-                                name="fullName"
-                                value={fullName}
-                                onChange={(event) => setFullName(event.target.value)}
-                            />
-                        </div>
-                        <div className="password-custom">
-                            <label className="form-label">Mật khẩu(*)</label>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                className="form-control"
-                                name="password"
-                                autoComplete="off"
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                            />
-                            {showPassword ? (
-                                <span className="icons-eye" onClick={() => setShowPassword(false)}>
-                                    <VscEye />
-                                </span>
-                            ) : (
-                                <span className="icons-eye" onClick={() => setShowPassword(true)}>
-                                    <VscEyeClosed />
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                    handleRegister();
-                                }}
-                            >
-                                Đăng ký
-                            </button>
+            <div className="register-container">
+                <div className="container">
+                    <div className="row">
+                        <div className="register-body col-12 p-3">
+                            <div className="back-login">
+                                <IoArrowBackOutline
+                                    onClick={() => {
+                                        navigate("/dang-nhap");
+                                    }}
+                                />
+                            </div>
+                            <div className="header-custom-register">
+                                <img src={logo} className="d-none d-sm-block" alt="" style={{ width: "100px" }} />
+                                <div>
+                                    <span className="hospital-header-register d-none d-sm-block">Phòng khám tư nhân</span>
+                                    <span className="name-hospital-header-register"> HealthBooking</span>
+                                </div>
+                            </div>
+                            <div className="register-content">
+                                <div>
+                                    <label className="form-label">Email(*)</label>
+                                    <input
+                                        type={"email"}
+                                        className="form-control"
+                                        name="email"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        placeholder="abc1@gmail.com"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="form-label">Tên đầy đủ(*)</label>
+                                    <input
+                                        type={"text"}
+                                        className="form-control"
+                                        name="fullName"
+                                        value={fullName}
+                                        onChange={(event) => setFullName(event.target.value)}
+                                    />
+                                </div>
+                                <div className="password-custom">
+                                    <label className="form-label">Mật khẩu(*)</label>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="form-control"
+                                        name="password"
+                                        autoComplete="off"
+                                        value={password}
+                                        onChange={(event) => setPassword(event.target.value)}
+                                    />
+                                    {showPassword ? (
+                                        <span className="icons-eye" onClick={() => setShowPassword(false)}>
+                                            <VscEye />
+                                        </span>
+                                    ) : (
+                                        <span className="icons-eye" onClick={() => setShowPassword(true)}>
+                                            <VscEyeClosed />
+                                        </span>
+                                    )}
+                                </div>
+                                <div>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            handleRegister();
+                                        }}
+                                    >
+                                        Đăng ký
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

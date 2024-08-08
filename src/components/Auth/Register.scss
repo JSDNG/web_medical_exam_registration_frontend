@@ -8,33 +8,23 @@
     overflow: hidden; /* Prevent overflow issues */
 }
 
-.register-container-custom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.register-container {
     .register-body {
-        width: 460px;
-        border-radius: 5px;
-        padding: 35px;
+        border-radius: 8px;
         background-color: rgb(255, 255, 255) !important;
         .back-login {
             display: flex;
-            justify-content: right;
             font-size: 25px;
             cursor: pointer;
         }
         .header-custom-register {
             display: flex;
-            .image {
-                width: 100px;
-                padding-right: 10px;
-            }
             .hospital-header-register {
-                font-size: 30px;
+                font-size: 1.8em;
                 font-weight: 600;
             }
             .name-hospital-header-register {
-                font-size: 20px;
+                font-size: 1.2em;
                 font-weight: 500;
             }
         }

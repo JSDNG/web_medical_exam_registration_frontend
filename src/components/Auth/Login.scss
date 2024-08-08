@@ -8,26 +8,23 @@
     overflow: hidden; /* Prevent overflow issues */
 }
 
-.login-container-custom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login-container { 
     .login-body {
-        width: 460px;
-        border-radius: 5px;
-        padding: 35px;
+        border-radius: 8px;
         background-color: rgb(255, 255, 255) !important;
+        .back-login {
+            display: flex;
+            font-size: 25px;
+            cursor: pointer;
+        }
         .header-custom-login {
             display: flex;
-            .image {
-                width: 100px;
-            }
             .hospital-header-login {
-                font-size: 30px;
+                font-size: 1.8em;
                 font-weight: 600;
             }
             .name-hospital-header-login {
-                font-size: 20px;
+                font-size: 1.2em;
                 font-weight: 500;
             }
         }

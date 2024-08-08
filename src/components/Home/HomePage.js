@@ -83,7 +83,7 @@ const HomePage = () => {
     return (
         <div className="homepage-container">
             <div className="homepage-content-header">
-                <img src={imageHomePage} alt="prop" className="custom-image-home" />
+                <img src={imageHomePage} alt="prop" className="custom-image-home d-none d-sm-block" />
             </div>
             <div className="homepage-content-specialty">
                 <div className="header-specialty">

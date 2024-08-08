@@ -11,9 +11,9 @@ const ModalUpdateMedicalStaffInfo = (props) => {
     const [specialtyList, setSpecialtyList] = useState([]);
     const [specialtyIdList, setSpecialtyIdList] = useState([]);
     const [positionList, setPositionList] = useState([]);
-    const [positionId, setPositionId] = useState(account?.user?.Position?.id);
+    const [positionId, setPositionId] = useState(account?.user?.Position?.id ? account?.user?.Position?.id : 1);
     const [fullName, setFullName] = useState(account?.user?.fullName);
-    const [gender, setGender] = useState(account.user.gender ? account?.user?.gender: "Nữ");
+    const [gender, setGender] = useState(account.user.gender ? account?.user?.gender : "Nữ");
     const [phone, setPhone] = useState(account?.user?.phone);
     const [price, setPrice] = useState(account?.user?.price);
     const dispatch = useDispatch();
@@ -41,7 +41,6 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             }
         }
     };
-
     const refreshData = async () => {
         let res = await getOneMedicalStaff(account?.user?.id);
         if (res && res.EC === 0) {
@@ -95,15 +94,34 @@ const ModalUpdateMedicalStaffInfo = (props) => {
             setPhone(cleanedValue);
         }
     };
+    const replaceImagePrefix = (imageBase64) => {
+        const prefixPatterns = [
+            /^data:image\/png;base64,/,
+            /^data:image\/jpg;base64,/,
+            /^data:image\/jpeg;base64,/,
+            /^data:image\/gif;base64,/,
+            // Thêm các định dạng khác nếu cần
+        ];
+
+        for (const pattern of prefixPatterns) {
+            if (pattern.test(imageBase64)) {
+                return imageBase64.replace(pattern, "");
+            }
+        }
+
+        // Trả về chuỗi gốc nếu không tìm thấy tiền tố nào phù hợp
+        return imageBase64;
+    };
+
     const handleSubmitUpdate = async () => {
-        if (!fullName || !phone || !gender) {
+        if (!fullName || !gender) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
             return;
         }
         let data = {
             id: account?.user?.id,
             fullName: fullName,
-            image: imageBase64.replace("data:image/png;base64,", ""),
+            image: replaceImagePrefix(imageBase64),
             gender: gender,
             phone: phone,
             description: description,

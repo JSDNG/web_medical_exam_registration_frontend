@@ -33,9 +33,7 @@ const Header = (props) => {
     };
     const handleLogOut = async () => {
         let res = await logout(account.email, account.refresh_token);
-        //console.log(res);
         if (res && res.EC === 0) {
-            //clear redux
             dispatch(doLogout());
             toast.success(res.EM);
             navigate("/");
@@ -61,7 +59,7 @@ const Header = (props) => {
                         </NavLink>
                     </Nav>
                     <Nav className="me-auto-center ">
-                        <NavLink to="/" className="nav-link">
+                        <NavLink to="/" className="nav-link d-lg-flex d-none">
                             Tất cả
                         </NavLink>
                         <NavLink to="/song-khoe" className="nav-link">
@@ -79,12 +77,11 @@ const Header = (props) => {
                             />
                         </Form>
                     </Nav>
-                    <Nav className="me-auto-end">
+                    <Nav className="me-auto-end d-lg-flex d-none">
                         <NavLink to="/lich-hen" className="nav-link d-flex flex-column align-items-center">
                             <GiAlarmClock style={{ fontSize: "35px", marginBottom: "-5px" }} />
                             <span style={{ fontSize: "15px" }}>Lịch hẹn</span>
                         </NavLink>
-
                         <div
                             onClick={() => handleQuickCheckUp()}
                             className="nav-link quick-check-up-custom d-flex flex-column align-items-center"
@@ -92,7 +89,6 @@ const Header = (props) => {
                             <TbBrandBooking style={{ fontSize: "35px", marginBottom: "-5px" }} />
                             <span style={{ fontSize: "15px" }}>Khám ngay</span>
                         </div>
-
                         <ModalQuickCheckUp
                             showQuickCheckUp={showQuickCheckUp}
                             setShowQuickCheckUp={setShowQuickCheckUp}
@@ -135,6 +131,56 @@ const Header = (props) => {
                         )}
                     </Nav>
                 </Navbar.Collapse>
+                <Nav className="d-block d-lg-none me-auto-end-sm">
+                    <NavLink to="/lich-hen" className="nav-link d-flex flex-column align-items-center">
+                        <GiAlarmClock style={{ fontSize: "35px", marginBottom: "-5px" }} />
+                        <span style={{ fontSize: "15px" }}>Lịch hẹn</span>
+                    </NavLink>
+                    <div
+                        onClick={() => handleQuickCheckUp()}
+                        className="nav-link quick-check-up-custom d-flex flex-column align-items-center"
+                    >
+                        <TbBrandBooking style={{ fontSize: "35px", marginBottom: "-5px" }} />
+                        <span style={{ fontSize: "15px" }}>Khám ngay</span>
+                    </div>
+                    <ModalQuickCheckUp showQuickCheckUp={showQuickCheckUp} setShowQuickCheckUp={setShowQuickCheckUp} />
+                    {isAuthenticated ? (
+                        <NavDropdown
+                            title={
+                                <span className="d-flex flex-column align-items-center">
+                                    <IoSettings style={{ fontSize: "30px", marginBottom: "-1px" }} />
+                                    <span style={{ fontSize: "15px", marginBottom: "-4px" }}>Cài đặt</span>
+                                </span>
+                            }
+                            style={{ marginRight: "-5px" }}
+                            id="basic-nav-dropdown"
+                        >
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    navigate("/ho-so");
+                                }}
+                            >
+                                {account?.user?.fullName}
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item
+                                onClick={() => {
+                                    handleLogOut();
+                                }}
+                            >
+                                Đăng xuất
+                            </NavDropdown.Item>
+                        </NavDropdown>
+                    ) : (
+                        <div
+                            onClick={() => navigate("/dang-nhap")}
+                            className="nav-link quick-check-up-custom d-flex flex-column align-items-center"
+                        >
+                            <CgLogIn style={{ fontSize: "35px", marginBottom: "-5px" }} />
+                            <span style={{ fontSize: "15px" }}>Đăng nhập</span>
+                        </div>
+                    )}
+                </Nav>
             </Container>
         </Navbar>
     );

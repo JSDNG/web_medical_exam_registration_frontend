@@ -24,11 +24,10 @@ const AppointmentListRelative = (props) => {
                 <table className="table table-hover table-medical-custom">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Số thứ tự khám</th>
                             <th>Chuyên khoa</th>
                             <th>Họ và tên</th>
-                            <th>Lịch sử bệnh án</th>
+                            <th>Bác sĩ điều trị</th>
                             <th>Lí do khám</th>
                             <th>Số điện thoại</th>
                             <th>Trạng thái</th>
@@ -42,11 +41,10 @@ const AppointmentListRelative = (props) => {
                             appointmentListRelative.map((item, index) => {
                                 return (
                                     <tr key={index} onClick={() => setShow(true)}>
-                                        <td>{index + 1}</td>
                                         <td>{item?.appointmentNumber}</td>
                                         <td>{item?.specialtyMR}</td>
                                         <td>{item?.Patient?.fullName}</td>
-                                        <td>{item?.medicalHistory}</td>
+                                        <td>{item?.MedicalStaff?.fullName}</td>
                                         <td>{item?.reason}</td>
                                         <td>{item?.Patient?.phone}</td>
                                         <td>{item?.statusMR}</td>

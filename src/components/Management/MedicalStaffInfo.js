@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MedicalStaffInfo.scss";
+import { useNavigate } from "react-router-dom";
 import ModalUpdateMedicalStaffInfo from "./ModalUpdateMedicalStaffInfo";
 const MedicalStaffInfo = (props) => {
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
     const account = useSelector((state) => state?.user?.account);
-    
+    useEffect(() => {
+        if (!account.role) {
+            navigate("/");
+        }
+    }, [navigate]);
     return (
         <div className="medical-staff-info-container-custom">
             <label className="label-title-custom">Thông tin cá nhân</label>

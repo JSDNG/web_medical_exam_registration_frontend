@@ -53,7 +53,6 @@ const ModalQuickCheckUp = (props) => {
         setGender("Nữ");
         setPhone("");
         setDateOfBirth("");
-        setSpecialtyId(specialtyList?.[0]?.id);
         setReason("");
         setMedicalHistory("");
     };
@@ -97,8 +96,10 @@ const ModalQuickCheckUp = (props) => {
         }
         setMedicalHistory("");
         setReason("");
-        setSpecialtyId(specialtyList?.[0]?.id);
     }, [status, account, relativeList, specialtyList]);
+    useEffect(() => {
+        setSpecialtyId(specialtyList?.[0]?.id);
+    }, []);
     useEffect(() => {
         getData();
     }, [account]);
@@ -208,12 +209,16 @@ const ModalQuickCheckUp = (props) => {
     };
 
     const handleSubmitFindSchedule = async () => {
+        if (!specialtyId) {
+            toast.error("Vui lòng chọn chuyên khoa!");
+            return;
+        }
         if (!fullName) {
-            toast.error("Vui lòng tên bệnh nhân!");
+            toast.error("Vui lòng nhập tên bệnh nhân!");
             return;
         }
         if (!phone) {
-            toast.error("Vui lòng số điện thoại bệnh nhân!");
+            toast.error("Vui lòng nhập số điện thoại bệnh nhân!");
             return;
         }
         if (!status) {

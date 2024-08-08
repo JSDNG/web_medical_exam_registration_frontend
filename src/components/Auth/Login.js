@@ -84,79 +84,90 @@ const Login = () => {
 
     return (
         <div className="root-login">
-            <div className="login-container-custom">
-                <div className="login-body">
-                    <div className="header-custom-login">
-                        <img src={logo} className="image" alt="" />
-                        <div>
-                            <span className="hospital-header-login">Phòng khám tư nhân</span>
-                            <span className="name-hospital-header-login"> HealthBooking</span>
-                        </div>
-                    </div>
+            <div className="login-container">
+                <div className="container">
+                    <div className="row">
+                        <div className="login-body col-12 p-3">
+                            <div className="back-login">
+                                <IoArrowBackOutline
+                                    onClick={() => {
+                                        navigate("/");
+                                    }}
+                                />
+                            </div>
+                            <div className="header-custom-login">
+                                <img src={logo} className="d-none d-sm-block" alt="" style={{ width: "100px" }} />
+                                <div>
+                                    <span className="hospital-header-login d-none d-sm-block">Phòng khám tư nhân</span>
+                                    <span className="name-hospital-header-login"> HealthBooking</span>
+                                </div>
+                            </div>
 
-                    <div className="login-content">
-                        <div>
-                            <label className="form-label">Email(*)</label>
-                            <input
-                                type={"email"}
-                                className="form-control"
-                                name="email"
-                                value={email}
-                                onChange={(event) => setEmail(event.target.value)}
-                                placeholder="abc1@gmail.com"
-                            />
-                        </div>
-                        <div className="password-custom">
-                            <label className="form-label">Mật khẩu(*)</label>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                className="form-control"
-                                name="password"
-                                autoComplete="off"
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                                onKeyDown={(event) => handleKeyDown(event)}
-                            />
-                            {showPassword ? (
-                                <span className="icons-eye" onClick={() => setShowPassword(false)}>
-                                    <VscEye />
-                                </span>
-                            ) : (
-                                <span className="icons-eye" onClick={() => setShowPassword(true)}>
-                                    <VscEyeClosed />
-                                </span>
-                            )}
-                        </div>
+                            <div className="login-content">
+                                <div>
+                                    <label className="form-label">Email(*)</label>
+                                    <input
+                                        type={"email"}
+                                        className="form-control"
+                                        name="email"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
+                                        placeholder="abc1@gmail.com"
+                                    />
+                                </div>
+                                <div className="password-custom">
+                                    <label className="form-label">Mật khẩu(*)</label>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="form-control"
+                                        name="password"
+                                        autoComplete="off"
+                                        value={password}
+                                        onChange={(event) => setPassword(event.target.value)}
+                                        onKeyDown={(event) => handleKeyDown(event)}
+                                    />
+                                    {showPassword ? (
+                                        <span className="icons-eye" onClick={() => setShowPassword(false)}>
+                                            <VscEye />
+                                        </span>
+                                    ) : (
+                                        <span className="icons-eye" onClick={() => setShowPassword(true)}>
+                                            <VscEyeClosed />
+                                        </span>
+                                    )}
+                                </div>
 
-                        <div>
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => {
-                                    handleLogin();
-                                }}
-                            >
-                                <span>Đăng nhập</span>
-                            </button>
-                        </div>
-                        <div className="custom-login-with-google">
-                            <button className="btn btn-light" onClick={() => handleGoogleLogin()}>
-                                <FcGoogle className="mx-2" />
-                                Tiếp tục với Google
-                            </button>
-                        </div>
-                    </div>
-                    <div className="action-choose">
-                        <div className="forgot-password">
-                            <span>Quên mật khẩu?</span>
-                        </div>
-                        <div className="btn-register-custom">
-                            <span
-                                onClick={() => {
-                                    navigate("/dang-ky");
-                                }}
-                            >
-                                Đăng ký
-                            </span>
+                                <div>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            handleLogin();
+                                        }}
+                                    >
+                                        <span>Đăng nhập</span>
+                                    </button>
+                                </div>
+                                <div className="custom-login-with-google">
+                                    <button className="btn btn-light" onClick={() => handleGoogleLogin()}>
+                                        <FcGoogle className="mx-2" />
+                                        Tiếp tục với Google
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="action-choose">
+                                <div className="forgot-password">
+                                    <span>Quên mật khẩu?</span>
+                                </div>
+                                <div className="btn-register-custom">
+                                    <span
+                                        onClick={() => {
+                                            navigate("/dang-ky");
+                                        }}
+                                    >
+                                        Đăng ký
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
